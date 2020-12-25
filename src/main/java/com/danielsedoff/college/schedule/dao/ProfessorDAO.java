@@ -4,27 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Professor;
 
 @Component
 public class ProfessorDAO implements DAO<Professor> {
 
     @Autowired
-    public ProfessorDAO professordao;
+    EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             @SuppressWarnings("unchecked")
             List<Professor> professors = em.createQuery("from Professor")
@@ -43,9 +40,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Professor.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Professor By Id", e);
@@ -57,13 +52,11 @@ public class ProfessorDAO implements DAO<Professor> {
 
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
-            Professor targetProfessor = em.find(Professor.class, professor.getId());
+            Professor targetProfessor = em.find(Professor.class,
+                    professor.getId());
             em.getTransaction().begin();
             em.remove(targetProfessor);
             em.getTransaction().commit();
@@ -78,10 +71,7 @@ public class ProfessorDAO implements DAO<Professor> {
         boolean result = false;
         try {
 
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
             oldProfessor.setDepartmentId(professor.getDepartmentId());
@@ -99,10 +89,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean create(Professor professor) throws DAOException {
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(professor);
             em.getTransaction().commit();
@@ -117,10 +104,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             professors = em.createQuery("from Professor", Professor.class)
                     .getResultList();

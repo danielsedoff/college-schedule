@@ -1,10 +1,13 @@
 package com.danielsedoff.college.schedule.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -22,7 +25,12 @@ public class Group {
     private int departmentId;
     @Column(name = "group_note")
     private String specialNotes;
+    @Column(name = "lesson")
+    private Lesson lesson;
 
+    @OneToMany(mappedBy="group")
+    private List<Student> students;
+    
     public Group() {
     }
 
@@ -48,5 +56,21 @@ public class Group {
 
     public void setSpecialNotes(String specialNotes) {
         this.specialNotes = specialNotes;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 }

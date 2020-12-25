@@ -4,27 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Component
 public class StudentDAO implements DAO<Student> {
 
     @Autowired
-    public StudentDAO studentdao;
+    EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             @SuppressWarnings("unchecked")
             List<Student> students = em.createQuery("from Student")
@@ -43,9 +40,7 @@ public class StudentDAO implements DAO<Student> {
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Student.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Student By Id", e);
@@ -57,10 +52,7 @@ public class StudentDAO implements DAO<Student> {
 
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Student targetStudent = em.find(Student.class, student.getId());
@@ -77,14 +69,9 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Student oldStudent = (Student) em.find(Student.class, id);
-            oldStudent.setGroupId(student.getGroupId());
             oldStudent.setName(student.getName());
             oldStudent.setSchoolYear(student.getSchoolYear());
             em.getTransaction().commit();
@@ -98,10 +85,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean create(Student student) throws DAOException {
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(student);
             em.getTransaction().commit();
@@ -116,10 +100,7 @@ public class StudentDAO implements DAO<Student> {
     public List<Student> getList() throws DAOException {
         List<Student> students = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             students = em.createQuery("from Student", Student.class)
                     .getResultList();

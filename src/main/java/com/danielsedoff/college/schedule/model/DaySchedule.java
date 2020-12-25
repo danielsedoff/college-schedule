@@ -1,12 +1,14 @@
 package com.danielsedoff.college.schedule.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -24,7 +26,11 @@ public class DaySchedule {
     private LocalDateTime day;
     @Column(name = "hasOverlaps")
     private boolean hasOverlaps;
-
+    @OneToMany(mappedBy = "dayschedule")
+    private List<Lesson> lessons;
+    @Column(name = "yearschedule")
+    public YearSchedule yearschedule;
+    
     public DaySchedule() {
     }
 
@@ -50,5 +56,21 @@ public class DaySchedule {
 
     public void setHasOverlaps(boolean hasOverlaps) {
         this.hasOverlaps = hasOverlaps;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public YearSchedule getYearschedule() {
+        return yearschedule;
+    }
+
+    public void setYearschedule(YearSchedule yearschedule) {
+        this.yearschedule = yearschedule;
     }
 }

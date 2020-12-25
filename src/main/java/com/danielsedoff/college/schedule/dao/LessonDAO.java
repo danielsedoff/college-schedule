@@ -4,27 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Lesson;
 
 @Component
 public class LessonDAO implements DAO<Lesson> {
 
     @Autowired
-    public LessonDAO lessondao;
-
+    EntityManagerConfig emf;
+    
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             @SuppressWarnings("unchecked")
             List<Lesson> lessons = em.createQuery("from Lesson")
@@ -43,9 +40,7 @@ public class LessonDAO implements DAO<Lesson> {
     public Lesson getById(Integer id) throws DAOException {
         Lesson result = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Lesson By Id", e);
@@ -57,10 +52,7 @@ public class LessonDAO implements DAO<Lesson> {
 
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
@@ -77,17 +69,13 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
             oldLesson.setEndTime(lesson.getEndTime());
             oldLesson.setStartTime(lesson.getStartTime());
-            oldLesson.setProfessorId(lesson.getProfessorId());
-            oldLesson.setGroupId(lesson.getGroupId());
+            oldLesson.setProfessors(lesson.getProfessors());
+            oldLesson.setGroups(lesson.getGroups());
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
@@ -99,10 +87,7 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(lesson);
             em.getTransaction().commit();
@@ -117,10 +102,7 @@ public class LessonDAO implements DAO<Lesson> {
     public List<Lesson> getList() throws DAOException {
         List<Lesson> lessons = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             lessons = em.createQuery("from Lesson", Lesson.class)
                     .getResultList();

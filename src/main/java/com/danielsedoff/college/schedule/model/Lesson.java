@@ -1,10 +1,13 @@
 package com.danielsedoff.college.schedule.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -22,10 +25,12 @@ public class Lesson {
     private String startTime;
     @Column(name = "end_time")
     private String endTime;
-    @Column(name = "professor_id")
-    private int professorId;
-    @Column(name = "group_id")
-    private int groupId;
+    @OneToMany(mappedBy = "lesson")
+    private List<Professor> professors;
+    @OneToMany(mappedBy = "lesson")
+    private List<Group> groups;
+    @Column(name = "dayschedule")
+    private DaySchedule dayschedule;
 
     public Lesson() {
     }
@@ -54,19 +59,27 @@ public class Lesson {
         this.endTime = endTime;
     }
 
-    public int getProfessorId() {
-        return professorId;
+    public List<Professor> getProfessors() {
+        return professors;
     }
 
-    public void setProfessorId(int professorId) {
-        this.professorId = professorId;
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public List<Group> getGroups() {
+        return groups;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public DaySchedule getDayschedule() {
+        return dayschedule;
+    }
+
+    public void setDayschedule(DaySchedule dayschedule) {
+        this.dayschedule = dayschedule;
     }
 }

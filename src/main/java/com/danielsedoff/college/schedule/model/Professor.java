@@ -13,8 +13,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "professors")
 @ToString
-@EqualsAndHashCode
-public class Professor {
+@EqualsAndHashCode(callSuper = false)
+public class Professor extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,6 +26,8 @@ public class Professor {
     private String specialNotes;
     @Column(name = "professor_ranks")
     private String ranksTitles;
+    @Column(name = "lesson")
+    private Lesson lesson;
 
     public Professor() {
     }
@@ -70,4 +72,11 @@ public class Professor {
         this.ranksTitles = ranksTitles;
     }
 
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
 }

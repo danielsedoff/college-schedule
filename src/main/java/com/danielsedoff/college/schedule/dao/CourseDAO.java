@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Course;
 
 @Component
 public class CourseDAO implements DAO<Course> {
 
     @Autowired
-    public CourseDAO coursedao;
+    EntityManagerConfig emf;
 
+    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
+    
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             @SuppressWarnings("unchecked")
             List<Course> courses = em.createQuery("from Course")
@@ -43,9 +44,7 @@ public class CourseDAO implements DAO<Course> {
     public Course getById(Integer id) throws DAOException {
         Course result = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Course.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Course By Id", e);
@@ -57,10 +56,8 @@ public class CourseDAO implements DAO<Course> {
 
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
             // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Course targetCourse = em.find(Course.class, course.getId());
@@ -78,10 +75,7 @@ public class CourseDAO implements DAO<Course> {
         boolean result = false;
         try {
 
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Course oldCourse = (Course) em.find(Course.class, id);
             oldCourse.setCourseDescription(course.getCourseDescription());
@@ -98,15 +92,13 @@ public class CourseDAO implements DAO<Course> {
     public boolean create(Course course) throws DAOException {
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(course);
+            em.flush();
             em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not create Course", e);
         }
         return result;
@@ -116,10 +108,7 @@ public class CourseDAO implements DAO<Course> {
     public List<Course> getList() throws DAOException {
         List<Course> courses = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             courses = em.createQuery("from Course", Course.class)
                     .getResultList();

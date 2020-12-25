@@ -13,8 +13,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "students")
 @ToString
-@EqualsAndHashCode
-public class Student {
+@EqualsAndHashCode(callSuper = false)
+public class Student extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,8 +22,8 @@ public class Student {
     private String name;
     @Column(name = "student_year")
     private int schoolYear;
-    @Column(name = "group_id")
-    private int groupId;
+    @Column(name = "group")
+    private Group group;
 
     public Student() {
 
@@ -53,12 +53,12 @@ public class Student {
         this.schoolYear = schoolYear;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
 }

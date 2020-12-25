@@ -4,31 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
 @Component
 public class YearScheduleDAO implements DAO<YearSchedule> {
 
     @Autowired
-    public YearScheduleDAO yearScheduledao;
+    EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             @SuppressWarnings("unchecked")
-            List<YearSchedule> yearSchedules = em.createQuery("from YearSchedule")
-                    .getResultList();
+            List<YearSchedule> yearSchedules = em
+                    .createQuery("from YearSchedule").getResultList();
             em.getTransaction().commit();
 
             for (YearSchedule yearSchedule : yearSchedules) {
@@ -43,9 +40,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(YearSchedule.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get YearSchedule By Id", e);
@@ -57,13 +52,11 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
 
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
-            YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
+            YearSchedule targetYearSchedule = em.find(YearSchedule.class,
+                    yearSchedule.getId());
             em.getTransaction().begin();
             em.remove(targetYearSchedule);
             em.getTransaction().commit();
@@ -74,16 +67,14 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    public boolean update(Integer id, YearSchedule yearSchedule) throws DAOException {
+    public boolean update(Integer id, YearSchedule yearSchedule)
+            throws DAOException {
         boolean result = false;
         try {
-
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            YearSchedule oldYearSchedule = (YearSchedule) em.find(YearSchedule.class, id);
+            YearSchedule oldYearSchedule = (YearSchedule) em
+                    .find(YearSchedule.class, id);
             oldYearSchedule.setYear(yearSchedule.getYear());
             em.getTransaction().commit();
             em.close();
@@ -96,10 +87,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public boolean create(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(yearSchedule);
             em.getTransaction().commit();
@@ -114,12 +102,10 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {
-            EntityManagerFactory emf = Persistence
-                    .createEntityManagerFactory("PU");
-            // DEBUG System.out.println(emf.getProperties());
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class)
+            yearSchedules = em
+                    .createQuery("from YearSchedule", YearSchedule.class)
                     .getResultList();
             em.getTransaction().commit();
             em.close();
