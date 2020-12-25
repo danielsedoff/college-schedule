@@ -3,6 +3,9 @@ package com.danielsedoff.college.schedule.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.ToString;
+
+@ToString
 public class Lesson {
     private int id;
     private LocalDateTime startTime;

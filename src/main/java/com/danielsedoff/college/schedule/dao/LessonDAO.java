@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import com.danielsedoff.college.schedule.dao.mappers.LessonMapper;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 
-@Component
+@Service
 public class LessonDAO implements DAO<Lesson> {
 
     JdbcTemplate jdbcTemplate;
@@ -57,7 +57,7 @@ public class LessonDAO implements DAO<Lesson> {
     public List<Group> getGroupsByLesson(GroupDAO groupdao, Lesson lesson) {
         List<Integer> groupIds = jdbcTemplate.queryForList(SQL_SELECT_GROUP_BY_LESSON,
                 Integer.class, lesson.getId());
-        List<Group> groups = new ArrayList<Group>();
+        List<Group> groups = new ArrayList<>();
         for (Integer groupId : groupIds) {
             groups.add(groupdao.getById(groupId));
         }

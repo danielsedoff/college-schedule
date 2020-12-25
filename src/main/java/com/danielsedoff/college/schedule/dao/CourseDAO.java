@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.mappers.CourseMapper;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@Component
+@Service
 public class CourseDAO implements DAO<Course> {
 
     JdbcTemplate jdbcTemplate;
@@ -63,7 +63,7 @@ public class CourseDAO implements DAO<Course> {
     public List<Professor> getProfessorByCourse(ProfessorDAO professordao, Course course) {
         List<Integer> professorIds = jdbcTemplate.queryForList(
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
-        List<Professor> professors = new ArrayList<Professor>();
+        List<Professor> professors = new ArrayList<>();
         for (Integer professorId : professorIds) {
             professors.add(professordao.getById(professorId));
         }

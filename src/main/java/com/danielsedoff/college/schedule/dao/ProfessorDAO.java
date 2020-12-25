@@ -3,12 +3,12 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.mappers.ProfessorMapper;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@Component
+@Service
 public class ProfessorDAO implements DAO<Professor> {
 
     JdbcTemplate jdbcTemplate;

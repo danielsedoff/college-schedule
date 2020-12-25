@@ -1,7 +1,9 @@
 package com.danielsedoff.college.schedule.model;
 
 import java.util.List;
+import lombok.ToString;
 
+@ToString
 public class Group {
     private int id;
     private int departmentId;

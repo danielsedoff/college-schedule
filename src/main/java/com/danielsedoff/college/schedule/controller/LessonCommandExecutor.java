@@ -3,10 +3,8 @@ package com.danielsedoff.college.schedule.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
@@ -16,29 +14,22 @@ import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
+import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
-@Component
+@Service
 public class LessonCommandExecutor {
 
-    private CourseDAO coursedao;
     private LessonDAO lessondao;
     private ProfessorDAO professordao;
-    private YearScheduleDAO yearscheduledao;
     private GroupDAO groupdao;
-    private StudentDAO studentdao;
-    private DayScheduleDAO dayscheduledao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     public LessonCommandExecutor(CourseDAO coursedao, StudentDAO studentdao,
             ProfessorDAO professordao, LessonDAO lessondao, DayScheduleDAO dayscheduledao,
             YearScheduleDAO yearscheduledao, GroupDAO groupdao) {
-        this.coursedao = coursedao;
         this.lessondao = lessondao;
         this.professordao = professordao;
-        this.dayscheduledao = dayscheduledao;
-        this.yearscheduledao = yearscheduledao;
-        this.studentdao = studentdao;
         this.groupdao = groupdao;
     }
 
@@ -48,7 +39,7 @@ public class LessonCommandExecutor {
         try {
             lessonId = Integer.parseInt(lessonIdStr);
         } catch (Exception e) {
-            return "Wrong Lesson ID.";
+            return WRONG_LESSON_ID;
         }
         Lesson lesson = null;
         try {
@@ -70,19 +61,19 @@ public class LessonCommandExecutor {
         try {
             lessonId = Integer.parseInt(lessonIdStr);
         } catch (Exception e) {
-            return "Wrong Lesson ID.";
+            return WRONG_LESSON_ID;
         }
         String groupIdStr = arguments[1];
         int groupId = -1;
         try {
             groupId = Integer.parseInt(groupIdStr);
         } catch (Exception e) {
-            return "Wrong Group ID.";
+            return WRONG_GROUP_ID;
         }
         boolean result = false;
         result = lessondao.setLessonGroup(lessondao.getById(lessonId),
                 groupdao.getById(groupId));
-        return result ? "success" : "failure";
+        return result ? SUCCESS : FAILURE;
     }
 
     String getLessonById(String[] arguments) {
@@ -91,7 +82,7 @@ public class LessonCommandExecutor {
         try {
             lessonId = Integer.parseInt(lessonIdStr);
         } catch (Exception e) {
-            return "Wrong Lesson ID.";
+            return WRONG_LESSON_ID;
         }
         return lessondao.getById(lessonId).toString();
     }
@@ -112,7 +103,7 @@ public class LessonCommandExecutor {
         lesson.setEndTime(LocalDateTime.parse(endTime, formatter));
         lesson.setProfessor(professordao.getById(professorId));
         result = lessondao.create(lesson);
-        return result ? "success" : "failure";
+        return result ? SUCCESS : FAILURE;
     }
 
     String deleteLesson(String[] arguments) {
@@ -122,10 +113,10 @@ public class LessonCommandExecutor {
         try {
             lessonId = Integer.parseInt(lessonIdStr);
         } catch (Exception e) {
-            return "Wrong Professor ID.";
+            return WRONG_LESSON_ID;
         }
         result = lessondao.delete(lessondao.getById(lessonId));
-        return result ? "success" : "failure";
+        return result ? SUCCESS : FAILURE;
     }
 
     String updateLesson(String[] arguments) {
@@ -144,17 +135,17 @@ public class LessonCommandExecutor {
         try {
             lessonId = Integer.parseInt(lessonIdStr);
         } catch (Exception e) {
-            return "Wrong lesson ID.";
+            return WRONG_LESSON_ID;
         }
         Lesson lesson = new Lesson();
         lesson.setStartTime(LocalDateTime.parse(startTime, formatter));
         lesson.setEndTime(LocalDateTime.parse(endTime, formatter));
         lesson.setProfessor(professordao.getById(professorId));
         result = lessondao.update(lessonId, lesson);
-        return result ? "success" : "failure";
+        return result ? SUCCESS : FAILURE;
     }
 
-    String getLessonIdList(String[] arguments) {
+    String getLessonIdList() {
         StringBuilder result = new StringBuilder();
         List<Integer> ids = lessondao.getIdList();
         for (Integer id : ids) {

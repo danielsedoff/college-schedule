@@ -1,7 +1,9 @@
 package com.danielsedoff.college.schedule.model;
 
 import java.util.List;
+import lombok.ToString;
 
+@ToString
 public class Professor extends Person {
     private List<String> ranksTitles;
 

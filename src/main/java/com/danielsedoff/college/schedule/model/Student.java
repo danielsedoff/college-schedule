@@ -1,5 +1,8 @@
 package com.danielsedoff.college.schedule.model;
 
+import lombok.ToString;
+
+@ToString
 public class Student extends Person {
     private int schoolYear;
 

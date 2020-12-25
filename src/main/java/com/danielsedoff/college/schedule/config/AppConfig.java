@@ -14,16 +14,14 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @PropertySource("classpath:database.properties")
 public class AppConfig {
 
+    private static final String URL = "url";
+    private static final String USER = "dbuser";
+    private static final String DRIVER = "driver";
+    private static final String PASSWORD = "dbpassword";
+
     @Autowired
-    Environment environment;
-
-    private final String URL = "url";
-    private final String USER = "dbuser";
-    private final String DRIVER = "driver";
-    private final String PASSWORD = "dbpassword";
-
     @Bean
-    DataSource dataSource() {
+    DataSource dataSource(Environment environment) {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setUrl(environment.getProperty(URL));
         driverManagerDataSource.setUsername(environment.getProperty(USER));

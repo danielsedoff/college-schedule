@@ -2,6 +2,9 @@ package com.danielsedoff.college.schedule.model;
 
 import java.util.List;
 
+import lombok.ToString;
+
+@ToString
 public class Course {
     private int id;
     private String name;

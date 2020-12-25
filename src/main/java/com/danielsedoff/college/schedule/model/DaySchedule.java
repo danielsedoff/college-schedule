@@ -2,7 +2,9 @@ package com.danielsedoff.college.schedule.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.ToString;
 
+@ToString
 public class DaySchedule {
     private int id;
     private LocalDateTime day;
