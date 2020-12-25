@@ -3,6 +3,8 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -31,41 +33,91 @@ public class LessonDAO implements DAO<Lesson> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList()  {
-        return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_LESSONS, Integer.class);
+    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
+
+    public List<Integer> getIdList() throws DAOException {
+        List<Integer> result = null;
+        try {
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_LESSONS, Integer.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean update(Integer id, Lesson lesson)  {
-        return jdbcTemplate.update(SQL_UPDATE_LESSONS, lesson.getStartTime(),
-                lesson.getEndTime(), lesson.getProfessor().getId(), lesson.getId()) > 0;
+    public boolean update(Integer id, Lesson lesson) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_UPDATE_LESSONS, lesson.getStartTime(),
+                    lesson.getEndTime(), lesson.getProfessor().getId(),
+                    lesson.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean delete(Lesson lesson)  {
-        return jdbcTemplate.update(SQL_DELETE_FROM_LESSONS, lesson.getId()) > 0;
+    public boolean delete(Lesson lesson) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_DELETE_FROM_LESSONS, lesson.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public boolean create(Lesson lesson)  {
-        return jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime(),
-                lesson.getEndTime(), lesson.getProfessor().getId()) > 0;
+    public boolean create(Lesson lesson) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime(),
+                    lesson.getEndTime(), lesson.getProfessor().getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public Lesson getById(Integer lessonId)  {
-        return jdbcTemplate.queryForObject(SQL_SELECT_LESSON_BY_ID,
-                new Object[] { lessonId }, new LessonMapper());
+    public Lesson getById(Integer lessonId) throws DAOException {
+        Lesson result = null;
+        try {
+            result = jdbcTemplate.queryForObject(SQL_SELECT_LESSON_BY_ID,
+                    new Object[] { lessonId }, new LessonMapper());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean setLessonGroup(Lesson lesson, Group group)  {
-        return (jdbcTemplate.update(SQL_INSERT_LESSON_GROUP, lesson.getId(),
-                group.getId()) > 0);
+    public boolean setLessonGroup(Lesson lesson, Group group) throws DAOException {
+        boolean result = false;
+        try {
+            result = (jdbcTemplate.update(SQL_INSERT_LESSON_GROUP, lesson.getId(),
+                    group.getId()) > 0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public List<Group> getGroupsByLesson(Lesson lesson)
-            {
-        List<Integer> groupIds = jdbcTemplate.queryForList(SQL_SELECT_GROUP_BY_LESSON,
-                Integer.class, lesson.getId());
+    public List<Group> getGroupsByLesson(Lesson lesson) throws DAOException {
         List<Group> groups = new ArrayList<>();
-        for (Integer groupId : groupIds) {
-            groups.add(groupdao.getById(groupId));
+        try {
+            List<Integer> groupIds = jdbcTemplate.queryForList(SQL_SELECT_GROUP_BY_LESSON,
+                    Integer.class, lesson.getId());
+            for (Integer groupId : groupIds) {
+                groups.add(groupdao.getById(groupId));
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
         return groups;
     }

@@ -3,6 +3,8 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -32,54 +34,112 @@ public class CourseDAO implements DAO<Course> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList()  {
-        return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
-    }
+    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
 
-    public Course getById(Integer id)  {
-        return jdbcTemplate.queryForObject(SQL_SELECT_COURSE_BY_ID, new Object[] { id },
-                new CourseMapper());
-    }
+    public List<Integer> getIdList() throws DAOException {
 
-    public boolean delete(Course course)  {
-        deleteCourseProfessorByCourse(course);
-        return jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
-    }
-
-    public boolean update(Integer id, Course course)  {
-        return jdbcTemplate.update(SQL_UPDATE_COURSES, course.getName(),
-                course.getCourseDescription(), course.getId()) > 0;
-    }
-
-    public boolean create(Course course)  {
-        return jdbcTemplate.update(SQL_INSERT_INTO_COURSES, course.getName(),
-                course.getCourseDescription()) > 0;
-    }
-
-    public boolean setCourseProfessor(Course course, List<Professor> professors)
-             {
-        // TODO: Make it batch.
-        boolean result = false;
-        for (int i = 0; i < professors.size(); i++) {
-            jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
-                    professors.get(i).getId());
+        List<Integer> result = null;
+        try {
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
         return result;
     }
 
-    public boolean deleteCourseProfessorByCourse(Course course)
-             {
-        return 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
+    public Course getById(Integer id) throws DAOException {
+        Course result = null;
+        try {
+            result = jdbcTemplate.queryForObject(SQL_SELECT_COURSE_BY_ID,
+                    new Object[] { id }, new CourseMapper());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public List<Professor> getProfessorByCourse(Course course) {
-        List<Integer> professorIds = jdbcTemplate.queryForList(
-                SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
+    public boolean delete(Course course) throws DAOException {
+
+        boolean result = false;
+        deleteCourseProfessorByCourse(course);
+        try {
+            result = jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public boolean update(Integer id, Course course) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_UPDATE_COURSES, course.getName(),
+                    course.getCourseDescription(), course.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public boolean create(Course course) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_INSERT_INTO_COURSES, course.getName(),
+                    course.getCourseDescription()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public boolean setCourseProfessor(Course course, List<Professor> professors)
+            throws DAOException {
+        // TODO: Make it batch.
+        boolean result = false;
+        try {
+            for (int i = 0; i < professors.size(); i++) {
+                jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
+                        professors.get(i).getId());
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public boolean deleteCourseProfessorByCourse(Course course) throws DAOException {
+        boolean result = false;
+        try {
+            result = 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
+    }
+
+    public List<Professor> getProfessorByCourse(Course course) throws DAOException {
         List<Professor> professors = new ArrayList<>();
-        for (Integer professorId : professorIds) {
-            if (0 == professorId)
-                continue;
-            professors.add(professordao.getById(professorId));
+        try {
+            List<Integer> professorIds = jdbcTemplate.queryForList(
+                    SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
+            for (Integer professorId : professorIds) {
+                if (0 == professorId)
+                    continue;
+                professors.add(professordao.getById(professorId));
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
         return professors;
     }

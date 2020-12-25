@@ -2,6 +2,8 @@ package com.danielsedoff.college.schedule.dao;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -22,34 +24,83 @@ public class StudentDAO implements DAO<Student> {
     private static final String SQL_REMOVE_ALL_STUDENTS_FROM_GROUP = "UPDATE students SET group_id = 65535 WHERE group_id = ?;";
 
     @Autowired
-    public StudentDAO(JdbcTemplate jdbcTemplate)  {
+    public StudentDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList()  {
-        return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS, Integer.class);
+    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
+
+    public List<Integer> getIdList() throws DAOException {
+        List<Integer> result = null;
+        try {
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS,
+                    Integer.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public Student getById(Integer studentId)  {
-        return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID,
-                new Object[] { studentId }, new StudentMapper());
+    public Student getById(Integer studentId) throws DAOException {
+        Student result = null;
+        try {
+            result = jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID,
+                    new Object[] { studentId }, new StudentMapper());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public boolean delete(Student student)  {
-        return jdbcTemplate.update(SQL_DELETE_FROM_STUDENTS, student.getId()) > 0;
+    public boolean delete(Student student) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_DELETE_FROM_STUDENTS, student.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public boolean update(Integer id, Student student)  {
-        return jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
-                student.getSchoolYear(), student.getName(), student.getId()) > 0;
+    public boolean update(Integer id, Student student) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
+                    student.getSchoolYear(), student.getName(), student.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean create(Student student)  {
-        return jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
-                student.getSchoolYear(), student.getName()) > 0;
+    public boolean create(Student student) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
+                    student.getSchoolYear(), student.getName()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean removeAllStudentsFromGroup(Group group)  {
-        return jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP, group.getId()) > 0;
+    public boolean removeAllStudentsFromGroup(Group group) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP,
+                    group.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 }

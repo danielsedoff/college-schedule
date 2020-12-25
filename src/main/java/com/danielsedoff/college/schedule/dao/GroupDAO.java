@@ -3,6 +3,8 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -33,55 +35,113 @@ public class GroupDAO implements DAO<Group> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList()  {
-        return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_GROUPZ, Integer.class);
-    }
+    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
 
-    public Group getById(Integer id)  {
-        return jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID, new Object[] { id },
-                new GroupMapper());
-    }
-
-    public boolean delete(Group group)  {
-        return jdbcTemplate.update(SQL_DELETE_FROM_GROUPZ, group.getId()) > 0;
-    }
-
-    public boolean update(Integer id, Group group)  {
-        StringBuffer notes = new StringBuffer();
-        group.getSpecialNotes()
-                .forEach(listItem -> notes.append(listItem).append(SEPARATOR));
-
-        return jdbcTemplate.update(SQL_UPDATE_GROUPZ, notes.toString(),
-                group.getDepartmentId(), group.getId()) > 0;
-    }
-
-    public boolean create(Group group)  {
-        return jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(),
-                group.getDepartmentId()) > 0;
-    }
-
-    public boolean setGroupStudent(Group group, List<Student> students)
-             {
-        // TODO: Make it batch.
-        boolean result = false;
-        for (int i = 0; i < students.size(); i++) {
-            jdbcTemplate.update(SQL_INSERT_GROUP_STUDENT, group.getId(),
-                    students.get(0).getId());
+    public List<Integer> getIdList() throws DAOException {
+        List<Integer> result = null;
+        try {
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_GROUPZ, Integer.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
         return result;
     }
 
-    public boolean deleteGroupStudent(Group group)  {
-        return 0 < jdbcTemplate.update(SQL_DELETE_GROUP_STUDENT, group.getId());
+    public Group getById(Integer id) throws DAOException {
+        Group result = null;
+        try {
+            result = jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID,
+                    new Object[] { id }, new GroupMapper());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public List<Student> getStudentsByGroup(Group group) {
-        List<Integer> studentIds = jdbcTemplate.queryForList(SQL_SELECT_STUDENT_BY_GROUP,
-                Integer.class, group.getId());
-        List<Student> students = new ArrayList<>();
-        for (Integer studentId : studentIds) {
-            students.add(studentdao.getById(studentId));
+    public boolean delete(Group group) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_DELETE_FROM_GROUPZ, group.getId()) > 0;
+            ;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
+        return result;
+
+    }
+
+    public boolean update(Integer id, Group group) throws DAOException {
+        boolean result = false;
+        StringBuffer notes = new StringBuffer();
+        group.getSpecialNotes()
+                .forEach(listItem -> notes.append(listItem).append(SEPARATOR));
+
+        try {
+            result = jdbcTemplate.update(SQL_UPDATE_GROUPZ, notes.toString(),
+                    group.getDepartmentId(), group.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public boolean create(Group group) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(),
+                    group.getDepartmentId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public boolean setGroupStudent(Group group, List<Student> students)
+            throws DAOException {
+        // TODO: Make it batch.
+        boolean result = false;
+        try {
+            for (int i = 0; i < students.size(); i++) {
+                jdbcTemplate.update(SQL_INSERT_GROUP_STUDENT, group.getId(),
+                        students.get(0).getId());
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public boolean deleteGroupStudent(Group group) throws DAOException {
+        boolean result = false;
+        try {
+            result = 0 < jdbcTemplate.update(SQL_DELETE_GROUP_STUDENT, group.getId());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    public List<Student> getStudentsByGroup(Group group) throws DAOException {
+        List<Student> students = new ArrayList<>();
+        try {
+            List<Integer> studentIds = jdbcTemplate.queryForList(
+                    SQL_SELECT_STUDENT_BY_GROUP, Integer.class, group.getId());
+            for (Integer studentId : studentIds) {
+                students.add(studentdao.getById(studentId));
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+
         return students;
     }
 

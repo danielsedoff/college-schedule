@@ -3,6 +3,8 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
 
     @Autowired
     DayScheduleDAO dayscheduledao;
-    
+
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_YEARS = "SELECT yearschedule_id FROM yearschedules;";
     private static final String SQL_UPDATE_YEARSCHEDULES = "UPDATE yearschedules SET year = ? WHERE yearschedule_id = ?;";
@@ -31,45 +33,99 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList() {
-        return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_YEARS, Integer.class);
+    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
+
+    public List<Integer> getIdList() throws DAOException {
+        List<Integer> result = null;
+        try {
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_YEARS, Integer.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean update(Integer id, YearSchedule yearschedule) {
-        return jdbcTemplate.update(SQL_UPDATE_YEARSCHEDULES, yearschedule.getYear(),
-                yearschedule.getId()) > 0;
+    public boolean update(Integer id, YearSchedule yearschedule) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_UPDATE_YEARSCHEDULES, yearschedule.getYear(),
+                    yearschedule.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean delete(YearSchedule yearschedule) {
-        return jdbcTemplate.update(SQL_DELETE_FROM_YEARSCHEDULES,
-                yearschedule.getId()) > 0;
+    public boolean delete(YearSchedule yearschedule) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_DELETE_FROM_YEARSCHEDULES,
+                    yearschedule.getId()) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public boolean create(YearSchedule yearschedule) {
-        return jdbcTemplate.update(SQL_INSERT_INTO_YEARSCHEDULES,
-                yearschedule.getYear()) > 0;
+    public boolean create(YearSchedule yearschedule) throws DAOException {
+        boolean result = false;
+        try {
+            result = jdbcTemplate.update(SQL_INSERT_INTO_YEARSCHEDULES,
+                    yearschedule.getYear()) > 0;
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public YearSchedule getById(Integer yearId) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_YEARSCHEDULE_BY_ID,
-                new Object[] { yearId }, new YearScheduleMapper());
+    public YearSchedule getById(Integer yearId) throws DAOException {
+        YearSchedule result = null;
+        try {
+            result = jdbcTemplate.queryForObject(SQL_SELECT_YEARSCHEDULE_BY_ID,
+                            new Object[] { yearId }, new YearScheduleMapper());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
     public boolean setDayScheduleYearSchedule(DaySchedule dayschedule,
-            YearSchedule yearschedule) {
-        return (jdbcTemplate.update(SQL_INSERT_YEARSCHEDULE_DAYSCHEDULE,
-                dayschedule.getId(), yearschedule.getId()) > 0);
+            YearSchedule yearschedule) throws DAOException {
+        boolean result = false;
+        try {
+            result = (jdbcTemplate.update(SQL_INSERT_YEARSCHEDULE_DAYSCHEDULE,
+                    dayschedule.getId(), yearschedule.getId()) > 0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
+        }
+        return result;
+
     }
 
-    public List<DaySchedule> getDayScheduleYearSchedule(
-            YearSchedule yearschedule)
-            {
-        List<Integer> dayScheduleIds = jdbcTemplate.queryForList(
-                SQL_SELECT_DAYSCHEDULES_BY_YEAR, Integer.class, yearschedule.getId());
+    public List<DaySchedule> getDayScheduleYearSchedule(YearSchedule yearschedule)
+            throws DAOException {
         List<DaySchedule> dayschedules = new ArrayList<>();
-        for (Integer dayId : dayScheduleIds) {
-            dayschedules.add(dayscheduledao.getById(dayId));
+        try {
+            List<Integer> dayScheduleIds = jdbcTemplate.queryForList(
+                    SQL_SELECT_DAYSCHEDULES_BY_YEAR, Integer.class, yearschedule.getId());
+            for (Integer dayId : dayScheduleIds) {
+                dayschedules.add(dayscheduledao.getById(dayId));
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DAOException(e.getMessage(), e);
         }
+
         return dayschedules;
     }
 
