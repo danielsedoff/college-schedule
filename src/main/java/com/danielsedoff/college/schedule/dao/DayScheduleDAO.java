@@ -47,7 +47,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     public boolean update(Integer id, DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_UPDATE_DAYSCHEDULES, daySchedule.getDay(),
+            result = jdbcTemplate.update(SQL_UPDATE_DAYSCHEDULES, daySchedule.getDay().format(formatter),
                     daySchedule.getHasOverlaps(), daySchedule.getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not update", e);
@@ -110,6 +110,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                     SQL_SELECT_LESSONS_BY_DAYSCHEDULE, Integer.class,
                     dayschedule.getId());
             for (Integer lessonId : lessonIds) {
+                if(0 == lessonId) continue;
                 lessons.add(lessondao.getById(lessonId));
             }
         } catch (Exception e) {

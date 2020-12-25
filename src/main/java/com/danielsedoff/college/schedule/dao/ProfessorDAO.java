@@ -14,7 +14,7 @@ public class ProfessorDAO implements DAO<Professor> {
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_PROFESSOR = "SELECT professor_id FROM professors;";
     private static final String SQL_UPDATE_PROFESSORS = "UPDATE professors SET professor_name = ?, professor_ranks = ?, professor_notes = ?, department_id = ? WHERE professor_id = ?;";
-    private static final String SQL_DELETE_FROM_PROFESSORS = "DELETE FROM students WHERE student_id = ?;";
+    private static final String SQL_DELETE_FROM_PROFESSORS = "DELETE FROM professors WHERE professor_id = ?;";
     private static final String SQL_INSERT_INTO_PROFESSORS = "INSERT INTO professors (professor_name, professor_ranks, professor_notes, department_id) VALUES (?, ?, ?,?);";
     private static final String SQL_SELECT_PROFESSOR_BY_ID = "SELECT * FROM professors where professor_id = ?";
 
@@ -76,7 +76,7 @@ public class ProfessorDAO implements DAO<Professor> {
         boolean result = false;
         try {
             result = jdbcTemplate.update(SQL_INSERT_INTO_PROFESSORS, professor.getName(),
-                    professor.getRanksTitles(), professor.getSpecialNotes(),
+                    professor.getRanksTitles().toString(), professor.getSpecialNotes().toString(),
                     professor.getDepartmentId()) > 0;
         } catch (Exception e) {
 

@@ -20,6 +20,7 @@ public class ProfessorMapper implements RowMapper<Professor> {
                 Arrays.asList(resultSet.getString("professor_ranks").split("\n"))));
         professor.setSpecialNotes(new ArrayList<>(
                 Arrays.asList(resultSet.getString("professor_notes").split("\n"))));
+        professor.setDepartmentId(resultSet.getInt("department_id"));
         return professor;
     }
 }

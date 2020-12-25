@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -73,13 +72,14 @@ class YearScheduleDAOTest extends DAOTest {
 
     @Test
     void testSetDayScheduleYearSchedule() throws DAOException {
-        YearSchedule ys = yeardao.getById(1);
+        YearSchedule ys = new YearSchedule();
+        ys.setYear(1999);
+        yeardao.create(ys);
         DaySchedule ds = new DaySchedule();
-        ds.setDay(LocalDateTime.now());
-        ds.setId(2);
+        ds.setId(3);
         yeardao.setDayScheduleYearSchedule(ds, ys);
         List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
-        assertEquals(2, requested.get(0).getId());
+        assertEquals(3, requested.get(0).getId());
     }
 
     @Test

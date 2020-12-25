@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonDAOTest extends DAOTest {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     private LessonDAO lessondao;
@@ -39,11 +42,18 @@ class LessonDAOTest extends DAOTest {
     @Test
     void testUpdate() throws DAOException {
         int id = 1;
+        LocalDateTime now = LocalDateTime.now();
         Lesson lesson = lessondao.getById(id);
-        LocalDateTime today = LocalDateTime.now();
-        lesson.setStartTime(today);
+        lesson.setStartTime(now);
+        lesson.setEndTime(now);
+        lesson.setStartTime(now);
+        Professor prof = new Professor();
+        prof.setName("John Deere");
+        lesson.setProfessor(prof);
         lessondao.update(id, lesson);
-        assertEquals(today, lessondao.getById(id).getStartTime());
+        assertEquals(now.format(formatter),
+                lessondao.getById(id).getStartTime().format(formatter));
+
     }
 
     @Test
@@ -61,9 +71,14 @@ class LessonDAOTest extends DAOTest {
         Lesson lesson = new Lesson();
         LocalDateTime now = LocalDateTime.now();
         lesson.setStartTime(now);
+        lesson.setEndTime(now);
+        Professor prof = new Professor();
+        prof.setName("John Deere");
+        lesson.setProfessor(prof);
         lessondao.create(lesson);
         assertEquals(expectedSize, lessondao.getIdList().size());
-        assertEquals(now, lessondao.getById(5).getStartTime());
+        assertEquals(now.format(formatter),
+                lessondao.getById(5).getStartTime().format(formatter));
     }
 
     @Test
@@ -76,12 +91,12 @@ class LessonDAOTest extends DAOTest {
     void testSetLessonGroup() throws DAOException {
         Lesson lesson = lessondao.getById(3);
         Group group = new Group();
-        String note = "Some New Group";
-        List<String> noteList = new ArrayList<>();
-        noteList.add(note);
-        group.setSpecialNotes(noteList);
+        int originalId = 3;
+        group.setId(originalId);
         lessondao.setLessonGroup(lesson, group);
-        assertEquals(noteList, lessondao.getGroupsByLesson(lesson));
+        List<Group> returnedList = lessondao.getGroupsByLesson(lesson);
+        int lastGroupId = returnedList.get(returnedList.size() - 1).getId();
+        assertEquals(lastGroupId, originalId);
     }
 
     @Test

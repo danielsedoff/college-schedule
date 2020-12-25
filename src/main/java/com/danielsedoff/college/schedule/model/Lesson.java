@@ -3,9 +3,11 @@ package com.danielsedoff.college.schedule.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @ToString
+@EqualsAndHashCode
 public class Lesson {
     private int id;
     private LocalDateTime startTime;

@@ -94,7 +94,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         boolean result = false;
         try {
             result = (jdbcTemplate.update(SQL_INSERT_YEARSCHEDULE_DAYSCHEDULE,
-                    dayschedule.getId(), yearschedule.getId()) > 0);
+                    yearschedule.getId(), dayschedule.getId()) > 0);
         } catch (Exception e) {
             throw new DAOException("Could not set Day Schedule Year Schedule", e);
         }

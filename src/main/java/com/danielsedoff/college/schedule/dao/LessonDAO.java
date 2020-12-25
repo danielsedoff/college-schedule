@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.dao;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import com.danielsedoff.college.schedule.model.Lesson;
 
 @Component
 public class LessonDAO implements DAO<Lesson> {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    
     @Autowired
     private GroupDAO groupdao;
     JdbcTemplate jdbcTemplate;
@@ -40,8 +44,8 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_UPDATE_LESSONS, lesson.getStartTime(),
-                    lesson.getEndTime(), lesson.getProfessor().getId(),
+            result = jdbcTemplate.update(SQL_UPDATE_LESSONS, lesson.getStartTime().format(formatter),
+                    lesson.getEndTime().format(formatter), lesson.getProfessor().getId(),
                     lesson.getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not update", e);
@@ -62,8 +66,8 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime(),
-                    lesson.getEndTime(), lesson.getProfessor().getId()) > 0;
+            result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime().format(formatter),
+                    lesson.getEndTime().format(formatter), lesson.getProfessor().getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not create", e);
         }
