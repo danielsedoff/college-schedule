@@ -16,7 +16,8 @@ import com.danielsedoff.college.schedule.model.Group;
 class GroupDAOTest extends DAOTest {
 
     @Autowired
-    private GroupDAO groupdao;
+    private DAO<Group> groupdao;
+    
     @Autowired
     private SqlScriptRunner ibatisRead;
 

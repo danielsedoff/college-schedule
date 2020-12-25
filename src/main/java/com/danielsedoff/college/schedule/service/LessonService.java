@@ -5,24 +5,22 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class LessonService {
-    private DAO<Lesson> lessondao;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    @Autowired
-    public LessonService(DAO<Professor> profdao, DAO<Lesson> lessondao, DAO<Group> groupdao) {
+    private DAO<Lesson> lessondao;
+    
+    public LessonService(DAO<Lesson> lessondao) {
         this.lessondao = lessondao;
     }
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private static Logger logger = LoggerFactory.getLogger(LessonService.class);
 

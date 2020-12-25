@@ -6,13 +6,11 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.model.DaySchedule;
-import com.danielsedoff.college.schedule.model.Lesson;
 
 @Service
 public class DayScheduleService {
@@ -20,8 +18,7 @@ public class DayScheduleService {
     private DAO<DaySchedule> dayscheduledao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    @Autowired
-    public DayScheduleService(DAO<DaySchedule> dayscheduledao, DAO<Lesson> lessondao) {
+    public DayScheduleService(DAO<DaySchedule> dayscheduledao) {
         this.dayscheduledao = dayscheduledao;
     }
 

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Transactional
-@Component("studentdao")
+@Component
 public class StudentDAO implements DAO<Student> {
     @PersistenceContext
     private EntityManager em;

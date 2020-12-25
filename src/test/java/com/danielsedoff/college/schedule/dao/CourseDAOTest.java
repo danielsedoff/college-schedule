@@ -12,23 +12,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.danielsedoff.college.schedule.config.TestWebConfig;
+import com.danielsedoff.college.schedule.config.TestConfig;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestWebConfig.class })
-@WebAppConfiguration
+@ContextConfiguration(classes = TestConfig.class)
 class CourseDAOTest extends DAOTest {
 
+    @Test
+    public void displayAllBeans() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(TestConfig.class);
+        String[] allBeanNames = applicationContext.getBeanDefinitionNames();
+        for (String beanName : allBeanNames) {
+            System.out.println("bean: " + beanName);
+        }
+    }
+
     @Autowired
-    @Qualifier("coursedao")
-    private CourseDAO coursedao;
+    private DAO<Course> coursedao;
     
     @Autowired
     private SqlScriptRunner ibatisRead;
@@ -82,5 +89,6 @@ class CourseDAOTest extends DAOTest {
         assertEquals(expectedSize, coursedao.getIdList().size());
         assertEquals(newName, coursedao.getById(5).getName());
     }
+    
 
 }

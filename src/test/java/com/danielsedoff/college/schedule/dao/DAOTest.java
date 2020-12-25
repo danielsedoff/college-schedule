@@ -5,10 +5,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.danielsedoff.college.schedule.config.TestWebConfig;
+import com.danielsedoff.college.schedule.config.TestConfig;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestWebConfig.class)
+@ContextConfiguration(classes = { TestConfig.class })
 @WebAppConfiguration
 public abstract class DAOTest {
     final String SQL_FILE_NAME = "create_tables.sql";

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
 @Transactional
-@Component("yeardao")
+@Component
 public class YearScheduleDAO implements DAO<YearSchedule> {
     @PersistenceContext
     private EntityManager em;

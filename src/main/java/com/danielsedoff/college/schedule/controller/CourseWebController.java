@@ -17,7 +17,7 @@ import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.service.CourseService;
 
-@Controller
+@Controller("courseWebController")
 public class CourseWebController {
 
     @Autowired

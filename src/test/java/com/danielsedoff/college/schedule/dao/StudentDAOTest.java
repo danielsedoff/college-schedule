@@ -16,7 +16,7 @@ import com.danielsedoff.college.schedule.model.Student;
 class StudentDAOTest extends DAOTest {
 
     @Autowired
-    private StudentDAO studentdao;
+    private DAO<Student> studentdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
 

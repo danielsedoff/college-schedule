@@ -18,7 +18,7 @@ class YearScheduleServiceTest {
 
     DayScheduleDAO dsdao = Mockito.mock(DayScheduleDAO.class);
     YearScheduleDAO ysdao = Mockito.mock(YearScheduleDAO.class);
-    YearScheduleService yservice = new YearScheduleService(ysdao, dsdao);
+    YearScheduleService yservice = new YearScheduleService(ysdao);
 
     @Test
     void testGetYearScheduleIdList() throws DAOException {

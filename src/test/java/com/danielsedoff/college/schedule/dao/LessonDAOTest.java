@@ -21,7 +21,7 @@ class LessonDAOTest extends DAOTest {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    private LessonDAO lessondao;
+    private DAO<Lesson> lessondao;
     @Autowired
     private SqlScriptRunner ibatisRead;
 

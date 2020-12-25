@@ -15,10 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.config.TestWebConfig;
+import com.danielsedoff.college.schedule.config.TestConfig;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestWebConfig.class })
+@ContextConfiguration(classes = { TestConfig.class })
 @WebAppConfiguration
 class MainPageControllerTest {
 

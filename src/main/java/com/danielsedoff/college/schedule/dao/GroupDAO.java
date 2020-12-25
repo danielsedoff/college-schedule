@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.Group;
 
 @Transactional
-@Component("groupdao")
+@Component
 public class GroupDAO implements DAO<Group> {
 
     private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
@@ -81,7 +81,6 @@ public class GroupDAO implements DAO<Group> {
         boolean result = false;
         try {
             em.persist(group);
-            em.getTransaction().commit();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

@@ -20,7 +20,7 @@ class StudentServiceTest {
     StudentDAO studentdao = Mockito.mock(StudentDAO.class);
     ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
     GroupDAO groupdao = Mockito.mock(GroupDAO.class);
-    StudentService stservice = new StudentService(profdao, studentdao, groupdao);
+    StudentService stservice = new StudentService( studentdao);
 
     @Test
     void testGetStudentIdList() throws DAOException {

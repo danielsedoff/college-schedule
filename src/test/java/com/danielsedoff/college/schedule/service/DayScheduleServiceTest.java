@@ -12,14 +12,12 @@ import org.mockito.Mockito;
 
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
-import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 
 class DayScheduleServiceTest {
 
     private DayScheduleDAO dsdao = Mockito.mock(DayScheduleDAO.class);
-    private LessonDAO lessondao = Mockito.mock(LessonDAO.class);
-    DayScheduleService dsservice = new DayScheduleService(dsdao, lessondao);
+    DayScheduleService dsservice = new DayScheduleService(dsdao);
 
     @Test
     void testGetDayScheduleIdList() throws DAOException {

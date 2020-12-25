@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="static/list.css"
+	media="all" />
+<link rel="stylesheet" type="text/css" href="static/picker.css"
+/>
+	
+	<script src="static/timeformatter.js"></script>
+</head>
+<body>
+	<input type="hidden" id="entityname" value="lesson" />
+	<div id="form_container">
+		<h1>
+			<span>&nbsp;</span>
+		</h1>
+
+		<form action="#" th:object="${lessondto}" id="form1" method="post">
+			<table border="1">
+				<tbody>
+					<tr>
+						<td>
+							<h2></h2>
+							<h2>Edit Lessons</h2>
+							<div id="submitterResult"></div>
+						</td>
+					</tr>
+					<tr>
+
+						<td><input type="radio" id="radioCreate" name="mode"
+							value="create" checked th:field="*{mode}" /> <label
+							for="radioCreate">Create</label> <input type="radio"
+							id="radioDelete" name="mode" value="delete" th:field="*{mode}" />
+							<label for="radioDelete">Delete</label> <input type="radio"
+							id="radioUpdate" name="mode" value="update" th:field="*{mode}" />
+							<label for="radioUpdate">Update</label></td>
+					</tr>
+					<tr>
+						<td><label class="description" for="idinput">Lesson
+								ID </label>
+							<div>
+								<input th:value="${upstreamId}" id="idinput" name="idinput"
+									class="element text medium" type="number" th:field="*{id}"
+									maxlength="255" value="" disabled />
+							</div></td>
+					</tr>
+					<tr>
+						<td><label class="description" for="name">Lesson Start Time
+						</label>
+							<div>
+								<input th:value="${upstreamName}" name="startTime" id="startTime" onclick="pickerRunner('startTime')"
+									class="element  text medium" disabled type="text" th:field="*{startTime}"
+									maxlength="255" value="" />
+							</div></td>
+					</tr>
+                    <tr>
+                        <td><label class="description" for="name">Lesson End Time
+                        </label>
+                            <div>
+                                <input th:value="${upstreamName}" name="endTime" id="endTime" onclick="pickerRunner('endTime')"
+                                    class="element  text medium" disabled type="text" th:field="*{endTime}"
+                                    maxlength="255" value="" />
+                            </div></td>
+                    </tr>
+
+					<tr>
+						<td><label class="description" for="connectedid1">Professor
+								ID </label>
+							<div>
+								<input th:value="${upstreamConnectedId1}" name="professorId"
+									class="element text medium" type="number"
+									th:field="*{professorId}" maxlength="255" value="" />
+							</div></td>
+					</tr>
+                    <tr>
+                        <td><label class="description" for="connectedid1">Group
+                                ID </label>
+                            <div>
+                                <input th:value="${upstreamConnectedId1}" name="groupId"
+                                    class="element text medium" type="number"
+                                    th:field="*{groupId}" maxlength="255" value="" />
+                            </div></td>
+                    </tr>
+                    <tr>
+                        <td class="buttons"><input class="button_text" type="submit"
+                            name="submit" value="Done"></td>
+                    </tr>
+
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<script src="static/radios.js"></script>
+	<script src="static/pickerRunner.js"></script>
+	<script src="static/picker.js"></script>
+</body>
+</html>

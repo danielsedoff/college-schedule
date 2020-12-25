@@ -22,7 +22,7 @@ class LessonServiceTest {
     LessonDAO lessondao = Mockito.mock(LessonDAO.class);
     GroupDAO groupdao = Mockito.mock(GroupDAO.class);
 
-    LessonService lservice = new LessonService(profdao, lessondao, groupdao);
+    LessonService lservice = new LessonService(lessondao);
 
     @Test
     void testGetLessonById() throws DAOException {

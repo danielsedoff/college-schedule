@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.DAO;
@@ -13,14 +12,15 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class ProfessorService {
-    private DAO<Professor> profdao;
-
-    @Autowired
-    public ProfessorService(DAO<Professor> profdao) {
-        this.profdao = profdao;
-    }
 
     private static Logger logger = LoggerFactory.getLogger(ProfessorService.class);
+
+    private DAO<Professor> profdao;
+
+    public ProfessorService(DAO<Professor> profdao) {
+        super();
+        this.profdao = profdao;
+    }
 
     public boolean updateProfessor(int professorId, Professor professor) {
         boolean result = false;

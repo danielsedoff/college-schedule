@@ -2,10 +2,11 @@
 <!DOCTYPE xml>
 
 <configuration scan="true">
+    <property name="MY_HOME" value="c:/javaprojects/schedule-hibernate"/>
 
 	<appender name="daoLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/dao.log</file>
+		<file>${MY_HOME}/logs/dao.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -26,7 +27,7 @@
 
 	<appender name="serviceLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/service.log</file>
+		<file>${MY_HOME}/logs/service.log</file>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -48,7 +49,7 @@
 
 	<appender name="springLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/spring.log</file>
+		<file>${MY_HOME}/logs/spring.log</file>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -70,7 +71,7 @@
 
 	<appender name="serverLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/server.log</file>
+		<file>${MY_HOME}/logs/server.log</file>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

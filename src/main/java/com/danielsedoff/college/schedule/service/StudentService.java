@@ -4,22 +4,19 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.model.Group;
-import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Service
 public class StudentService {
 
-    @Autowired
     private DAO<Student> studentdao;
 
-    public StudentService(DAO<Professor> professordao, DAO<Student> studentdao, DAO<Group> groupdao) {
+    public StudentService(DAO<Student> studentdao) {
+        super();
         this.studentdao = studentdao;
     }
 

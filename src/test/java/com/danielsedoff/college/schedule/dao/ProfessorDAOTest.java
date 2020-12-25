@@ -10,15 +10,13 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
 class ProfessorDAOTest extends DAOTest {
 
     @Autowired
-    @Qualifier("profdao")
-    private ProfessorDAO profdao;
+    private DAO<Professor> profdao;
     
     @Autowired
     private SqlScriptRunner ibatisRead;
