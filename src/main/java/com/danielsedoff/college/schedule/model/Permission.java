@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.security.model;
+package com.danielsedoff.college.schedule.model;
 
 public enum Permission {
     DATA_READ("data:read"), 

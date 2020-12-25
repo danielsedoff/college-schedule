@@ -8,8 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
-import com.danielsedoff.college.schedule.security.model.Status;
-import com.danielsedoff.college.schedule.security.model.User;
+import com.danielsedoff.college.schedule.model.Status;
+import com.danielsedoff.college.schedule.model.User;
 
 @Data
 public class SecurityUser implements UserDetails {

@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.model.User;
 import com.danielsedoff.college.schedule.repositories.UserRepository;
-import com.danielsedoff.college.schedule.security.model.User;
 
 @Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService{

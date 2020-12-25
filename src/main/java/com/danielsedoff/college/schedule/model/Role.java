@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.security.model;
+package com.danielsedoff.college.schedule.model;
 
 import java.util.Set;
 import java.util.stream.Collectors;
