@@ -2,9 +2,11 @@ package com.danielsedoff.college.schedule.model;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @ToString
+@EqualsAndHashCode
 public class Course {
     private int id;
     private String name;

@@ -49,7 +49,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                 new Object[] { dayScheduleId }, new DayScheduleMapper());
     }
 
-    public boolean insertLessonDayschedule(Lesson lesson, DaySchedule dayschedule) {
+    public boolean setLessonDayschedule(Lesson lesson, DaySchedule dayschedule) {
         return (jdbcTemplate.update(SQL_INSERT_LESSON_DAYSCHEDULE, lesson.getId(),
                 dayschedule.getId()) > 0);
     }
