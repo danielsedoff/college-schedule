@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -27,11 +25,11 @@ public class DayScheduleService {
         this.lessondao = lessondao;
     }
 
-    public List<Integer> getDayscheduleIdList() throws DayScheduleDAOException {
+    public List<Integer> getDayscheduleIdList()  {
         return dayscheduledao.getIdList();
     }
 
-    public boolean createDaySchedule(LocalDateTime date) throws DayScheduleDAOException {
+    public boolean createDaySchedule(LocalDateTime date)  {
         boolean hasOverlaps = false;
         DaySchedule ds = new DaySchedule();
         ds.setDay(date);
@@ -40,30 +38,30 @@ public class DayScheduleService {
     }
 
     public boolean updateDaySchedule(int dayschedId, LocalDateTime date,
-            boolean hasOverlaps) throws DayScheduleDAOException {
+            boolean hasOverlaps)  {
         DaySchedule daysched = new DaySchedule();
         daysched.setDay(date);
         daysched.setHasOverlaps(hasOverlaps);
         return dayscheduledao.update(dayschedId, daysched);
     }
 
-    public boolean deleteDayScheduleById(int dayschedId) throws DayScheduleDAOException {
+    public boolean deleteDayScheduleById(int dayschedId)  {
         return dayscheduledao.delete(dayscheduledao.getById(dayschedId));
     }
 
-    public DaySchedule getDayScheduleById(int dayschedId) throws DayScheduleDAOException {
+    public DaySchedule getDayScheduleById(int dayschedId)  {
         return dayscheduledao.getById(dayschedId);
     }
 
     public boolean setLessonDaySchedule(int lessonId, int dayschedId)
-            throws DayScheduleDAOException, LessonDAOException {
+            {
         Lesson lesson = lessondao.getById(lessonId);
         DaySchedule daysched = dayscheduledao.getById(dayschedId);
         return dayscheduledao.setLessonDayschedule(lesson, daysched);
     }
 
     public List<Lesson> getLessonsByDayScheduleById(int dayschedId)
-            throws DayScheduleDAOException, LessonDAOException {
+            {
         DaySchedule daysched = dayscheduledao.getById(dayschedId);
         return dayscheduledao.getLessonsByDayschedule(daysched);
     }

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.danielsedoff.college.schedule.dao.CourseDAO;
-import com.danielsedoff.college.schedule.dao.DAOException.CourseDAOException;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -22,7 +21,7 @@ class CourseServiceTest {
     CourseService cservice = new CourseService(coursedao, profdao);
 
     @Test
-    void testGetCourseIdList() throws CourseDAOException {
+    void testGetCourseIdList()  {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(coursedao.getIdList()).thenReturn(mockList);
@@ -31,7 +30,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void testCreateCourse() throws CourseDAOException {
+    void testCreateCourse()  {
         Course course = new Course();
         course.setName("Wine Studies");
         Mockito.when(coursedao.create(Mockito.any())).thenReturn(true);
@@ -40,7 +39,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void testGetCourseById() throws CourseDAOException {
+    void testGetCourseById()  {
         Course course = new Course();
         course.setName("Wine Studies");
         Mockito.when(coursedao.getById(Mockito.anyInt())).thenReturn(course);
@@ -48,14 +47,14 @@ class CourseServiceTest {
     }
 
     @Test
-    void testDeleteCourseById() throws CourseDAOException {
+    void testDeleteCourseById()  {
         Mockito.when(coursedao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = cservice.deleteCourseById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testUpdateCourse() throws CourseDAOException {
+    void testUpdateCourse()  {
         int courseId = 1;
         Course course = new Course();
         course.setName("Wine Studies");
@@ -65,7 +64,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void testSetCourseProfessors() throws CourseDAOException {
+    void testSetCourseProfessors()  {
         List<Professor> profs = new ArrayList<>();
         int courseId = 1;
         Mockito.when(coursedao.setCourseProfessor(Mockito.any(), Mockito.any())).thenReturn(true);
@@ -73,7 +72,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void testGetProfessorsByCourseById() throws CourseDAOException {
+    void testGetProfessorsByCourseById()  {
         int courseId = 1;
         List<Professor> profs = new ArrayList<>();
         profs.add(new Professor());

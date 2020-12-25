@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.danielsedoff.college.schedule.dao.DAOException.GroupDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.StudentDAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
@@ -23,7 +21,7 @@ class GroupServiceTest {
     GroupService gservice = new GroupService(groupdao, stdao);
 
     @Test
-    void testGetGroupIdList() throws GroupDAOException {
+    void testGetGroupIdList()  {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(groupdao.getIdList()).thenReturn(mockList);
@@ -32,7 +30,7 @@ class GroupServiceTest {
     }
 
     @Test
-    void testCreateGroup() throws GroupDAOException {
+    void testCreateGroup()  {
         Group group = new Group();
         group.setDepartmentId(123);
         Mockito.when(groupdao.create(group)).thenReturn(true);
@@ -41,7 +39,7 @@ class GroupServiceTest {
     }
 
     @Test
-    void testUpdateGroup() throws GroupDAOException {
+    void testUpdateGroup()  {
         int groupId = 1;
         Group group = new Group();
         group.setDepartmentId(123);
@@ -51,14 +49,14 @@ class GroupServiceTest {
     }
 
     @Test
-    void testDeleteGroupById() throws GroupDAOException {
+    void testDeleteGroupById()  {
         Mockito.when(groupdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = gservice.deleteGroupById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testGetGroupById() throws GroupDAOException {
+    void testGetGroupById()  {
         Group group = new Group();
         group.setDepartmentId(123);
         Mockito.when(groupdao.getById(Mockito.anyInt())).thenReturn(group);
@@ -66,7 +64,7 @@ class GroupServiceTest {
     }
 
     @Test
-    void testSetGroupStudent() throws GroupDAOException {
+    void testSetGroupStudent()  {
         List<Student> students = new ArrayList<>();
         Student student = new Student();
         students.add(student);
@@ -77,7 +75,7 @@ class GroupServiceTest {
     }
 
     @Test
-    void testGetStudentsByGroupId() throws GroupDAOException, StudentDAOException {
+    void testGetStudentsByGroupId() {
         List<Student> students = new ArrayList<>();
         Student student = new Student();
         students.add(student);

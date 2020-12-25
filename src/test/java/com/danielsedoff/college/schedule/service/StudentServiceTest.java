@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.danielsedoff.college.schedule.dao.DAOException.ProfessorDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.StudentDAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
@@ -24,7 +22,7 @@ class StudentServiceTest {
     StudentService stservice = new StudentService(professordao, stdao, groupdao);
 
     @Test
-    void testGetStudentIdList() throws StudentDAOException, ProfessorDAOException {
+    void testGetStudentIdList() {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(stdao.getIdList()).thenReturn(mockList);
@@ -33,7 +31,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testCreateStudent() throws StudentDAOException, ProfessorDAOException {
+    void testCreateStudent() {
         Student student = new Student();
         student.setName("Jack");
         Mockito.when(stdao.create(student)).thenReturn(true);
@@ -42,7 +40,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testUpdateStudent() throws StudentDAOException, ProfessorDAOException {
+    void testUpdateStudent() {
         int studId = 1;
         Student student = new Student();
         student.setName("John");
@@ -52,7 +50,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testDeleteStudent() throws StudentDAOException, ProfessorDAOException {
+    void testDeleteStudent() {
         Student student = new Student();
         student.setId(1);
         Mockito.when(stdao.delete(Mockito.any())).thenReturn(true);
@@ -61,7 +59,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testGetStudentById() throws StudentDAOException, ProfessorDAOException {
+    void testGetStudentById() {
         Student student = new Student();
         student.setName("John");
         Mockito.when(stdao.getById((Mockito.anyInt()))).thenReturn(student);

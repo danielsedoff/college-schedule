@@ -13,8 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.dao.DAOException.GroupDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 
@@ -31,7 +29,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() throws LessonDAOException {
+    void testGetIdList()  {
         List<Integer> result = lessondao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -39,7 +37,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() throws LessonDAOException {
+    void testUpdate()  {
         int id = 1;
         Lesson lesson = lessondao.getById(id);
         LocalDateTime today = LocalDateTime.now();
@@ -49,7 +47,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() throws LessonDAOException {
+    void testDelete()  {
         int expectedResult = lessondao.getIdList().size() - 1;
         Lesson lesson = new Lesson();
         lesson.setId(1);
@@ -58,7 +56,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() throws LessonDAOException {
+    void testCreate()  {
         int expectedSize = lessondao.getIdList().size() + 1;
         Lesson lesson = new Lesson();
         LocalDateTime now = LocalDateTime.now();
@@ -69,13 +67,13 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() throws LessonDAOException {
+    void testGetById()  {
         Lesson lesson = lessondao.getById(1);
         assertNotNull(lesson);
     }
 
     @Test
-    void testSetLessonGroup() throws LessonDAOException, GroupDAOException {
+    void testSetLessonGroup() {
         Lesson lesson = lessondao.getById(3);
         Group group = new Group();
         String note = "Some New Group";
@@ -87,7 +85,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetGroupsByLesson() throws LessonDAOException, GroupDAOException {
+    void testGetGroupsByLesson() {
         Lesson lesson = lessondao.getById(3);
         assertNotNull(lessondao.getGroupsByLesson(lesson));
     }

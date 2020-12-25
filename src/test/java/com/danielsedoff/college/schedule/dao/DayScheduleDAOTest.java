@@ -13,8 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
 
@@ -32,7 +30,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() throws DayScheduleDAOException {
+    void testGetIdList()  {
         List<Integer> result = dsdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -40,7 +38,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() throws DayScheduleDAOException {
+    void testUpdate()  {
         int id = 1;
         DaySchedule ds = dsdao.getById(id);
         LocalDateTime today = LocalDateTime.now();
@@ -50,7 +48,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() throws DayScheduleDAOException {
+    void testDelete()  {
         int expectedResult = dsdao.getIdList().size() - 1;
         DaySchedule ds = new DaySchedule();
         ds.setId(1);
@@ -59,7 +57,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() throws DayScheduleDAOException {
+    void testCreate()  {
         int expectedSize = dsdao.getIdList().size() + 1;
         DaySchedule ds = new DaySchedule();
         LocalDateTime now = LocalDateTime.now();
@@ -70,13 +68,13 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() throws DayScheduleDAOException {
+    void testGetById()  {
         DaySchedule ds = dsdao.getById(1);
         assertNotNull(ds);
     }
 
     @Test
-    void testSetLessonDayschedule() throws DayScheduleDAOException, LessonDAOException {
+    void testSetLessonDayschedule() {
         LocalDateTime now = LocalDateTime.now();
         Lesson originalLesson = new Lesson();
         originalLesson.setStartTime(now);
@@ -89,7 +87,7 @@ class DayScheduleDAOTest extends DAOTest {
 
     @Test
     void testGetLessonsByDayschedule()
-            throws DayScheduleDAOException, LessonDAOException {
+            {
         DaySchedule ds = dsdao.getById(3);
         assertNotNull(dsdao.getLessonsByDayschedule(ds));
     }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.dao.DAOException.StudentDAOException;
 import com.danielsedoff.college.schedule.dao.mappers.StudentMapper;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
@@ -23,34 +22,34 @@ public class StudentDAO implements DAO<Student> {
     private static final String SQL_REMOVE_ALL_STUDENTS_FROM_GROUP = "UPDATE students SET group_id = 65535 WHERE group_id = ?;";
 
     @Autowired
-    public StudentDAO(JdbcTemplate jdbcTemplate) throws StudentDAOException {
+    public StudentDAO(JdbcTemplate jdbcTemplate)  {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList() throws StudentDAOException {
+    public List<Integer> getIdList()  {
         return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS, Integer.class);
     }
 
-    public Student getById(Integer studentId) throws StudentDAOException {
+    public Student getById(Integer studentId)  {
         return jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID,
                 new Object[] { studentId }, new StudentMapper());
     }
 
-    public boolean delete(Student student) throws StudentDAOException {
+    public boolean delete(Student student)  {
         return jdbcTemplate.update(SQL_DELETE_FROM_STUDENTS, student.getId()) > 0;
     }
 
-    public boolean update(Integer id, Student student) throws StudentDAOException {
+    public boolean update(Integer id, Student student)  {
         return jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
                 student.getSchoolYear(), student.getName(), student.getId()) > 0;
     }
 
-    public boolean create(Student student) throws StudentDAOException {
+    public boolean create(Student student)  {
         return jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
                 student.getSchoolYear(), student.getName()) > 0;
     }
 
-    public boolean removeAllStudentsFromGroup(Group group) throws StudentDAOException {
+    public boolean removeAllStudentsFromGroup(Group group)  {
         return jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP, group.getId()) > 0;
     }
 }

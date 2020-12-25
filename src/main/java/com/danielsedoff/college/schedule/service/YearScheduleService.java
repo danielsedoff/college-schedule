@@ -1,11 +1,10 @@
 package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.YearScheduleDAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -23,39 +22,39 @@ public class YearScheduleService {
         this.dayscheduledao = dayscheduledao;
     }
 
-    List<Integer> getYearScheduleIdList() throws YearScheduleDAOException {
+    List<Integer> getYearScheduleIdList()  {
         return yearscheduledao.getIdList();
     }
 
-    YearSchedule getYearScheduleById(int yearId) throws YearScheduleDAOException {
+    YearSchedule getYearScheduleById(int yearId)  {
         return yearscheduledao.getById(yearId);
     }
 
-    boolean createYearSchedule(int year) throws YearScheduleDAOException {
+    boolean createYearSchedule(int year)  {
         YearSchedule yearschedule = new YearSchedule();
         yearschedule.setYear(year);
         return yearscheduledao.create(yearschedule);
     }
 
-    boolean deleteYearSchedule(int yearId) throws YearScheduleDAOException {
+    boolean deleteYearSchedule(int yearId)  {
         return yearscheduledao.delete(yearscheduledao.getById(yearId));
     }
 
-    boolean updateYearSchedule(int yearId, int year) throws YearScheduleDAOException {
+    boolean updateYearSchedule(int yearId, int year)  {
         YearSchedule ys = yearscheduledao.getById(yearId);
         ys.setYear(year);
         return yearscheduledao.update(year, ys);
     }
 
     boolean setDayScheduleYearSchedule(int daySchedId, int yearSchedId)
-            throws YearScheduleDAOException, DayScheduleDAOException {
+            {
         YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
         DaySchedule dayschedule = dayscheduledao.getById(daySchedId);
         return yearscheduledao.setDayScheduleYearSchedule(dayschedule, yearschedule);
     }
 
     List<DaySchedule> getDayScheduleByYearSchedule(int yearSchedId)
-            throws YearScheduleDAOException, DayScheduleDAOException {
+            {
         YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
         return yearscheduledao.getDayScheduleYearSchedule(yearschedule);
     }

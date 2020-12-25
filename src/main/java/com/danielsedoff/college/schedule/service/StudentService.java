@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAOException.ProfessorDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.StudentDAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
@@ -25,28 +23,28 @@ public class StudentService {
         this.studentdao = studentdao;
     }
 
-    List<Integer> getStudentIdList() throws ProfessorDAOException {
+    List<Integer> getStudentIdList()  {
         return professordao.getIdList();
     }
 
     boolean createStudent(Student student)
-            throws ProfessorDAOException, StudentDAOException {
+            {
         return studentdao.create(student);
 
     }
 
     boolean updateStudent(int studId, Student student)
-            throws ProfessorDAOException, StudentDAOException {
+            {
         return studentdao.update(studId, student);
     }
 
-    boolean deleteStudent(int studId) throws ProfessorDAOException, StudentDAOException {
+    boolean deleteStudent(int studId) {
         Student st = studentdao.getById(studId);
         return studentdao.delete(st);
     }
 
     Student getStudentById(int studentId)
-            throws ProfessorDAOException, StudentDAOException {
+            {
         return studentdao.getById(studentId);
     }
 

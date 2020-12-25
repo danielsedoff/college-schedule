@@ -1,15 +1,15 @@
 package com.danielsedoff.college.schedule.dao;
 
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
+
+import org.apache.ibatis.jdbc.ScriptRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SqlScriptRunner {

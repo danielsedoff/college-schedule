@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.dao.DAOException.CourseDAOException;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
@@ -29,7 +28,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() throws CourseDAOException {
+    void testGetIdList()  {
         List<Integer> result = coursedao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -37,13 +36,13 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() throws CourseDAOException {
+    void testGetById()  {
         Course result = coursedao.getById(1);
         assertNotNull(result);
     }
 
     @Test
-    void testDelete() throws CourseDAOException {
+    void testDelete()  {
         int expectedResult = coursedao.getIdList().size() - 1;
         Course course = new Course();
         course.setId(1);
@@ -52,7 +51,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() throws CourseDAOException {
+    void testUpdate()  {
         int id = 1;
         Course course = coursedao.getById(id);
         String newDescription = "New Description";
@@ -62,7 +61,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() throws CourseDAOException {
+    void testCreate()  {
         int expectedSize = coursedao.getIdList().size() + 1;
         String newName = "Chemistry";
         Course course = new Course();
@@ -73,7 +72,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testSetProfessorList() throws CourseDAOException {
+    void testSetProfessorList()  {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
         Professor prof = new  Professor();
@@ -86,7 +85,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetProfessorByCourse() throws CourseDAOException {
+    void testGetProfessorByCourse()  {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
         Professor prof = new  Professor();

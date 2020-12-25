@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.dao.DAOException.ProfessorDAOException;
 import com.danielsedoff.college.schedule.model.Professor;
 
 class ProfessorDAOTest extends DAOTest {
@@ -27,7 +26,7 @@ class ProfessorDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() throws ProfessorDAOException {
+    void testGetIdList()  {
         List<Integer> result = profdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -35,7 +34,7 @@ class ProfessorDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() throws ProfessorDAOException {
+    void testUpdate()  {
         int id = 1;
         int deptId = 1337;
         Professor prof = profdao.getById(id);
@@ -45,7 +44,7 @@ class ProfessorDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() throws ProfessorDAOException {
+    void testDelete()  {
         int expectedResult = profdao.getIdList().size() - 1;
         Professor prof = new Professor();
         prof.setId(1);
@@ -54,7 +53,7 @@ class ProfessorDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() throws ProfessorDAOException {
+    void testCreate()  {
         int expectedSize = profdao.getIdList().size() + 1;
         Professor prof = new Professor();
         int deptId = 1337;
@@ -65,7 +64,7 @@ class ProfessorDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() throws ProfessorDAOException {
+    void testGetById()  {
         Professor prof = profdao.getById(1);
         assertNotNull(prof);
     }

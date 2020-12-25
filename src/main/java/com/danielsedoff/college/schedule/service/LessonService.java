@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAOException.GroupDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
@@ -29,34 +27,34 @@ public class LessonService {
     }
 
     List<Group> getGroupsByLessonId(int lessonId)
-            throws LessonDAOException, GroupDAOException {
+            {
         Lesson lesson = lessondao.getById(lessonId);
         return lessondao.getGroupsByLesson(lesson);
     }
 
     boolean setLessonGroup(int lessonId, int groupId)
-            throws LessonDAOException, GroupDAOException {
+            {
         return lessondao.setLessonGroup(lessondao.getById(lessonId),
                 groupdao.getById(groupId));
     }
 
-    Lesson getLessonById(int lessonId) throws LessonDAOException {
+    Lesson getLessonById(int lessonId)  {
         return lessondao.getById(lessonId);
     }
 
-    boolean createLesson(Lesson lesson) throws LessonDAOException {
+    boolean createLesson(Lesson lesson)  {
         return lessondao.create(lesson);
     }
 
-    boolean deleteLessonById(int lessonId) throws LessonDAOException {
+    boolean deleteLessonById(int lessonId)  {
         return lessondao.delete(lessondao.getById(lessonId));
     }
 
-    boolean updateLesson(int lessonId, Lesson lesson) throws LessonDAOException {
+    boolean updateLesson(int lessonId, Lesson lesson)  {
         return lessondao.update(lessonId, lesson);
     }
 
-    List<Integer> getLessonIdList() throws LessonDAOException {
+    List<Integer> getLessonIdList()  {
         return lessondao.getIdList();
     }
 }

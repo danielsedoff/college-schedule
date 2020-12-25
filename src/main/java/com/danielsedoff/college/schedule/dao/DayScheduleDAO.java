@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.dao.mappers.DayScheduleMapper;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
@@ -31,43 +29,43 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     private static final String SQL_SELECT_LESSONS_BY_DAYSCHEDULE = "SELECT lesson_id FROM lesson_dayschedule WHERE dayschedule_id = ?";
 
     @Autowired
-    public DayScheduleDAO(JdbcTemplate jdbcTemplate) throws DayScheduleDAOException {
+    public DayScheduleDAO(JdbcTemplate jdbcTemplate)  {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList() throws DayScheduleDAOException {
+    public List<Integer> getIdList()  {
         return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_DAYSCHEDULES, Integer.class);
     }
 
     public boolean update(Integer id, DaySchedule daySchedule)
-            throws DayScheduleDAOException {
+             {
         return jdbcTemplate.update(SQL_UPDATE_DAYSCHEDULES, daySchedule.getDay(),
                 daySchedule.getHasOverlaps(), daySchedule.getId()) > 0;
     }
 
-    public boolean delete(DaySchedule daySchedule) throws DayScheduleDAOException {
+    public boolean delete(DaySchedule daySchedule)  {
         return jdbcTemplate.update(SQL_DELETE_FROM_DAYSCHEDULES, daySchedule.getId()) > 0;
     }
 
-    public boolean create(DaySchedule daySchedule) throws DayScheduleDAOException {
+    public boolean create(DaySchedule daySchedule)  {
         String dateText = daySchedule.getDay().format(formatter);
         return jdbcTemplate.update(SQL_INSERT_INTO_DAYSCHEDULES, dateText,
                 daySchedule.getHasOverlaps()) > 0;
     }
 
-    public DaySchedule getById(Integer dayScheduleId) throws DayScheduleDAOException {
+    public DaySchedule getById(Integer dayScheduleId)  {
         return jdbcTemplate.queryForObject(SQL_SELECT_DAYSCHEDULE_BY_ID,
                 new Object[] { dayScheduleId }, new DayScheduleMapper());
     }
 
     public boolean setLessonDayschedule(Lesson lesson, DaySchedule dayschedule)
-            throws DayScheduleDAOException {
+             {
         return (jdbcTemplate.update(SQL_INSERT_LESSON_DAYSCHEDULE, lesson.getId(),
                 dayschedule.getId()) > 0);
     }
 
     public List<Lesson> getLessonsByDayschedule(DaySchedule dayschedule)
-            throws DayScheduleDAOException, LessonDAOException {
+            {
         List<Integer> lessonIds = jdbcTemplate.queryForList(
                 SQL_SELECT_LESSONS_BY_DAYSCHEDULE, Integer.class, dayschedule.getId());
         List<Lesson> lessons = new ArrayList<>();

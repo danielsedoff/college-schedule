@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.CourseDAO;
-import com.danielsedoff.college.schedule.dao.DAOException.CourseDAOException;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -20,33 +19,33 @@ public class CourseService {
         this.coursedao = coursedao;
     }
 
-    public List<Integer> getCourseIdList() throws CourseDAOException {
+    public List<Integer> getCourseIdList()  {
         return coursedao.getIdList();
     }
 
-    public boolean createCourse(Course course) throws CourseDAOException {
+    public boolean createCourse(Course course)  {
         return coursedao.create(course);
     }
 
-    public Course getCourseById(int courseId) throws CourseDAOException {
+    public Course getCourseById(int courseId)  {
         return coursedao.getById(courseId);
     }
 
-    public boolean deleteCourseById(int courseId) throws CourseDAOException {
+    public boolean deleteCourseById(int courseId)  {
         return coursedao.delete(coursedao.getById(courseId));
     }
 
-    public boolean updateCourse(int courseId, Course course) throws CourseDAOException {
+    public boolean updateCourse(int courseId, Course course)  {
         return coursedao.update(courseId, course);
     }
 
     public boolean setCourseProfessors(int courseId, List<Professor> profs)
-            throws CourseDAOException {
+             {
         return coursedao.setCourseProfessor(coursedao.getById(courseId), profs);
     }
 
     public List<Professor> getProfessorsByCourseById(int courseId)
-            throws CourseDAOException {
+             {
         Course course = coursedao.getById(courseId);
         return coursedao.getProfessorByCourse(course);
     }

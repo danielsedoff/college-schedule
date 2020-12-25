@@ -12,8 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.dao.DAOException.GroupDAOException;
-import com.danielsedoff.college.schedule.dao.DAOException.StudentDAOException;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
@@ -30,7 +28,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() throws GroupDAOException {
+    void testGetIdList()  {
         List<Integer> result = groupdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -38,13 +36,13 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() throws GroupDAOException {
+    void testGetById()  {
         Group group = groupdao.getById(1);
         assertNotNull(group);
     }
 
     @Test
-    void testUpdate() throws GroupDAOException {
+    void testUpdate()  {
         int id = 1;
         List<String> noteList = new ArrayList<>();
         String note = "Large group";
@@ -58,7 +56,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() throws GroupDAOException {
+    void testDelete()  {
         int expectedResult = groupdao.getIdList().size() - 1;
         Group group = new Group();
         group.setId(1);
@@ -67,7 +65,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() throws GroupDAOException {
+    void testCreate()  {
         int expectedSize = groupdao.getIdList().size() + 1;
         Group group = new Group();
         group.setDepartmentId(65535);
@@ -80,7 +78,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testSetGroupStudent() throws GroupDAOException, StudentDAOException {
+    void testSetGroupStudent() {
         Group group = groupdao.getById(1);
         List<Student> students = new ArrayList<>();
         Student student = new Student();
@@ -93,7 +91,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetStudentsByGroup() throws GroupDAOException, StudentDAOException {
+    void testGetStudentsByGroup() {
         Group group = groupdao.getById(3);
         assertNotNull(groupdao.getStudentsByGroup(group));
     }
