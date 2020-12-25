@@ -13,7 +13,7 @@ public class Student extends Person {
     @Column(name = "student_year")
     private int schoolYear;
 
-    @ManyToOne // (cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 

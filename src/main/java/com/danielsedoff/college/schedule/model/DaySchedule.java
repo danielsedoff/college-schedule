@@ -3,7 +3,6 @@ package com.danielsedoff.college.schedule.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +35,7 @@ public class DaySchedule {
     @OneToMany(mappedBy = "dayschedule") //, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
     
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "yearschedule_id")
     private YearSchedule yearschedule;
     

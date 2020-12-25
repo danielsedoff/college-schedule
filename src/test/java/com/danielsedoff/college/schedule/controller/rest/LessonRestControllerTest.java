@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -35,6 +36,7 @@ class LessonRestControllerTest extends ControllerTest {
     }
 
     @Test
+    @Order(2)
     void restGetGroupsShouldReturnThis() throws Exception {
         mockMvc.perform(get("/lessons")).andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
@@ -52,6 +54,7 @@ class LessonRestControllerTest extends ControllerTest {
     }
 
     @Test
+    @Order(1)
     void restPostGroupShouldReturnThis() throws Exception {
         mockMvc.perform(post("/lessons").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }

@@ -3,7 +3,6 @@ package com.danielsedoff.college.schedule.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,11 +28,11 @@ public class Professor extends Person {
         this.course = course;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "professor") //, cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "professor")
     private List<Lesson> lessons = new ArrayList<Lesson>();
 
     public Professor() {

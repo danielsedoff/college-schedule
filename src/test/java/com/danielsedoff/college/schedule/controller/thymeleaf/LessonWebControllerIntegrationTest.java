@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class StudentWebControllerTest {
+class LessonWebControllerIntegrationTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -40,42 +40,46 @@ class StudentWebControllerTest {
         ServletContext servletContext = wac.getServletContext();
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("studentWebController"));
+        assertNotNull(wac.getBean("lessonWebController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/studentList")).andDo(print()).andExpect(view().name("studentList"));
+        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/studentList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/lessonList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
-    void getStudentListShouldReturnStudentListTemplate() throws Exception {
-        mockMvc.perform(get("/studentList")).andDo(print()).andExpect(view().name("studentList"));
+    void getLessonListShouldReturnLessonListTemplate() throws Exception {
+        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
     }
 
     @Test
-    void getStudentFormShouldReturnStudentFormTemplate() throws Exception {
-        mockMvc.perform(get("/studentForm").param("id", "-1")).andDo(print()).andExpect(view().name("studentForm"));
+    void getLessonFormShouldReturnLessonFormTemplate() throws Exception {
+        mockMvc.perform(get("/lessonForm").param("id", "-1")).andDo(print()).andExpect(view().name("lessonForm"));
     }
 
     @Test
-    void postDeleteStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteStudent")).andDo(print()).andExpect(view().name("resultPage"));
+    void postDeleteLessonShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/deleteLesson")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postCreateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createStudent")).andExpect(status().isOk());
+    void postCreateLessonShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/createLesson").param("endTime", "1999-01-01 14:14")
+                .param("startTime", "1999-01-01 13:13").param("groupId", "1").param("professorId", "1")).andDo(print())
+                .andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postUpdateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateStudent")).andExpect(status().isOk());
+    void postUpdateLessonShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/updateLesson").param("id", "3").param("endTime", "1999-01-01 14:14")
+                .param("startTime", "1999-01-01 13:13").param("groupId", "1").param("professorId", "1")).andDo(print())
+                .andExpect(view().name("resultPage"));
     }
 
 }

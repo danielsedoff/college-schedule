@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,15 +30,15 @@ public class Lesson {
     @Column(name = "end_time")
     private String endTime;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "dayschedule_id")
     private DaySchedule dayschedule;
 

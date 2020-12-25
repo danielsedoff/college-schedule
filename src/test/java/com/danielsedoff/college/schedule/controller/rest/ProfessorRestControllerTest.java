@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,11 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.controller.ControllerTest;
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class ProfessorRestControllerTest extends ControllerTest {
+class ProfessorRestControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -35,6 +34,7 @@ class ProfessorRestControllerTest extends ControllerTest {
     }
 
     @Test
+    @Order(2)
     void restGetGroupsShouldReturnThis() throws Exception {
         mockMvc.perform(get("/professors")).andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
@@ -52,6 +52,7 @@ class ProfessorRestControllerTest extends ControllerTest {
     }
 
     @Test
+    @Order(1)
     void restPostGroupShouldReturnThis() throws Exception {
         mockMvc.perform(post("/professors").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }

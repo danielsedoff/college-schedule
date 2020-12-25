@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.integration.controller.thymeleaf;
+package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;

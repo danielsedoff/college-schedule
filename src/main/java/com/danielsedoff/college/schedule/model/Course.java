@@ -31,7 +31,7 @@ public class Course {
     @Column(name = "course_description")
     private String courseDescription;
 
-    @OneToMany(mappedBy = "course") //, cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "course")
     private List<Professor> professors = new ArrayList<Professor>();
 
     public Course() {

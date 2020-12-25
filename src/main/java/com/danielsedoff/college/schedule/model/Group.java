@@ -26,7 +26,7 @@ public class Group {
     @Column(name = "group_note")
     private String specialNotes;
 
-    @OneToMany(mappedBy = "group") //, cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "group")
     private List<Student> students = new ArrayList<Student>();
 
     public Group() {
