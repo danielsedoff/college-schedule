@@ -8,23 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.GroupRepository;
 import com.danielsedoff.college.schedule.model.Group;
-import com.danielsedoff.college.schedule.repositories.GroupRepository;
 
 @Service
 public class GroupService {
 
     @Autowired
-    private GroupRepository groupRepo;
+    private GroupRepository groupdao;
 
     private static Logger logger = LoggerFactory.getLogger(GroupService.class);
 
     public boolean createGroup(Group group) {
-        return groupRepo.save(group) != null;
+        return groupdao.save(group) != null;
     }
 
     public Group getGroupById(int groupId) {
-        Optional<Group> result = groupRepo.findById(groupId);
+        Optional<Group> result = groupdao.findById(groupId);
         if (null == result) {
             return null;
         }
@@ -33,7 +33,7 @@ public class GroupService {
 
     public boolean deleteGroupById(int groupId) {
         try {
-            groupRepo.deleteById(groupId);
+            groupdao.deleteById(groupId);
         } catch (Exception e) {
             logger.error("Could not delete Group by id: {}", groupId);
             return false;
@@ -43,10 +43,10 @@ public class GroupService {
 
     public boolean updateGroup(int groupId, Group group) {
         try {
-            Group managedGroup = groupRepo.findById(groupId).get();
+            Group managedGroup = groupdao.findById(groupId).get();
             managedGroup.setStudents(group.getStudents());
             managedGroup.setSpecialNotes(group.getSpecialNotes());
-            groupRepo.save(managedGroup);
+            groupdao.save(managedGroup);
         } catch (Exception e) {
             logger.error("Could not update Group, id: {}", groupId);
             return false;
@@ -56,7 +56,7 @@ public class GroupService {
 
     public List<Group> getGroupList() {
         try {
-            return (List<Group>) groupRepo.findAll();
+            return (List<Group>) groupdao.findAll();
         } catch (Exception e) {
             logger.error("Could not get a Group List", e);
         }

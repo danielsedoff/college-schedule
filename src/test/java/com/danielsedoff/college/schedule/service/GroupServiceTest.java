@@ -10,12 +10,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.danielsedoff.college.schedule.dao.GroupRepository;
 import com.danielsedoff.college.schedule.model.Group;
-import com.danielsedoff.college.schedule.repositories.GroupRepository;
 
 @SpringBootTest
 class GroupServiceTest extends AbstractServiceTest {
-    GroupRepository groupRepo = Mockito.mock(GroupRepository.class);
+    GroupRepository groupdao = Mockito.mock(GroupRepository.class);
 
     @Autowired
     GroupService gservice = new GroupService();
@@ -24,7 +24,7 @@ class GroupServiceTest extends AbstractServiceTest {
     void testCreateGroup() throws Exception {
         Group group = new Group();
         group.setSpecialNotes("Any Group");
-        Mockito.when(groupRepo.save(Mockito.any())).thenReturn(true);
+        Mockito.when(groupdao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = gservice.createGroup(group);
         assertTrue(successfulCreation);
     }
@@ -40,7 +40,7 @@ class GroupServiceTest extends AbstractServiceTest {
 
     @Test
     void testDeleteGroupById() throws Exception {
-        groupRepo.delete(Mockito.any());
+        groupdao.delete(Mockito.any());
         boolean successfulDeletion = gservice.deleteGroupById(1);
         assertTrue(successfulDeletion);
     }
@@ -48,7 +48,7 @@ class GroupServiceTest extends AbstractServiceTest {
     @Test
     void testGetGroupById() throws Exception {
         Group group = new Group();
-        Mockito.when(groupRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(group));
+        Mockito.when(groupdao.findById(Mockito.anyInt())).thenReturn(Optional.of(group));
         assertNotNull(gservice.getGroupById(1));
     }
 

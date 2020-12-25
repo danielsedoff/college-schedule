@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.repositories;
+package com.danielsedoff.college.schedule.dao;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

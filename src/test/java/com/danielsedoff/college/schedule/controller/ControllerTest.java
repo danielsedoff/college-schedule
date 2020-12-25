@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.danielsedoff.college.schedule.repositories.SqlScriptRunner;
+import com.danielsedoff.college.schedule.dao.SqlScriptRunner;
 
 public abstract class ControllerTest {
     public static final String SQL_FILE_NAME = "create_tables.sql";

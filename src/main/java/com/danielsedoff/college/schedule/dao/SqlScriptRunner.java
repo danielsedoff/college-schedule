@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.repositories;
+package com.danielsedoff.college.schedule.dao;
 
 import java.io.File;
 import java.io.FileReader;

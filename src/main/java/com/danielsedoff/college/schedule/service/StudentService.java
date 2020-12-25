@@ -9,23 +9,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.StudentRepository;
 import com.danielsedoff.college.schedule.model.Student;
-import com.danielsedoff.college.schedule.repositories.StudentRepository;
 
 @Service
 public class StudentService {
 
     @Autowired
-    private StudentRepository studentRepo;
+    private StudentRepository studentdao;
 
     private static Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public boolean createStudent(Student student) {
-        return studentRepo.save(student) != null;
+        return studentdao.save(student) != null;
     }
 
     public Student getStudentById(int studentId) {
-        Optional<Student> result = studentRepo.findById(studentId);
+        Optional<Student> result = studentdao.findById(studentId);
         if (null == result) {
             return null;
         }
@@ -34,7 +34,7 @@ public class StudentService {
 
     public boolean deleteStudentById(int studentId) {
         try {
-            studentRepo.deleteById(studentId);
+            studentdao.deleteById(studentId);
         } catch (Exception e) {
             logger.error("Could not delete Student by id: {}", studentId);
             return false;
@@ -44,11 +44,11 @@ public class StudentService {
 
     public boolean updateStudent(int studentId, Student student) {
         try {
-            Student managedStudent = studentRepo.findById(studentId).get();
+            Student managedStudent = studentdao.findById(studentId).get();
             managedStudent.setGroup(student.getGroup());
             managedStudent.setName(student.getName());
             managedStudent.setSchoolYear(student.getSchoolYear());
-            studentRepo.save(managedStudent);
+            studentdao.save(managedStudent);
         } catch (Exception e) {
             logger.error("Could not update Student, id: {}", studentId);
             return false;
@@ -59,7 +59,7 @@ public class StudentService {
     public List<Student> getStudentList() {
         try {
             List<Student> students = new ArrayList<>();
-            Iterable<Student> allStudents = studentRepo.findAll();
+            Iterable<Student> allStudents = studentdao.findAll();
             allStudents.forEach(stud -> {
                 students.add(stud);
             });

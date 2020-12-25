@@ -10,13 +10,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.danielsedoff.college.schedule.dao.CourseRepository;
 import com.danielsedoff.college.schedule.model.Course;
-import com.danielsedoff.college.schedule.repositories.CourseRepository;
 
 @SpringBootTest
 class CourseServiceTest extends AbstractServiceTest {
 
-    CourseRepository courseRepo = Mockito.mock(CourseRepository.class);
+    CourseRepository coursedao = Mockito.mock(CourseRepository.class);
 
     @Autowired
     CourseService cservice = new CourseService();
@@ -25,7 +25,7 @@ class CourseServiceTest extends AbstractServiceTest {
     void testCreateCourse() throws Exception {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(courseRepo.save(Mockito.any())).thenReturn(true);
+        Mockito.when(coursedao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = cservice.createCourse(course);
         assertTrue(successfulCreation);
     }
@@ -34,13 +34,13 @@ class CourseServiceTest extends AbstractServiceTest {
     void testGetCourseById() throws Exception {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(courseRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(course));
+        Mockito.when(coursedao.findById(Mockito.anyInt())).thenReturn(Optional.of(course));
         assertNotNull(cservice.getCourseById(1));
     }
 
     @Test
     void testDeleteCourseById() throws Exception {
-        courseRepo.delete(Mockito.any());
+        coursedao.delete(Mockito.any());
         boolean successfulDeletion = cservice.deleteCourseById(1);
         assertTrue(successfulDeletion);
     }
