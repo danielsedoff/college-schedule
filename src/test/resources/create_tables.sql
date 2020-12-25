@@ -80,7 +80,7 @@ CREATE TABLE group_student
     group_id INTEGER,
     student_id INTEGER,
     FOREIGN KEY(group_id) REFERENCES groupz(group_id),
-    FOREIGN KEY(student_id) REFERENCES student(student_id)
+    FOREIGN KEY(student_id) REFERENCES students(student_id)
 );
 
 CREATE TABLE lesson_group
@@ -103,7 +103,7 @@ CREATE TABLE yearschedule_dayschedule
 (
     year INTEGER,
     dayschedule_id INTEGER,
-    FOREIGN KEY(year) REFERENCES yearschedule(year),
+    FOREIGN KEY(year) REFERENCES yearschedules(year),
     FOREIGN KEY(dayschedule_id) REFERENCES dayschedules(dayschedule_id)
 );
 

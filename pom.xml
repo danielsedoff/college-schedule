@@ -29,9 +29,17 @@
         <mockito.version>1.10.19</mockito.version>
         <exec.maven.version>1.2.1</exec.maven.version>
         <lombok.version>1.18.12</lombok.version>
+        <spring.boot.starter.parent.version>2.3.0.RELEASE</spring.boot.starter.parent.version>
     </properties>
 
     <dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-parent</artifactId>
+		    <version>${spring.boot.starter.parent.version}</version>
+		    <type>pom</type>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 		<dependency>
 		    <groupId>org.springframework</groupId>

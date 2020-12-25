@@ -1,24 +1,44 @@
 package com.danielsedoff.college.schedule.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 
-@Component
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = AppConfig.class)
+@Service
 class LessonDAOTest {
 
-    private JdbcTemplate jdbctemplate = new JdbcTemplate();
-    private LessonDAO lessondao = new LessonDAO(this.jdbctemplate);
-    private GroupDAO groupdao = new GroupDAO(this.jdbctemplate);
+    final String SQL_FILE_NAME = "create_tables.sql";
+
+    @Autowired
+    private LessonDAO lessondao;
+    @Autowired
+    private GroupDAO groupdao;
+    @Autowired
+    private SqlScriptRunner ibatisRead;
+
+    @BeforeEach
+    final void readSQLfile() throws IOException, SQLException {
+        ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
+    }
 
     @Test
     void testGetIdList() {
