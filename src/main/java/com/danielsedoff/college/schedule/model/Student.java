@@ -5,7 +5,9 @@ import lombok.ToString;
 @ToString
 public class Student extends Person {
     private int schoolYear;
-    
+
+    private int groupId;
+
     public int getSchoolYear() {
         return schoolYear;
     }
@@ -14,13 +16,12 @@ public class Student extends Person {
         this.schoolYear = schoolYear;
     }
 
-    public Group getGroup() {
-        return group;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
-    private Group group;
 }

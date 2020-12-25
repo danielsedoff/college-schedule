@@ -26,8 +26,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
-            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_PROFESSOR,
-                    Integer.class);
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_PROFESSOR, Integer.class);
         } catch (Exception e) {
 
             throw new DAOException("Could not get Id List", e);
@@ -50,8 +49,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean delete(Professor professor) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_DELETE_FROM_PROFESSORS,
-                    professor.getId()) > 0;
+            result = jdbcTemplate.update(SQL_DELETE_FROM_PROFESSORS, professor.getId()) > 0;
         } catch (Exception e) {
 
             throw new DAOException("Could not delete", e);

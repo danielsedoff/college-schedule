@@ -18,13 +18,10 @@ public class StudentService {
 
     @Autowired
     private StudentDAO studentdao;
-    @Autowired
-    private ProfessorDAO professordao;
 
     @Autowired
     public StudentService(ProfessorDAO professordao, StudentDAO studentdao,
             GroupDAO groupdao) {
-        this.professordao = professordao;
         this.studentdao = studentdao;
     }
 
@@ -33,7 +30,7 @@ public class StudentService {
     public List<Integer> getStudentIdList() {
         List<Integer> result = null;
         try {
-            result = professordao.getIdList();
+            result = studentdao.getIdList();
         } catch (DAOException e) {
             logger.error("Could not get a Student Id List", e);
         }

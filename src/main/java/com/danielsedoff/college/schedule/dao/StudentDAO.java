@@ -29,8 +29,7 @@ public class StudentDAO implements DAO<Student> {
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
-            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS,
-                    Integer.class);
+            result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS, Integer.class);
         } catch (Exception e) {
             throw new DAOException("Could not get Id List", e);
         }
@@ -63,7 +62,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
+            result = jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroupId(),
                     student.getSchoolYear(), student.getName(), student.getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not update", e);
@@ -74,7 +73,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean create(Student student) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
+            result = jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroupId(),
                     student.getSchoolYear(), student.getName()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not create", e);
@@ -85,8 +84,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean removeAllStudentsFromGroup(Group group) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP,
-                    group.getId()) > 0;
+            result = jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP, group.getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not remove All Students From Group", e);
         }

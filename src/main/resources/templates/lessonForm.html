@@ -5,6 +5,9 @@
 <title></title>
 <link rel="stylesheet" type="text/css" href="static/list.css"
 	media="all" />
+<link rel="stylesheet" type="text/css" href="static/picker.css"
+/>
+	
 	<script src="static/timeformatter.js"></script>
 </head>
 <body>
@@ -47,10 +50,7 @@
 						<td><label class="description" for="name">Lesson Start Time
 						</label>
 							<div>
-							    <input type="text" id="startDateRaw" onchange="fillStartDate()">
-                                <input type="text" id="startTimeRaw" onchange="fillStartDate()">
-                                
-								<input th:value="${upstreamName}" name="startTime" id="startTime"
+								<input th:value="${upstreamName}" name="startTime" id="startTime" onclick="pickerRunner('startTime')"
 									class="element  text medium" disabled type="text" th:field="*{startTime}"
 									maxlength="255" value="" />
 							</div></td>
@@ -59,10 +59,7 @@
                         <td><label class="description" for="name">Lesson End Time
                         </label>
                             <div>
-                                <input type="text" id="endDateRaw" onchange="fillEndDate()">
-                                <input type="text" id="endTimeRaw" onchange="fillEndDate()">
-                                
-                                <input th:value="${upstreamName}" name="endTime" id="endTime"
+                                <input th:value="${upstreamName}" name="endTime" id="endTime" onclick="pickerRunner('endTime')"
                                     class="element  text medium" disabled type="text" th:field="*{endTime}"
                                     maxlength="255" value="" />
                             </div></td>
@@ -96,5 +93,7 @@
 		</form>
 	</div>
 	<script src="static/radios.js"></script>
+	<script src="static/pickerRunner.js"></script>
+	<script src="static/picker.js"></script>
 </body>
 </html>

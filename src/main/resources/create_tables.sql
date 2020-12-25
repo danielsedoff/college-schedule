@@ -113,15 +113,15 @@ INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Bio'
 INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Eng', 'English', 2);
 INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Hist', 'History', 2);
 
-INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-01-01 00:01', '1970-01-01 01:01', 1, 2);
-INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-02-01 00:01', '1970-02-01 01:01', 2, 2);
-INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-03-01 00:01', '1970-03-01 01:01', 3, 2);
-INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-04-01 00:01', '1970-04-01 01:01', 4, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('2019-01-01 00:01', '2019-01-01 01:01', 1, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('2019-02-01 00:01', '2019-02-01 01:01', 2, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('2019-03-01 00:01', '2019-03-01 01:01', 3, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('2019-04-01 00:01', '2019-04-01 01:01', 4, 2);
 
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-01-01 00:01', FALSE);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-02-01 00:01', TRUE);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-03-01 00:01', FALSE);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-04-01 00:01', TRUE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-01-01 00:01', FALSE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-02-01 00:01', TRUE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-03-01 00:01', FALSE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-04-01 00:01', TRUE);
 
 INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
     values ('John Lennon', 'Most Excellent Order of the British Empire ', 'Husband of Yoko Ono', 1);
@@ -137,7 +137,7 @@ INSERT INTO students(group_id, student_year, student_name) VALUES (2, 1, 'Jimmy 
 INSERT INTO students(group_id, student_year, student_name) VALUES (1, 1, 'Goodluck Jonathan');
 INSERT INTO students(group_id, student_year, student_name) VALUES (1, 1, 'Buka S. Dimka');
 
-INSERT INTO yearschedules(year) VALUES (1970);
+INSERT INTO yearschedules(year) VALUES (2019);
 INSERT INTO yearschedules(year) VALUES (1971);
 INSERT INTO yearschedules(year) VALUES (1972);
 INSERT INTO yearschedules(year) VALUES (1973);

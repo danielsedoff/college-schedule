@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -60,12 +59,8 @@ class ProfessorDAOTest extends DAOTest {
         int deptId = 1337;
         prof.setDepartmentId(deptId);
         prof.setName("Pit Bull");
-        List<String> specialNotes = new ArrayList<String>();
-        specialNotes.add("Note 1");
-        List<String> ranksTitles = new ArrayList<String>();
-        ranksTitles.add("Rank 1");
-        prof.setRanksTitles(ranksTitles);
-        prof.setSpecialNotes(specialNotes);
+        prof.setRanksTitles("The Most Aggressive One");
+        prof.setSpecialNotes("Students Beware");
         profdao.create(prof);
         assertEquals(expectedSize, profdao.getIdList().size());
         assertEquals(deptId, profdao.getById(expectedSize).getDepartmentId());

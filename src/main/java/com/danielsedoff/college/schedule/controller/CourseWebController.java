@@ -36,7 +36,7 @@ public class CourseWebController {
         return "courseList";
     }
 
-    @RequestMapping(value = "/courseForm", params = { "id" }, method = RequestMethod.GET)
+    @GetMapping(value = "/courseForm", params = { "id" })
     public String gedItParam(@RequestParam("id") int id,
             @ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         if (id == -1) {
