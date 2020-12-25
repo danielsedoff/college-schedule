@@ -1,0 +1,37 @@
+package com.danielsedoff.college.schedule.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.danielsedoff.college.schedule.dao.ProfessorDAO;
+import com.danielsedoff.college.schedule.service.ProfessorService;
+
+@Controller
+@ResponseBody
+public class ProfessorListController {
+
+    @Autowired
+    private ProfessorDAO professordao;
+
+    @GetMapping("/professors")
+    public String example() {
+        ProfessorService ps = new ProfessorService(professordao);
+        List<Integer> ids = ps.getProfessorIdList();
+        StringBuilder result = new StringBuilder();
+        result.append("<!DOCTYPE HTML><HTML><BODY><DIV STYLE=\"font-size:24px;\">");
+        result.append("<A HREF=\"index.html\">Back to the index page</A><UL>");
+        for (Integer id : ids) {
+            result.append("<LI>Professor ID ");
+            result.append(id);
+            result.append(": ");
+            result.append(ps.getProfessorById(id).getName());
+            result.append("</LI>");
+        }
+        result.append("</UL></DIV></BODY></HTML>");
+        return result.toString();
+    }
+}
