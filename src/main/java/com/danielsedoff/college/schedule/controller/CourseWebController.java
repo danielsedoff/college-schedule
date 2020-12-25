@@ -3,11 +3,13 @@ package com.danielsedoff.college.schedule.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,9 @@ public class CourseWebController {
     @Autowired
     private CourseService cs;
 
+    @Autowired
+    private CourseDTO coursedto;
+    
     @GetMapping("/courseList")
     public String getCourses(Model model) {
         List<Integer> ids = cs.getCourseIdList();
@@ -45,23 +50,31 @@ public class CourseWebController {
         }
 
         Course course = cs.getCourseById(id);
-        model.addAttribute("upstreamId", id);
-        model.addAttribute("upstreamName", course.getName());
-        model.addAttribute("upstreamDescription", course.getCourseDescription());
+        model.addAttribute("id", id);
+        model.addAttribute("name", course.getName());
+        model.addAttribute("description", course.getCourseDescription());
         List<Professor> profs = course.getProfessors();
         if (null != profs) {
             int profId = profs.get(0).getId();
-            model.addAttribute("upstreamConnectedId1", profId);
+            model.addAttribute("connectedId1", profId);
         } else {
-            model.addAttribute("upstreamConnectedId1", 0);
+            model.addAttribute("connectedId1", "");
         }
         model.addAttribute("testvalue", "passed");
         return "courseForm";
     }
 
     @PostMapping("/courseForm")
-    public String editCourses(@ModelAttribute("courseDTO") CourseDTO coursedto, Model model) {
+    public String editCourses(HttpServletRequest request, HttpServletResponse response,
+            Model model) {
         
+        /* DEBUG */
+        System.out.println(coursedto.getId());
+        System.out.println(coursedto.getName());
+        System.out.println(coursedto.getDescription());
+        /* DEBUG */
+        
+        model.addAttribute("course", coursedto);
         if (null != coursedto.getMode() && coursedto.getMode().equals("delete")) {
             cs.deleteCourseById(coursedto.getId());
             model.addAttribute("result", "Your DELETE request has been accepted by the server.");
