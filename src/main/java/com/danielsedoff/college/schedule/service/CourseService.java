@@ -40,7 +40,7 @@ public class CourseService {
     }
 
     public boolean setCourseProfessors(int courseId, List<Professor> profs) {
-        return coursedao.setProfessorList(coursedao.getById(courseId), profs);
+        return coursedao.setCourseProfessor(coursedao.getById(courseId), profs);
     }
 
     public List<Professor> getProfessorsByCourseById(int courseId) {

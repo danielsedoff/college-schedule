@@ -11,7 +11,7 @@ public class YearScheduleMapper implements RowMapper<YearSchedule> {
 
     public YearSchedule mapRow(ResultSet resultSet, int i) throws SQLException {
         YearSchedule yearSchedule = new YearSchedule();
-
+        yearSchedule.setId(resultSet.getInt("yearschedule_id"));
         yearSchedule.setYear(resultSet.getInt("year"));
         yearSchedule.setLearningDays(null);
         // TODO: Implement YearSchedule-DaySchedule relation

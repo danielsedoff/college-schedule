@@ -9,18 +9,22 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
+import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
 class YearScheduleServiceTest {
 
-    YearScheduleService yservice = Mockito.mock(YearScheduleService.class);
+    DayScheduleDAO dsdao = Mockito.mock(DayScheduleDAO.class);
+    YearScheduleDAO ysdao = Mockito.mock(YearScheduleDAO.class);
+    YearScheduleService yservice =  new YearScheduleService(ysdao, dsdao);
 
     @Test
     void testGetYearScheduleIdList() {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
-        Mockito.when(yservice.getYearScheduleIdList()).thenReturn(mockList);
+        Mockito.when(ysdao.getIdList()).thenReturn(mockList);
         List<Integer> idList = yservice.getYearScheduleIdList();
         assertNotNull(idList);
     }
@@ -29,34 +33,35 @@ class YearScheduleServiceTest {
     void testGetYearScheduleById() {
         YearSchedule ys = new YearSchedule();
         ys.setYear(1234);
-        Mockito.when(yservice.getYearScheduleById(Mockito.anyInt())).thenReturn(ys);
+        Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(ys);
         assertNotNull(yservice.getYearScheduleById(1));
     }
 
     @Test
     void testCreateYearSchedule() {
-        Mockito.when(yservice.createYearSchedule(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(ysdao.create(Mockito.any())).thenReturn(true);
         boolean successfulCreation = yservice.createYearSchedule(1861);
         assertTrue(successfulCreation);
     }
 
     @Test
     void testDeleteYearSchedule() {
-        Mockito.when(yservice.deleteYearSchedule(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(ysdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = yservice.deleteYearSchedule(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
     void testUpdateYearSchedule() {
-        Mockito.when(yservice.updateYearSchedule(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
+        Mockito.when(ysdao.update(Mockito.any(), Mockito.any())).thenReturn(true);
+        Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(new YearSchedule());
         boolean successfulUpdate = yservice.updateYearSchedule(1, 1234);
         assertTrue(successfulUpdate);
     }
 
     @Test
     void testSetDayScheduleYearSchedule() {
-        Mockito.when(yservice.setDayScheduleYearSchedule(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
+        Mockito.when(ysdao.setDayScheduleYearSchedule(Mockito.any(), Mockito.any())).thenReturn(true);
         boolean successfulSetDY = yservice.setDayScheduleYearSchedule(2, 2);
         assertTrue(successfulSetDY);
     }
@@ -66,7 +71,7 @@ class YearScheduleServiceTest {
         List<DaySchedule> mockList = new ArrayList<DaySchedule>();
         DaySchedule ds = new DaySchedule();
         mockList.add(ds);
-        Mockito.when(yservice.getDayScheduleByYearSchedule(Mockito.anyInt())).thenReturn(mockList);
+        Mockito.when(ysdao.getDayScheduleYearSchedule(Mockito.any())).thenReturn(mockList);
         List<DaySchedule> dayschedules = yservice.getDayScheduleByYearSchedule(1);
         assertNotNull(dayschedules);
     }

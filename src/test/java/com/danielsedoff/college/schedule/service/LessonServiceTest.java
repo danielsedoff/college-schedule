@@ -9,26 +9,34 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.GroupDAO;
+import com.danielsedoff.college.schedule.dao.LessonDAO;
+import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonServiceTest {
 
-    LessonService lservice = Mockito.mock(LessonService.class);
+    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
+    LessonDAO lessondao = Mockito.mock(LessonDAO.class);
+    GroupDAO groupdao = Mockito.mock(GroupDAO.class);
+
+    LessonService lservice = new LessonService(profdao, lessondao, groupdao);
 
     @Test
     void testGetGroupsByLessonId() {
-        
+
         List<Group> groups = lservice.getGroupsByLessonId(1);
         groups.add(new Group());
-        Mockito.when(lservice.getGroupsByLessonId(Mockito.anyInt())).thenReturn(groups);
+        Mockito.when(lessondao.getGroupsByLesson(Mockito.any())).thenReturn(groups);
         assertNotNull(lservice.getGroupsByLessonId(123));
     }
 
     @Test
     void testSetLessonGroup() {
-        Mockito.when(lservice.setLessonGroup(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
+        Mockito.when(lessondao.setLessonGroup(Mockito.any(), Mockito.any()))
+                .thenReturn(true);
         boolean successfulSetDY = lservice.setLessonGroup(2, 2);
         assertTrue(successfulSetDY);
     }
@@ -37,7 +45,7 @@ class LessonServiceTest {
     void testGetLessonById() {
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lservice.getLessonById(Mockito.anyInt())).thenReturn(lesson);
+        Mockito.when(lessondao.getById(Mockito.anyInt())).thenReturn(lesson);
         assertNotNull(lservice.getLessonById(1));
     }
 
@@ -45,14 +53,14 @@ class LessonServiceTest {
     void testCreateLesson() {
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lservice.createLesson(lesson)).thenReturn(true);
+        Mockito.when(lessondao.create(lesson)).thenReturn(true);
         boolean successfulCreation = lservice.createLesson(lesson);
         assertTrue(successfulCreation);
     }
 
     @Test
     void testDeleteLessonById() {
-        Mockito.when(lservice.deleteLessonById(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(lessondao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = lservice.deleteLessonById(1);
         assertTrue(successfulDeletion);
     }
@@ -62,7 +70,7 @@ class LessonServiceTest {
         int lessonId = 1;
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lservice.updateLesson(lessonId, lesson)).thenReturn(true);
+        Mockito.when(lessondao.update(Mockito.anyInt(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = lservice.updateLesson(lessonId, lesson);
         assertTrue(successfulUpdate);
     }
@@ -71,7 +79,7 @@ class LessonServiceTest {
     void testGetLessonIdList() {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
-        Mockito.when(lservice.getLessonIdList()).thenReturn(mockList);
+        Mockito.when(lessondao.getIdList()).thenReturn(mockList);
         List<Integer> idList = lservice.getLessonIdList();
         assertNotNull(idList);
     }

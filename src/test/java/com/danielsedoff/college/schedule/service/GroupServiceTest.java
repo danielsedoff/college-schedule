@@ -9,18 +9,22 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.GroupDAO;
+import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
 class GroupServiceTest {
+    GroupDAO groupdao = Mockito.mock(GroupDAO.class);
+    StudentDAO stdao = Mockito.mock(StudentDAO.class);
 
-    GroupService gservice = Mockito.mock(GroupService.class);
+    GroupService gservice = new GroupService(groupdao, stdao);
 
     @Test
     void testGetGroupIdList() {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
-        Mockito.when(gservice.getGroupIdList()).thenReturn(mockList);
+        Mockito.when(groupdao.getIdList()).thenReturn(mockList);
         List<Integer> idList = gservice.getGroupIdList();
         assertNotNull(idList);
     }
@@ -29,7 +33,7 @@ class GroupServiceTest {
     void testCreateGroup() {
         Group group = new Group();
         group.setDepartmentId(123);
-        Mockito.when(gservice.createGroup(group)).thenReturn(true);
+        Mockito.when(groupdao.create(group)).thenReturn(true);
         boolean successfulCreation = gservice.createGroup(group);
         assertTrue(successfulCreation);
     }
@@ -39,14 +43,14 @@ class GroupServiceTest {
         int groupId = 1;
         Group group = new Group();
         group.setDepartmentId(123);
-        Mockito.when(gservice.updateGroup(groupId, group)).thenReturn(true);
+        Mockito.when(groupdao.update(groupId, group)).thenReturn(true);
         boolean successfulUpdate = gservice.updateGroup(groupId, group);
         assertTrue(successfulUpdate);
     }
 
     @Test
     void testDeleteGroupById() {
-        Mockito.when(gservice.deleteGroupById(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(groupdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = gservice.deleteGroupById(1);
         assertTrue(successfulDeletion);
     }
@@ -55,7 +59,7 @@ class GroupServiceTest {
     void testGetGroupById() {
         Group group = new Group();
         group.setDepartmentId(123);
-        Mockito.when(gservice.getGroupById(Mockito.anyInt())).thenReturn(group);
+        Mockito.when(groupdao.getById(Mockito.anyInt())).thenReturn(group);
         assertNotNull(gservice.getGroupById(1));
     }
 
@@ -64,7 +68,7 @@ class GroupServiceTest {
         List<Student> students = new ArrayList<>();
         Student student = new Student();
         students.add(student);
-        Mockito.when(gservice.setGroupStudent(Mockito.anyInt(), students)).thenReturn(true);
+        Mockito.when(groupdao.setGroupStudent(Mockito.any(), Mockito.any())).thenReturn(true);
         boolean successfulSetDY = gservice.setGroupStudent(2, students);
         assertTrue(successfulSetDY);
     }
@@ -74,7 +78,7 @@ class GroupServiceTest {
         List<Student> students = new ArrayList<>();
         Student student = new Student();
         students.add(student);
-        Mockito.when(gservice.getStudentsByGroupId(Mockito.anyInt())).thenReturn(students);
+        Mockito.when(groupdao.getStudentsByGroup(Mockito.any())).thenReturn(students);
         List<Student> dayschedules = gservice.getStudentsByGroupId(1);
         assertNotNull(dayschedules);
     }

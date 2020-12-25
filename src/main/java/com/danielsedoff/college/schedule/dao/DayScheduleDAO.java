@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.dao;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,13 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     private LessonDAO lessondao;
 
     JdbcTemplate jdbcTemplate;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private static final String SQL_SELECT_ID_FROM_DAYSCHEDULES = "SELECT dayschedule_id FROM dayschedules;";
     private static final String SQL_UPDATE_DAYSCHEDULES = "UPDATE dayschedules SET date = ?, hasOverlaps = ? WHERE dayschedule_id = ?;";
     private static final String SQL_DELETE_FROM_DAYSCHEDULES = "DELETE FROM daySchedules WHERE daySchedule_id = ?;";
-    private static final String SQL_INSERT_INTO_DAYSCHEDULES = "INSERT INTO daySchedules (group_id, daySchedule_year, daySchedule_name) VALUES (?, ?, ?);";
+    private static final String SQL_INSERT_INTO_DAYSCHEDULES = "INSERT INTO daySchedules (date, hasOverlaps) VALUES (?, ?);";
     private static final String SQL_SELECT_DAYSCHEDULE_BY_ID = "SELECT * FROM daySchedules where daySchedule_id = ?";
-    private static final String SQL_INSERT_LESSON_DAYSCHEDULE = "INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id)";
+    private static final String SQL_INSERT_LESSON_DAYSCHEDULE = "INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (?, ?);";
     private static final String SQL_SELECT_LESSONS_BY_DAYSCHEDULE = "SELECT lesson_id FROM lesson_dayschedule WHERE dayschedule_id = ?";
 
     @Autowired
@@ -43,7 +45,8 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     }
 
     public boolean create(DaySchedule daySchedule) {
-        return jdbcTemplate.update(SQL_INSERT_INTO_DAYSCHEDULES, daySchedule.getDay(),
+        String dateText = daySchedule.getDay().format(formatter);
+        return jdbcTemplate.update(SQL_INSERT_INTO_DAYSCHEDULES, dateText,
                 daySchedule.getHasOverlaps()) > 0;
     }
 

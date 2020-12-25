@@ -9,18 +9,22 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.CourseDAO;
+import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
 class CourseServiceTest {
 
-    CourseService cservice = Mockito.mock(CourseService.class);
+    CourseDAO coursedao = Mockito.mock(CourseDAO.class);
+    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
+    CourseService cservice = new CourseService(coursedao, profdao);
 
     @Test
     void testGetCourseIdList() {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
-        Mockito.when(cservice.getCourseIdList()).thenReturn(mockList);
+        Mockito.when(coursedao.getIdList()).thenReturn(mockList);
         List<Integer> idList = cservice.getCourseIdList();
         assertNotNull(idList);
     }
@@ -29,7 +33,7 @@ class CourseServiceTest {
     void testCreateCourse() {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(cservice.createCourse(course)).thenReturn(true);
+        Mockito.when(coursedao.create(Mockito.any())).thenReturn(true);
         boolean successfulCreation = cservice.createCourse(course);
         assertTrue(successfulCreation);
     }
@@ -38,13 +42,13 @@ class CourseServiceTest {
     void testGetCourseById() {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(cservice.getCourseById(Mockito.anyInt())).thenReturn(course);
+        Mockito.when(coursedao.getById(Mockito.anyInt())).thenReturn(course);
         assertNotNull(cservice.getCourseById(1));
     }
 
     @Test
     void testDeleteCourseById() {
-        Mockito.when(cservice.deleteCourseById(Mockito.anyInt())).thenReturn(true);
+        Mockito.when(coursedao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = cservice.deleteCourseById(1);
         assertTrue(successfulDeletion);
     }
@@ -54,7 +58,7 @@ class CourseServiceTest {
         int courseId = 1;
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(cservice.updateCourse(courseId, course)).thenReturn(true);
+        Mockito.when(coursedao.update(Mockito.anyInt(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = cservice.updateCourse(courseId, course);
         assertTrue(successfulUpdate);
     }
@@ -63,7 +67,7 @@ class CourseServiceTest {
     void testSetCourseProfessors() {
         List<Professor> profs = new ArrayList<>();
         int courseId = 1;
-        Mockito.when(cservice.setCourseProfessors(courseId, profs)).thenReturn(true);
+        Mockito.when(coursedao.setCourseProfessor(Mockito.any(), Mockito.any())).thenReturn(true);
         assertTrue(cservice.setCourseProfessors(courseId, profs));
     }
 
@@ -72,7 +76,7 @@ class CourseServiceTest {
         int courseId = 1;
         List<Professor> profs = new ArrayList<>();
         profs.add(new Professor());
-        Mockito.when(cservice.getProfessorsByCourseById(courseId)).thenReturn(profs);
+        Mockito.when(coursedao.getProfessorByCourse(Mockito.any())).thenReturn(profs);
         assertNotNull(cservice.getProfessorsByCourseById(courseId));
     }
 

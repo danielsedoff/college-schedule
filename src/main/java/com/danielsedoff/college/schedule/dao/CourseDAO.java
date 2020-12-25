@@ -56,12 +56,12 @@ public class CourseDAO implements DAO<Course> {
                 course.getCourseDescription()) > 0;
     }
 
-    public boolean setProfessorList(Course course, List<Professor> professors) {
+    public boolean setCourseProfessor(Course course, List<Professor> professors) {
         // TODO: Make it batch.
         boolean result = false;
         for (int i = 0; i < professors.size(); i++) {
             jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
-                    professors.get(0).getId());
+                    professors.get(i).getId());
         }
         return result;
     }
@@ -76,6 +76,7 @@ public class CourseDAO implements DAO<Course> {
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
         List<Professor> professors = new ArrayList<>();
         for (Integer professorId : professorIds) {
+            if(0 == professorId) continue;
             professors.add(professordao.getById(professorId));
         }
         return professors;

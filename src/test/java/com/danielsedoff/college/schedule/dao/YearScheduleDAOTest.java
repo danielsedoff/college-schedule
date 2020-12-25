@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +49,7 @@ class YearScheduleDAOTest extends DAOTest {
     void testDelete() {
         int expectedResult = yeardao.getIdList().size() - 1;
         YearSchedule ys = new YearSchedule();
-        int unixStartYear = 1970;
-        ys.setYear(unixStartYear);
+        ys.setId(1);
         yeardao.delete(ys);
         assertEquals(expectedResult, yeardao.getIdList().size());
     }
@@ -78,11 +76,10 @@ class YearScheduleDAOTest extends DAOTest {
         YearSchedule ys = yeardao.getById(1);
         DaySchedule ds = new DaySchedule();
         ds.setDay(LocalDateTime.now());
-        List<DaySchedule> pushed = new ArrayList<>();
-        pushed.add(ds);
+        ds.setId(2);
         yeardao.setDayScheduleYearSchedule(ds, ys);
         List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
-        assertEquals(requested, pushed);
+        assertEquals(2, requested.get(0).getId());
     }
 
     @Test

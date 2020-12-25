@@ -25,7 +25,7 @@ public class GroupDAO implements DAO<Group> {
     private static final String SQL_INSERT_GROUP_STUDENT = "INSERT INTO group_student (group_id, student_id) VALUES(?, ?)";
     private static final String SQL_SELECT_STUDENT_BY_GROUP = "SELECT student_id FROM group_student WHERE group_id = ?";
     private static final String SQL_DELETE_GROUP_STUDENT = "DELETE FROM group_student WHERE group_id = ?;";
-    private static final Object SEPARATOR = "|";
+    private static final String SEPARATOR = "|";
 
     @Autowired
     public GroupDAO(JdbcTemplate jdbcTemplate) {
