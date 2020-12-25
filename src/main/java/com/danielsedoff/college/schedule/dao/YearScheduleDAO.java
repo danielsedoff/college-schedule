@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
@@ -16,6 +16,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -28,7 +29,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
@@ -42,6 +43,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
 
     @Transactional
     public boolean delete(YearSchedule yearSchedule) throws DAOException {
+
         boolean result = false;
         try {
 
@@ -89,7 +91,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {

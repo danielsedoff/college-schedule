@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
@@ -20,7 +20,7 @@ public class ProfessorDAO implements DAO<Professor> {
 
     private static Logger logger = LoggerFactory.getLogger(ProfessorDAO.class);
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -34,7 +34,7 @@ public class ProfessorDAO implements DAO<Professor> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
@@ -49,6 +49,7 @@ public class ProfessorDAO implements DAO<Professor> {
 
     @Transactional
     public boolean delete(Professor professor) throws DAOException {
+
         boolean result = false;
         try {
 
@@ -99,9 +100,10 @@ public class ProfessorDAO implements DAO<Professor> {
             throw new DAOException("Could not create Professor", e);
         }
         return result;
+
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {

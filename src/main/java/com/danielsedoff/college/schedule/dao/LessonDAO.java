@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Lesson;
 
@@ -20,7 +20,7 @@ public class LessonDAO implements DAO<Lesson> {
 
     private static Logger logger = LoggerFactory.getLogger(LessonDAO.class);
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -34,10 +34,11 @@ public class LessonDAO implements DAO<Lesson> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Lesson getById(Integer id) throws DAOException {
         Lesson result = null;
         try {
+
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -46,9 +47,12 @@ public class LessonDAO implements DAO<Lesson> {
         return result;
     }
 
+    @Transactional
     public boolean delete(Lesson lesson) throws DAOException {
+
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
@@ -63,9 +67,11 @@ public class LessonDAO implements DAO<Lesson> {
         return result;
     }
 
+    @Transactional
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
             oldLesson.setEndTime(lesson.getEndTime());
@@ -81,9 +87,11 @@ public class LessonDAO implements DAO<Lesson> {
         return result;
     }
 
+    @Transactional
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.persist(lesson);
             em.getTransaction().commit();
@@ -93,12 +101,14 @@ public class LessonDAO implements DAO<Lesson> {
             throw new DAOException("Could not create Lesson", e);
         }
         return result;
+
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Lesson> getList() throws DAOException {
         List<Lesson> lessons = null;
         try {
+
             em.getTransaction().begin();
             lessons = em.createQuery("from Lesson", Lesson.class).getResultList();
             em.getTransaction().commit();

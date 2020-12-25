@@ -6,11 +6,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Student;
 
@@ -21,7 +21,7 @@ public class StudentDAO implements DAO<Student> {
 
     private static Logger logger = LoggerFactory.getLogger(StudentDAO.class);
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -35,11 +35,11 @@ public class StudentDAO implements DAO<Student> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
-            
+
             result = em.find(Student.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -50,9 +50,10 @@ public class StudentDAO implements DAO<Student> {
 
     @Transactional
     public boolean delete(Student student) throws DAOException {
+
         boolean result = false;
         try {
-            
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             Student targetStudent = em.find(Student.class, student.getId());
@@ -71,7 +72,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-            
+
             em.getTransaction().begin();
             Student oldStudent = (Student) em.find(Student.class, id);
             oldStudent.setGroup(student.getGroup());
@@ -89,7 +90,7 @@ public class StudentDAO implements DAO<Student> {
     @Transactional
     public boolean create(Student student) throws DAOException {
         boolean result = false;
-        
+
         EntityTransaction trn = em.getTransaction();
         try {
             trn.begin();
@@ -107,11 +108,11 @@ public class StudentDAO implements DAO<Student> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Student> getList() throws DAOException {
         List<Student> students = null;
         try {
-            
+
             em.getTransaction().begin();
             students = em.createQuery("from Student", Student.class).getResultList();
             em.getTransaction().commit();
@@ -122,4 +123,5 @@ public class StudentDAO implements DAO<Student> {
         }
         return students;
     }
+
 }

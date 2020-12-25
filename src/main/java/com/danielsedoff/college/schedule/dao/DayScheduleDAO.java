@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.DaySchedule;
 
@@ -16,7 +16,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -29,10 +29,11 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public DaySchedule getById(Integer id) throws DAOException {
         DaySchedule result = null;
         try {
+
             result = em.find(DaySchedule.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get DaySchedule By Id", e);
@@ -40,9 +41,12 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
+    @Transactional
     public boolean delete(DaySchedule daySchedule) throws DAOException {
+
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             DaySchedule targetDaySchedule = em.find(DaySchedule.class, daySchedule.getId());
@@ -56,9 +60,11 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
+    @Transactional
     public boolean update(Integer id, DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             DaySchedule oldDaySchedule = (DaySchedule) em.find(DaySchedule.class, id);
             oldDaySchedule.setDay(daySchedule.getDay());
@@ -71,9 +77,11 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
+    @Transactional
     public boolean create(DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.persist(daySchedule);
             em.getTransaction().commit();
@@ -85,10 +93,11 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<DaySchedule> getList() throws DAOException {
         List<DaySchedule> daySchedules = null;
         try {
+
             em.getTransaction().begin();
             daySchedules = em.createQuery("from DaySchedule", DaySchedule.class).getResultList();
             em.getTransaction().commit();

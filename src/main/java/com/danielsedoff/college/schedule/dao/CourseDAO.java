@@ -15,13 +15,13 @@ import com.danielsedoff.college.schedule.model.Course;
 
 @Component
 public class CourseDAO implements DAO<Course> {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -35,8 +35,9 @@ public class CourseDAO implements DAO<Course> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Course getById(Integer id) throws DAOException {
+
         Course result = null;
         try {
             result = em.find(Course.class, id);
@@ -46,10 +47,13 @@ public class CourseDAO implements DAO<Course> {
         }
         return result;
     }
+
     @Transactional
     public boolean delete(Course course) throws DAOException {
+
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             Course targetCourse = em.find(Course.class, course.getId());
@@ -63,11 +67,12 @@ public class CourseDAO implements DAO<Course> {
         }
         return result;
     }
-    
+
     @Transactional
     public boolean create(Course course) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             em.persist(course);
             em.getTransaction().commit();
@@ -84,6 +89,7 @@ public class CourseDAO implements DAO<Course> {
     public boolean update(Integer id, Course course) throws DAOException {
         boolean result = false;
         try {
+
             em.getTransaction().begin();
             Course newCourse = em.find(Course.class, id);
             newCourse.setId(id);
@@ -100,10 +106,11 @@ public class CourseDAO implements DAO<Course> {
         return result;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<Course> getList() throws DAOException {
         List<Course> courses = null;
         try {
+
             em.getTransaction().begin();
             courses = em.createQuery("from Course", Course.class).getResultList();
             em.getTransaction().commit();
