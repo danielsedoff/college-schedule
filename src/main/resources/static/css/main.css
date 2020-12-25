@@ -1,15 +1,15 @@
-.tile{
-    display:inline-block;
-    margin: 20px;
+.tile {
+	display: inline-block;
+	margin: 20px;
 }
 
-.tileimg{
-    border: 2px dashed black;
-    width: 200px;
-
+.tileimg {
+	border: 2px dashed black;
+	width: 200px;
 }
-.caption{
-    font-size: 24px;
-    font-family: sans-serif;
-    text-align: center;
+
+.caption {
+	font-size: 24px;
+	font-family: sans-serif;
+	text-align: center;
 }

@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.danielsedoff.college.schedule.controller.ControllerTest;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class LessonRestControllerTest extends ControllerTest {
@@ -33,32 +35,29 @@ class LessonRestControllerTest extends ControllerTest {
     }
 
     @Test
-    void restGetLessonsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/lessons")).andDo(print()).andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    void restGetGroupsShouldReturnThis() throws Exception {
+        mockMvc.perform(get("/lessons")).andDo(print())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
-    void restGetLessonOneShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/lessons/1")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "{\"mode\":\"update\",\"id\":1,\"startTime\":\"2019-01-01 00:01\",\"endTime\":\"2019-01-01 01:01\",\"professorId\":1,\"groupId\":2}"));
+    void restGetGroupTwoShouldReturnThis() throws Exception {
+        mockMvc.perform(get("/lessons/2")).andDo(print())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
-    void restDeleteLessonThreeShouldReturnThis() throws Exception {
+    void restDeleteGroupThreeShouldReturnThis() throws Exception {
         mockMvc.perform(delete("/lessons/3")).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
-    void restPostLessonShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/lessons").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"startTime\":\"2011-01-01 00:01\",\"endTime\":\"2012-01-01 01:01\",\"professorId\":1,\"groupId\":2}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+    void restPostGroupShouldReturnThis() throws Exception {
+        mockMvc.perform(post("/lessons").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }
 
     @Test
-    void restPutLessonShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/lessons/1").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"mode\":\"update\",\"id\":1,\"startTime\":\"2011-01-01 00:01\",\"endTime\":\"2012-01-01 01:01\",\"professorId\":1,\"groupId\":2}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    void restPutGroupShouldReturnThis() throws Exception {
+        mockMvc.perform(put("/lessons/1").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }
 }

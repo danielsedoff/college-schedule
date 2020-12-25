@@ -43,7 +43,8 @@
 									maxlength="255" value="" disabled />
 							</div></td>
 					</tr>
-						<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
+					<tr>
+						<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
 							ID</td>
 					</tr>
 					<tr>
@@ -55,7 +56,8 @@
 									maxlength="255" value="" />
 							</div></td>
 					</tr>
-						<tr><td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
+					<tr>
+						<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
 							name</td>
 					</tr>
 					<tr>
@@ -67,7 +69,8 @@
 									maxlength="255" value="" />
 							</div></td>
 					</tr>
-						<tr><td th:if="${#fields.hasErrors('ranks')}" th:errors="*{ranks}">Illegal
+					<tr>
+						<td th:if="${#fields.hasErrors('ranks')}" th:errors="*{ranks}">Illegal
 							ranks and titles</td>
 					</tr>
 					<tr>
@@ -79,7 +82,8 @@
 									maxlength="255" value="" />
 							</div></td>
 					</tr>
-						<tr><td th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Illegal
+					<tr>
+						<td th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Illegal
 							notes</td>
 					</tr>
 					<tr>

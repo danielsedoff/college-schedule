@@ -70,20 +70,7 @@ class GroupWebControllerTest {
 
     @Test
     void postCreateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/createGroup").param("id", "3")
-                .param("description", "Penguin Group")
-                .param("name", "PG"))
-                .andDo(print()).andExpect(view().name("resultPage"));
-    }
-
-    @Test
-    void postUpdateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/updateGroup").param("id", "1")
-                .param("description", "Penguin Group")
-                .param("name", "PG"))
-                .andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/createGroup")).andExpect(status().isOk());
     }
 
 }

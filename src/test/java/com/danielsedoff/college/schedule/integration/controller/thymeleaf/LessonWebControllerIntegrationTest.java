@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller.thymeleaf;
+package com.danielsedoff.college.schedule.integration.controller.thymeleaf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LessonWebControllerTest {
+class LessonWebControllerIntegrationTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -70,7 +70,16 @@ class LessonWebControllerTest {
 
     @Test
     void postCreateLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createLesson")).andExpect(status().isOk());
+        mockMvc.perform(post("/createLesson").param("endTime", "1999-01-01 14:14")
+                .param("startTime", "1999-01-01 13:13").param("groupId", "1").param("professorId", "1")).andDo(print())
+                .andExpect(view().name("resultPage"));
+    }
+
+    @Test
+    void postUpdateLessonShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/updateLesson").param("id", "3").param("endTime", "1999-01-01 14:14")
+                .param("startTime", "1999-01-01 13:13").param("groupId", "1").param("professorId", "1")).andDo(print())
+                .andExpect(view().name("resultPage"));
     }
 
 }

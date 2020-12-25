@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller.rest;
+package com.danielsedoff.college.schedule.integration.controller.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,11 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.controller.ControllerTest;
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class GroupRestControllerTest extends ControllerTest {
+class StudentRestControllerIntegrationTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -35,29 +33,33 @@ class GroupRestControllerTest extends ControllerTest {
     }
 
     @Test
-    void restGetGroupsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups")).andDo(print())
+    void restGetStudentsShouldReturnThis() throws Exception {
+        mockMvc.perform(get("/students")).andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
-    void restGetGroupTwoShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups/2")).andDo(print())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    void restGetStudentTwoShouldReturnThis() throws Exception {
+        mockMvc.perform(get("/students/2")).andDo(print()).andExpect(MockMvcResultMatchers.content()
+                .json("{'id':2,'mode':'update','name':'Jimmy Carter','groupId':2,'schoolYear':1}"));
     }
 
     @Test
-    void restDeleteGroupThreeShouldReturnThis() throws Exception {
-        mockMvc.perform(delete("/groups/3")).andDo(print()).andExpect(status().isOk());
+    void restDeleteStudentThreeShouldReturnThis() throws Exception {
+        mockMvc.perform(delete("/students/3")).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
-    void restPostGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/groups").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
+    void restPostStudentShouldReturnThis() throws Exception {
+        mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":2,\"mode\":\"update\",\"name\":\"Johnny\",\"groupId\":2,\"schoolYear\":2}")
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
 
     @Test
-    void restPutGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/groups/1").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
+    void restPutStudentShouldReturnThis() throws Exception {
+        mockMvc.perform(put("/students/1").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Little John\",\"groupId\":3,\"mode\":\"create\",\"schoolYear\":1}")
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 }

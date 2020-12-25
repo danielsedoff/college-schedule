@@ -21,15 +21,16 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket coursesApi() {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.danielsedoff.college.schedule.controller"))
-                .paths(PathSelectors.regex("/courses.*")).build().apiInfo(metaData());
+                .paths(PathSelectors.regex("/.*")).build().apiInfo(metaData());
+
     }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
                 .description("\"Spring Boot REST API for the College Schedule Web App\"").version("0.1")
-                .license("GNU GPL 1.0").licenseUrl("https://www.gnu.org/licenses/old-licenses/gpl-2.0.html")
-                .contact(
-                        new Contact("Daniel Sedoff", "https://github.com/danielsedoff", "sedoff@zohomail.com"))
+
+                .license("GNU GPL 2.0").licenseUrl("https://www.gnu.org/licenses/old-licenses/gpl-2.0.html")
+                .contact(new Contact("Daniel Sedoff", "https://github.com/danielsedoff", "sedoff@zohomail.com"))
                 .build();
     }
 

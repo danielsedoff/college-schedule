@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.danielsedoff</groupId>
     <artifactId>college-schedule</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>college-schedule</name>
     <description>College Schedule</description>
 
@@ -19,20 +19,26 @@
         <java.version>11</java.version>
     </properties>
 
-        <dependencies><!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+    <dependencies><!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+        <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.1.2</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
+            <version>2.9.2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
+            <version>2.9.2</version>
         </dependency>
 
         <dependency>

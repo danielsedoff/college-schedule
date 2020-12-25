@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.danielsedoff.college.schedule.controller.ControllerTest;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class ProfessorRestControllerTest extends ControllerTest {
@@ -27,40 +29,35 @@ class ProfessorRestControllerTest extends ControllerTest {
 
     private MockMvc mockMvc;
 
-
     @BeforeEach
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    void restGetProfessorsShouldReturnThis() throws Exception {
+    void restGetGroupsShouldReturnThis() throws Exception {
         mockMvc.perform(get("/professors")).andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
-    void restGetProfessorTwoShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/professors/2")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "{'id':2,'mode':'update','name':'Graham Greene','ranks':'Order of the Companions of Honour','notes':'He wrote The Journey Without Maps'}"));
+    void restGetGroupTwoShouldReturnThis() throws Exception {
+        mockMvc.perform(get("/professors/2")).andDo(print())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
-    void restDeleteProfessorTwoShouldReturnThis() throws Exception {
-        mockMvc.perform(delete("/professors/2")).andDo(print()).andExpect(status().isOk());
+    void restDeleteGroupThreeShouldReturnThis() throws Exception {
+        mockMvc.perform(delete("/professors/3")).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
-    void restPostProfessorShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/professors").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"courseId\":1,\"id\":2,\"mode\":\"update\",\"name\":\"Ronnie Bruenswick\",\"ranks\":\"No titles\",\"notes\":\"Football club owner\"}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+    void restPostGroupShouldReturnThis() throws Exception {
+        mockMvc.perform(post("/professors").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }
 
     @Test
-    void restPutProfessorShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/professors/1").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"courseId\":1,\"id\":2,\"mode\":\"update\",\"name\":\"Big Professor\",\"ranks\":\"Pumpkin Eater\",\"notes\":\"The largest and fattest Professor\"}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+    void restPutGroupShouldReturnThis() throws Exception {
+        mockMvc.perform(put("/professors/1").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
     }
 }

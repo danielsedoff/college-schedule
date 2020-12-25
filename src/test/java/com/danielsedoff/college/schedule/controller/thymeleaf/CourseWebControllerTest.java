@@ -65,21 +65,7 @@ class CourseWebControllerTest {
 
     @Test
     void postDeleteCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteCourse").param("id",  "3")).andDo(print()).andExpect(view().name("resultPage"));
-    }
-
-    @Test
-    void postCreateCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/createCourse").param("name", "ShortName").param("description", "Some longer description")
-                .param("professorId", "1"))
-                .andDo(print()).andExpect(view().name("resultPage"));
-    }
-
-    @Test
-    void postUpdateCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateCourse").param("id", "3").param("name", "ShortName").param("description",
-                "Some longer description").param("professorId", "1")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/deleteCourse").param("id", "3")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller.rest;
+package com.danielsedoff.college.schedule.integration.controller.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +22,7 @@ import com.danielsedoff.college.schedule.controller.ControllerTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GroupRestControllerTest extends ControllerTest {
+class GroupRestControllerIntegrationTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -42,8 +42,8 @@ class GroupRestControllerTest extends ControllerTest {
 
     @Test
     void restGetGroupTwoShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups/2")).andDo(print())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+        mockMvc.perform(get("/groups/2")).andDo(print()).andExpect(MockMvcResultMatchers.content()
+                .json("{'mode':'update','id':2,'name':'Worst Group','description':'Worst Group'}"));
     }
 
     @Test
@@ -53,11 +53,15 @@ class GroupRestControllerTest extends ControllerTest {
 
     @Test
     void restPostGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/groups").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
+        mockMvc.perform(post("/groups").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Big Group\",\"description\":\"Big Group\",\"mode\":\"create\",\"id\":1}")
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
     }
 
     @Test
     void restPutGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/groups/1").contentType(MediaType.APPLICATION_JSON).contentType("application/json"));
+        mockMvc.perform(put("/groups/1").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Big Group\",\"description\":\"Big Group\",\"mode\":\"create\",\"id\":1}")
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 }

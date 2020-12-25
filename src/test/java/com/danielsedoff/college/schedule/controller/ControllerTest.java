@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller.rest;
+package com.danielsedoff.college.schedule.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;

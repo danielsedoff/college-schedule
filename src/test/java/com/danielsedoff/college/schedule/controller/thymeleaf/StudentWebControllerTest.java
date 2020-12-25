@@ -70,20 +70,12 @@ class StudentWebControllerTest {
 
     @Test
     void postCreateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/createStudent").param("id", "3").param("name", "John Deere")
-                .param("groupId", "2")
-                .param("schoolYear", "2"))
-                .andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/createStudent")).andExpect(status().isOk());
     }
 
     @Test
     void postUpdateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/updateStudent").param("id", "3").param("name", "John Deere")
-                .param("groupId", "2")
-                .param("schoolYear", "2"))
-                .andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/updateStudent")).andExpect(status().isOk());
     }
 
 }
