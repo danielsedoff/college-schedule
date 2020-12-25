@@ -12,7 +12,7 @@ import com.danielsedoff.college.schedule.model.PageLink;
 @Controller
 public class MainPageController {
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String main(Model model) {
 
         List<PageLink> links = new ArrayList<>();

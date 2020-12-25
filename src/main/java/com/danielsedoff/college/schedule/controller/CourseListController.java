@@ -31,7 +31,6 @@ public class CourseListController {
             courses.add(cs.getCourseById(id));
         }
         model.addAttribute("courses", courses);
-        model.addAttribute("testvalue", "passed");
         return "courses";
     }
 }
