@@ -30,6 +30,7 @@
         <servlet.api.version>4.0.0</servlet.api.version>
         <spring.version>5.2.8.RELEASE</spring.version>
         <surefire.version>2.22.2</surefire.version>
+        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     </properties>
 
     <build>
@@ -51,6 +52,11 @@
         </plugins>
     </build>
     <dependencies>
+    <dependency>
+    <groupId>org.thymeleaf</groupId>
+    <artifactId>thymeleaf-spring5</artifactId>
+    <version>${thymeleaf.version}</version>
+</dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
