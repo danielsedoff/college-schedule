@@ -26,15 +26,16 @@ public class LessonRestControllerIntegrationTest {
 
     int port = 8080;
 
+    private final String urlpart = "http://localhost:" + port + "/lessons";
+
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Sql({ "classpath:/create_tables.sql" })
     @Test
     public void testOneLesson() {
-        assertEquals(this.restTemplate
-                .getForObject("http://localhost:" + port + "/lessons/2", Lesson.class)
-                .getId(), 2);
+        assertEquals(this.restTemplate.getForObject(urlpart + "/2", Lesson.class).getId(),
+                2);
 
     }
 
@@ -46,16 +47,16 @@ public class LessonRestControllerIntegrationTest {
         lessondto.setGroupId(2);
         lessondto.setProfessorId(2);
         lessondto.setId(1);
-        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/lessons", lessondto, String.class);
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(urlpart,
+                lessondto, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
 
     @Test
     public void testGetLessonListAvailability() {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
-        ResponseEntity<String> response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/lessons", String.class);
+        ResponseEntity<String> response = testRestTemplate.getForEntity(urlpart,
+                String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -64,12 +65,11 @@ public class LessonRestControllerIntegrationTest {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         Map<String, String> urlVariables = new HashMap<String, String>();
         urlVariables.put("", "");
-        ResponseEntity<String> response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/lessons/3", String.class);
+        ResponseEntity<String> response = testRestTemplate.getForEntity(urlpart + "/3",
+                String.class);
         assertEquals(200, response.getStatusCodeValue());
-        testRestTemplate.delete("http://localhost:" + port + "/lessons/3", urlVariables);
-        response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/lessons/3", String.class);
+        testRestTemplate.delete(urlpart + "/3", urlVariables);
+        response = testRestTemplate.getForEntity(urlpart + "/3", String.class);
         assertEquals(500, response.getStatusCodeValue());
     }
 
@@ -87,9 +87,8 @@ public class LessonRestControllerIntegrationTest {
 
         HttpEntity<LessonDTO> dto = new HttpEntity<LessonDTO>(lessondto);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:" + port + "/lessons/1", HttpMethod.PUT, dto,
-                String.class, id);
+        ResponseEntity<String> response = restTemplate.exchange(urlpart + "/1",
+                HttpMethod.PUT, dto, String.class, id);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("success", response.getBody());

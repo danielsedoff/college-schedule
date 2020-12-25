@@ -26,15 +26,16 @@ public class StudentRestControllerIntegrationTest {
 
     int port = 8080;
 
+    private final String urlpart = "http://localhost:" + port + "/students";
+
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Sql({ "classpath:/create_tables.sql" })
     @Test
     public void testOneStudent() {
-        assertEquals(this.restTemplate
-                .getForObject("http://localhost:" + port + "/students/2", Student.class)
-                .getId(), 2);
+        assertEquals(
+                this.restTemplate.getForObject(urlpart + "/2", Student.class).getId(), 2);
     }
 
     @Test
@@ -63,12 +64,11 @@ public class StudentRestControllerIntegrationTest {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         Map<String, String> urlVariables = new HashMap<String, String>();
         urlVariables.put("", "");
-        ResponseEntity<String> response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/students/3", String.class);
+        ResponseEntity<String> response = testRestTemplate.getForEntity(urlpart + "/3",
+                String.class);
         assertEquals(200, response.getStatusCodeValue());
-        testRestTemplate.delete("http://localhost:" + port + "/students/3", urlVariables);
-        response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/students/3", String.class);
+        testRestTemplate.delete(urlpart + "/3", urlVariables);
+        response = testRestTemplate.getForEntity(urlpart + "/3", String.class);
         assertEquals(500, response.getStatusCodeValue());
     }
 
@@ -85,9 +85,8 @@ public class StudentRestControllerIntegrationTest {
 
         HttpEntity<StudentDTO> dto = new HttpEntity<StudentDTO>(studDto);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:" + port + "/students/1", HttpMethod.PUT, dto,
-                String.class, id);
+        ResponseEntity<String> response = restTemplate.exchange(urlpart + "/1",
+                HttpMethod.PUT, dto, String.class, id);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("success", response.getBody());

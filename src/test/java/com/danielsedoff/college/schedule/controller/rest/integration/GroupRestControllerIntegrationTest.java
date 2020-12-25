@@ -30,6 +30,8 @@ public class GroupRestControllerIntegrationTest {
 
     int port = 8080;
 
+    private final String urlpart = "http://localhost:" + port + "/groups";
+
     @Autowired
     StudentService ss;
 
@@ -39,9 +41,8 @@ public class GroupRestControllerIntegrationTest {
     @Sql({ "classpath:/create_tables.sql" })
     @Test
     public void testOneGroup() {
-        assertEquals(this.restTemplate
-                .getForObject("http://localhost:" + port + "/groups/2", Group.class)
-                .getId(), 2);
+        assertEquals(this.restTemplate.getForObject(urlpart + "/2", Group.class).getId(),
+                2);
 
     }
 
@@ -54,16 +55,16 @@ public class GroupRestControllerIntegrationTest {
         students.add(ss.getStudentById(2));
         groupdto.setName("FG");
 
-        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(
-                "http://localhost:" + port + "/groups", groupdto, String.class);
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(urlpart,
+                groupdto, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
 
     @Test
     public void testGetGroupListAvailability() {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
-        ResponseEntity<String> response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/groups", String.class);
+        ResponseEntity<String> response = testRestTemplate.getForEntity(urlpart,
+                String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -72,12 +73,11 @@ public class GroupRestControllerIntegrationTest {
         TestRestTemplate testRestTemplate = new TestRestTemplate();
         Map<String, String> urlVariables = new HashMap<String, String>();
         urlVariables.put("", "");
-        ResponseEntity<String> response = testRestTemplate
-                .getForEntity("http://localhost:" + port + "/groups/3", String.class);
-        assertEquals(200, response.getStatusCodeValue());
-        testRestTemplate.delete("http://localhost:" + port + "/groups/3", urlVariables);
-        response = testRestTemplate.getForEntity("http://localhost:" + port + "/groups/3",
+        ResponseEntity<String> response = testRestTemplate.getForEntity(urlpart + "/3",
                 String.class);
+        assertEquals(200, response.getStatusCodeValue());
+        testRestTemplate.delete(urlpart + "/3", urlVariables);
+        response = testRestTemplate.getForEntity(urlpart + "/3", String.class);
         assertEquals(500, response.getStatusCodeValue());
     }
 
@@ -95,9 +95,8 @@ public class GroupRestControllerIntegrationTest {
 
         HttpEntity<GroupDTO> dto = new HttpEntity<GroupDTO>(groupdto);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:" + port + "/groups/2", HttpMethod.PUT, dto,
-                String.class, id);
+        ResponseEntity<String> response = restTemplate.exchange(urlpart + "/2",
+                HttpMethod.PUT, dto, String.class, id);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("success", response.getBody());
