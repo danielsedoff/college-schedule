@@ -28,6 +28,7 @@ public class StudentDAO implements DAO<Student> {
                 result.add(student.getId());
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Student Id List", e);
         }
         return result;
@@ -39,6 +40,7 @@ public class StudentDAO implements DAO<Student> {
             EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Student.class, id);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Student By Id", e);
         }
         return result;
@@ -57,6 +59,7 @@ public class StudentDAO implements DAO<Student> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not delete Student", e);
         }
         return result;
@@ -74,6 +77,7 @@ public class StudentDAO implements DAO<Student> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not update Student", e);
         }
         return result;
@@ -84,11 +88,13 @@ public class StudentDAO implements DAO<Student> {
         try {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
+//          DEBUG
+            System.out.println("StudentDAO RECEIVES: " + student.toString());
             em.persist(student);
+            em.flush();
             em.close();
         } catch (Exception e) {
-            e.printStackTrace();// DEBUG if logger failed
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Student", e);
         }
         return result;
@@ -100,12 +106,11 @@ public class StudentDAO implements DAO<Student> {
         try {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            students = em.createQuery("from Student", Student.class)
-                    .getResultList();
+            students = em.createQuery("from Student", Student.class).getResultList();
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Student List", e);
         }
         return students;

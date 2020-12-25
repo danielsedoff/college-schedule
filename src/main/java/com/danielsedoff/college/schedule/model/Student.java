@@ -26,13 +26,12 @@ public class Student extends Person {
     }
 
     public Student() {
-
     }
 
     @Override
     public String toString() {
-        return "Student [student_id=" + person_id + ", name=" + name + ", schoolYear=" + schoolYear + ", group="
-                + group.toString() + "]";
+        return "Student [person_id=" + person_id + ", name=" + name + ", schoolYear=" + schoolYear + ", group(Id only)="
+                + group.getId() + "]";
     }
 
     public int getSchoolYear() {

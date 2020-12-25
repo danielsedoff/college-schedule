@@ -28,7 +28,7 @@ public class CourseDAO implements DAO<Course> {
                 result.add(course.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Course Id List", e);
         }
         return result;
@@ -40,7 +40,7 @@ public class CourseDAO implements DAO<Course> {
             EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Course.class, id);
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Course By Id", e);
         }
         return result;
@@ -59,7 +59,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not delete Course", e);
         }
         return result;
@@ -77,7 +77,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not update Course", e);
         }
         return result;
@@ -93,7 +93,7 @@ public class CourseDAO implements DAO<Course> {
             em.flush();
             em.close();
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Course", e);
         }
         return result;
@@ -110,7 +110,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Course List", e);
         }
         return courses;
