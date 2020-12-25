@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
+import com.danielsedoff.college.schedule.dao.DAOException.YearScheduleDAOException;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
@@ -29,7 +30,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() {
+    void testGetIdList() throws YearScheduleDAOException {
         List<Integer> result = yeardao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -37,7 +38,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdate() throws YearScheduleDAOException {
         int id = 1;
         int hundredYearWarBeginning = 1337;
         YearSchedule ys = yeardao.getById(id);
@@ -47,17 +48,16 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() {
+    void testDelete() throws YearScheduleDAOException {
         int expectedResult = yeardao.getIdList().size() - 1;
         YearSchedule ys = new YearSchedule();
-        int unixStartYear = 1970;
-        ys.setYear(unixStartYear);
+        ys.setId(1);
         yeardao.delete(ys);
         assertEquals(expectedResult, yeardao.getIdList().size());
     }
 
     @Test
-    void testCreate() {
+    void testCreate() throws YearScheduleDAOException {
         int expectedSize = yeardao.getIdList().size() + 1;
         YearSchedule ys = new YearSchedule();
         int hundredYearWarBeginning = 1337;
@@ -68,25 +68,26 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() {
+    void testGetById() throws YearScheduleDAOException {
         YearSchedule ys = yeardao.getById(1);
         assertNotNull(ys);
     }
 
     @Test
-    void testSetDayScheduleYearSchedule() {
+    void testSetDayScheduleYearSchedule()
+            throws YearScheduleDAOException, DayScheduleDAOException {
         YearSchedule ys = yeardao.getById(1);
         DaySchedule ds = new DaySchedule();
         ds.setDay(LocalDateTime.now());
-        List<DaySchedule> pushed = new ArrayList<>();
-        pushed.add(ds);
+        ds.setId(2);
         yeardao.setDayScheduleYearSchedule(ds, ys);
         List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
-        assertEquals(requested, pushed);
+        assertEquals(2, requested.get(0).getId());
     }
 
     @Test
-    void testGetDayScheduleYearSchedule() {
+    void testGetDayScheduleYearSchedule()
+            throws YearScheduleDAOException, DayScheduleDAOException {
         YearSchedule ys = yeardao.getById(1);
         List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
         assertNotNull(requested);

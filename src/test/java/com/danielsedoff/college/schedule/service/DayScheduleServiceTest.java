@@ -10,6 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
+import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -22,7 +24,7 @@ class DayScheduleServiceTest {
     DayScheduleService dsservice = new DayScheduleService(dsdao, lessondao);
 
     @Test
-    void testGetDayScheduleIdList() {
+    void testGetDayScheduleIdList() throws DayScheduleDAOException {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(dsdao.getIdList()).thenReturn(mockList);
@@ -31,7 +33,7 @@ class DayScheduleServiceTest {
     }
 
     @Test
-    void testCreateDaySchedule() {
+    void testCreateDaySchedule() throws DayScheduleDAOException {
         LocalDateTime today = LocalDateTime.now();
         Mockito.when(dsdao.create(Mockito.anyObject())).thenReturn(true);
         boolean successfulCreation = dsservice.createDaySchedule(today);
@@ -39,7 +41,7 @@ class DayScheduleServiceTest {
     }
 
     @Test
-    void testUpdateDaySchedule() {
+    void testUpdateDaySchedule() throws DayScheduleDAOException {
         LocalDateTime today = LocalDateTime.now();
         Mockito.when(dsdao.update(Mockito.any(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = dsservice.updateDaySchedule(1, today, false);
@@ -47,14 +49,14 @@ class DayScheduleServiceTest {
     }
 
     @Test
-    void testDeleteDayScheduleById() {
+    void testDeleteDayScheduleById() throws DayScheduleDAOException {
         Mockito.when(dsdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = dsservice.deleteDayScheduleById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testGetDayScheduleById() {
+    void testGetDayScheduleById() throws DayScheduleDAOException {
         DaySchedule ds = new DaySchedule();
         ds.setDay(LocalDateTime.now());
         Mockito.when(dsdao.getById(Mockito.anyInt())).thenReturn(ds);
@@ -62,7 +64,7 @@ class DayScheduleServiceTest {
     }
 
     @Test
-    void testSetLessonDaySchedule() {
+    void testSetLessonDaySchedule() throws DayScheduleDAOException, LessonDAOException {
         Mockito.when(dsdao.setLessonDayschedule(Mockito.any(), Mockito.any()))
                 .thenReturn(true);
         boolean successfulSetDY = dsservice.setLessonDaySchedule(2, 2);
@@ -70,7 +72,8 @@ class DayScheduleServiceTest {
     }
 
     @Test
-    void testGetLessonsByDayScheduleById() {
+    void testGetLessonsByDayScheduleById()
+            throws DayScheduleDAOException, LessonDAOException {
         List<Lesson> mockList = new ArrayList<Lesson>();
         Lesson lesson = new Lesson();
         mockList.add(lesson);

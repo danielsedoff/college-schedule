@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.danielsedoff.college.schedule.dao.DAOException.CourseDAOException;
 import com.danielsedoff.college.schedule.dao.mappers.CourseMapper;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -32,50 +33,53 @@ public class CourseDAO implements DAO<Course> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Integer> getIdList() {
+    public List<Integer> getIdList() throws CourseDAOException {
         return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
     }
 
-    public Course getById(Integer id) {
+    public Course getById(Integer id) throws CourseDAOException {
         return jdbcTemplate.queryForObject(SQL_SELECT_COURSE_BY_ID, new Object[] { id },
                 new CourseMapper());
     }
 
-    public boolean delete(Course course) {
+    public boolean delete(Course course) throws CourseDAOException {
         deleteCourseProfessorByCourse(course);
         return jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
     }
 
-    public boolean update(Integer id, Course course) {
+    public boolean update(Integer id, Course course) throws CourseDAOException {
         return jdbcTemplate.update(SQL_UPDATE_COURSES, course.getName(),
                 course.getCourseDescription(), course.getId()) > 0;
     }
 
-    public boolean create(Course course) {
+    public boolean create(Course course) throws CourseDAOException {
         return jdbcTemplate.update(SQL_INSERT_INTO_COURSES, course.getName(),
                 course.getCourseDescription()) > 0;
     }
 
-    public boolean setCourseProfessor(Course course, List<Professor> professors) {
+    public boolean setCourseProfessor(Course course, List<Professor> professors)
+            throws CourseDAOException {
         // TODO: Make it batch.
         boolean result = false;
         for (int i = 0; i < professors.size(); i++) {
             jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
-                    professors.get(0).getId());
+                    professors.get(i).getId());
         }
         return result;
     }
 
-    public boolean deleteCourseProfessorByCourse(Course course) {
+    public boolean deleteCourseProfessorByCourse(Course course)
+            throws CourseDAOException {
         return 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
     }
 
-    public List<Professor> getProfessorByCourse(
-            Course course) {
+    public List<Professor> getProfessorByCourse(Course course) throws CourseDAOException {
         List<Integer> professorIds = jdbcTemplate.queryForList(
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
         List<Professor> professors = new ArrayList<>();
         for (Integer professorId : professorIds) {
+            if (0 == professorId)
+                continue;
             professors.add(professordao.getById(professorId));
         }
         return professors;

@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.danielsedoff.college.schedule.dao.DAOException.DayScheduleDAOException;
+import com.danielsedoff.college.schedule.dao.DAOException.LessonDAOException;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
 
@@ -21,6 +24,7 @@ class DayScheduleDAOTest extends DAOTest {
     private DayScheduleDAO dsdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @BeforeEach
     final void readSQLfile() throws IOException, SQLException {
@@ -28,7 +32,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() {
+    void testGetIdList() throws DayScheduleDAOException {
         List<Integer> result = dsdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -36,7 +40,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdate() throws DayScheduleDAOException {
         int id = 1;
         DaySchedule ds = dsdao.getById(id);
         LocalDateTime today = LocalDateTime.now();
@@ -46,7 +50,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete() {
+    void testDelete() throws DayScheduleDAOException {
         int expectedResult = dsdao.getIdList().size() - 1;
         DaySchedule ds = new DaySchedule();
         ds.setId(1);
@@ -55,24 +59,24 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() {
+    void testCreate() throws DayScheduleDAOException {
         int expectedSize = dsdao.getIdList().size() + 1;
         DaySchedule ds = new DaySchedule();
         LocalDateTime now = LocalDateTime.now();
         ds.setDay(now);
         dsdao.create(ds);
         assertEquals(expectedSize, dsdao.getIdList().size());
-        assertEquals(now, dsdao.getById(5).getDay());
+        assertEquals(now.format(formatter), dsdao.getById(5).getDay().format(formatter));
     }
 
     @Test
-    void testGetById() {
+    void testGetById() throws DayScheduleDAOException {
         DaySchedule ds = dsdao.getById(1);
         assertNotNull(ds);
     }
 
     @Test
-    void testSetLessonDayschedule() {
+    void testSetLessonDayschedule() throws DayScheduleDAOException, LessonDAOException {
         LocalDateTime now = LocalDateTime.now();
         Lesson originalLesson = new Lesson();
         originalLesson.setStartTime(now);
@@ -84,7 +88,8 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetLessonsByDayschedule() {
+    void testGetLessonsByDayschedule()
+            throws DayScheduleDAOException, LessonDAOException {
         DaySchedule ds = dsdao.getById(3);
         assertNotNull(dsdao.getLessonsByDayschedule(ds));
     }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.danielsedoff.college.schedule.dao.DAOException.CourseDAOException;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
@@ -28,7 +29,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList() {
+    void testGetIdList() throws CourseDAOException {
         List<Integer> result = coursedao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -36,13 +37,13 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById() {
+    void testGetById() throws CourseDAOException {
         Course result = coursedao.getById(1);
         assertNotNull(result);
     }
 
     @Test
-    void testDelete() {
+    void testDelete() throws CourseDAOException {
         int expectedResult = coursedao.getIdList().size() - 1;
         Course course = new Course();
         course.setId(1);
@@ -51,7 +52,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdate() throws CourseDAOException {
         int id = 1;
         Course course = coursedao.getById(id);
         String newDescription = "New Description";
@@ -61,7 +62,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate() {
+    void testCreate() throws CourseDAOException {
         int expectedSize = coursedao.getIdList().size() + 1;
         String newName = "Chemistry";
         Course course = new Course();
@@ -72,27 +73,29 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testSetProfessorList() {
+    void testSetProfessorList() throws CourseDAOException {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new Professor();
-        prof.setName("Evangelista Torricelli");
+        Professor prof = new  Professor();
+        prof.setId(1);
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);
         List<Professor> requestedProfessors = coursedao.getProfessorByCourse(course);
-        assertEquals(professors, requestedProfessors);
+        int lastIndex = requestedProfessors.size() - 1;
+        assertEquals(1, requestedProfessors.get(lastIndex).getId());
     }
 
     @Test
-    void testGetProfessorByCourse() {
-        Course course = coursedao.getById(3);
+    void testGetProfessorByCourse() throws CourseDAOException {
+        Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new Professor();
-        prof.setName("Leonardo Da Vinci");
+        Professor prof = new  Professor();
+        prof.setId(2);
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);
         List<Professor> requestedProfessors = coursedao.getProfessorByCourse(course);
-        assertEquals(professors, requestedProfessors);
+        int lastIndex = requestedProfessors.size() - 1;
+        assertEquals(2, requestedProfessors.get(lastIndex).getId());
     }
 
 }
