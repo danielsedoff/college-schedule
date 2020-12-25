@@ -10,18 +10,18 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.GroupRepository;
-import com.danielsedoff.college.schedule.dao.LessonRepository;
-import com.danielsedoff.college.schedule.dao.ProfessorRepository;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.model.Professor;
+import com.danielsedoff.college.schedule.repositories.GroupRepository;
+import com.danielsedoff.college.schedule.repositories.LessonRepository;
+import com.danielsedoff.college.schedule.repositories.ProfessorRepository;
 
 @SpringBootTest
 class LessonServiceTest extends AbstractServiceTest {
 
-    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
-    LessonRepository lessondao = Mockito.mock(LessonRepository.class);
-    GroupRepository groupdao = Mockito.mock(GroupRepository.class);
+    ProfessorRepository profRepo = Mockito.mock(ProfessorRepository.class);
+    LessonRepository lessonRepo = Mockito.mock(LessonRepository.class);
+    GroupRepository groupRepo = Mockito.mock(GroupRepository.class);
 
     @Autowired
     LessonService lservice;
@@ -30,7 +30,7 @@ class LessonServiceTest extends AbstractServiceTest {
     void testGetLessonById() throws Exception {
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lessondao.findById(Mockito.anyInt())).thenReturn(Optional.of(lesson));
+        Mockito.when(lessonRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(lesson));
         assertNotNull(lservice.getLessonById(1));
     }
 
@@ -38,14 +38,14 @@ class LessonServiceTest extends AbstractServiceTest {
     void testCreateLesson() throws Exception {
         Lesson lesson = new Lesson();
         lesson.setStartTime("12-12-2012");
-        Mockito.when(lessondao.save(Mockito.any())).thenReturn(true);
+        Mockito.when(lessonRepo.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = lservice.createLesson(lesson);
         assertTrue(successfulCreation);
     }
 
     @Test
     void testDeleteLessonById() throws Exception {
-        lessondao.delete(Mockito.any());
+        lessonRepo.delete(Mockito.any());
         boolean successfulDeletion = lservice.deleteLessonById(1);
         assertTrue(successfulDeletion);
     }

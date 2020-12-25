@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.danielsedoff.college.schedule.dao.SqlScriptRunner;
 import com.danielsedoff.college.schedule.model.PageLink;
+import com.danielsedoff.college.schedule.repositories.SqlScriptRunner;
 
 @Controller
 public class MainPageController {
@@ -28,11 +28,11 @@ public class MainPageController {
     public String main(Model model) {
 
         List<PageLink> links = new ArrayList<>();
-        links.add(new PageLink("Student List", "studentList"));
-        links.add(new PageLink("Professor List", "professorList"));
-        links.add(new PageLink("Course List", "courseList"));
-        links.add(new PageLink("Group List", "groupList"));
-        links.add(new PageLink("Lesson List", "lessonList"));
+        links.add(new PageLink("Student List", "studentList", "/images/student.png"));
+        links.add(new PageLink("Professor List", "professorList", "/images/professor.png"));
+        links.add(new PageLink("Course List", "courseList", "/images/course.png"));
+        links.add(new PageLink("Group List", "groupList", "/images/group.png"));
+        links.add(new PageLink("Lesson List", "lessonList", "/images/lesson.png"));
 
         model.addAttribute("links", links);
 

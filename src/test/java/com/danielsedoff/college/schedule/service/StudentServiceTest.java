@@ -10,17 +10,17 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.GroupRepository;
-import com.danielsedoff.college.schedule.dao.ProfessorRepository;
-import com.danielsedoff.college.schedule.dao.StudentRepository;
 import com.danielsedoff.college.schedule.model.Student;
+import com.danielsedoff.college.schedule.repositories.GroupRepository;
+import com.danielsedoff.college.schedule.repositories.ProfessorRepository;
+import com.danielsedoff.college.schedule.repositories.StudentRepository;
 
 @SpringBootTest
 class StudentServiceTest extends AbstractServiceTest {
 
-    StudentRepository studentdao = Mockito.mock(StudentRepository.class);
-    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
-    GroupRepository groupdao = Mockito.mock(GroupRepository.class);
+    StudentRepository studentRepo = Mockito.mock(StudentRepository.class);
+    ProfessorRepository profRepo = Mockito.mock(ProfessorRepository.class);
+    GroupRepository groupRepo = Mockito.mock(GroupRepository.class);
     
     @Autowired
     StudentService stservice;
@@ -34,7 +34,7 @@ class StudentServiceTest extends AbstractServiceTest {
         student.setName("John");
         student.setSchoolYear(2);
         student.setGroup(gservice.getGroupById(1));
-        Mockito.when(studentdao.save(Mockito.any())).thenReturn(true);
+        Mockito.when(studentRepo.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = stservice.createStudent(student);
         assertTrue(successfulCreation);
     }
@@ -43,7 +43,7 @@ class StudentServiceTest extends AbstractServiceTest {
     void testGetStudentById() throws Exception {
         Student student = new Student();
         student.setName("John");
-        Mockito.when(studentdao.findById((Mockito.anyInt()))).thenReturn(Optional.of(student));
+        Mockito.when(studentRepo.findById((Mockito.anyInt()))).thenReturn(Optional.of(student));
         assertNotNull(stservice.getStudentById(1));
     }
     

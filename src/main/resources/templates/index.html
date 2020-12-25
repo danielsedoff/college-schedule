@@ -7,26 +7,23 @@
 
 <title>Index Page</title>
 
-<link th:href="@{/css/list.css}" rel="stylesheet"></link>
+<link th:href="@{/css/main.css}" rel="stylesheet"></link>
 
 </head>
 
 <body>
 
 	<main role="main" class="container">
-
-		<div class="starter-template">
-			<h1>Please select a table from below</h1>
+		<div th:each="link: ${links}" class="tile">
+			<a th:href="${link.getAddress()}"> 
+				<img class="tileimg"
+				th:src="${link.getImageAddress()}" th:alt="${link.getTitle()}">
+				<p class="caption" th:text="${link.getTitle()}"></p>
+			</a>
 		</div>
-		<table>
-			<tr th:each="link: ${links}">
-				<td><a th:href="${link.getAddress()}"
-					th:text="${link.getTitle()}"> </a></td>
-			</tr>
-		</table>
+
 	</main>
 
-	<script type="text/javascript"
-		></script>
 </body>
 </html>
+

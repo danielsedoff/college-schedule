@@ -8,23 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.CourseRepository;
 import com.danielsedoff.college.schedule.model.Course;
+import com.danielsedoff.college.schedule.repositories.CourseRepository;
 
 @Service
 public class CourseService {
 
     @Autowired
-    private CourseRepository coursedao;
+    private CourseRepository courseRepo;
 
     private static Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     public boolean createCourse(Course course) {
-        return coursedao.save(course) != null;
+        return courseRepo.save(course) != null;
     }
 
     public Course getCourseById(int courseId) {
-        Optional<Course> result = coursedao.findById(courseId);
+        Optional<Course> result = courseRepo.findById(courseId);
         if (null == result) {
             return null;
         }
@@ -33,7 +33,7 @@ public class CourseService {
 
     public boolean deleteCourseById(int courseId) {
         try {
-            coursedao.deleteById(courseId);
+            courseRepo.deleteById(courseId);
         } catch (Exception e) {
             logger.error("Could not delete Course by id: {}", courseId);
             return false;
@@ -43,11 +43,11 @@ public class CourseService {
 
     public boolean updateCourse(int courseId, Course course) {
         try {
-            Course managedCourse = coursedao.findById(courseId).get();
+            Course managedCourse = courseRepo.findById(courseId).get();
             managedCourse.setCourseDescription(course.getCourseDescription());
             managedCourse.setName(course.getName());
             managedCourse.setProfessor(course.getProfessors());
-            coursedao.save(managedCourse);
+            courseRepo.save(managedCourse);
         } catch (Exception e) {
             logger.error("Could not update Course, id: {}", courseId);
             return false;
@@ -57,7 +57,7 @@ public class CourseService {
 
     public List<Course> getCourseList() {
         try {
-            return (List<Course>) coursedao.findAll();
+            return (List<Course>) courseRepo.findAll();
         } catch (Exception e) {
             logger.error("Could not get a Course List", e);
         }

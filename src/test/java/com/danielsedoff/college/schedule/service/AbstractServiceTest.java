@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.SqlScriptRunner;
+import com.danielsedoff.college.schedule.repositories.SqlScriptRunner;
 
 @SpringBootTest
 public class AbstractServiceTest {

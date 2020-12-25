@@ -1,11 +1,20 @@
+* {
+    font-family: sans-serif;
+}
+
 .sticky {
     position: sticky;
     top: 2em;
     min-height: 2em;
 }
 
+.goback {
+	margin: 20px;
+	font-size: 30px;
+}
+
 table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-family: sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
