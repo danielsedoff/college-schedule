@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
@@ -18,7 +19,7 @@ import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.StudentService;
 
 @Controller
-public class StudentWebController {
+public class StudentWebController implements WebMvcConfigurer {
 
     @Autowired
     StudentService ss;

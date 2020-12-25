@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.ProfessorDTO;
 import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class ProfessorWebController {
+public class ProfessorWebController implements WebMvcConfigurer {
 
     @Autowired
     ProfessorService ps;

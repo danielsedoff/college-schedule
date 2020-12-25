@@ -12,15 +12,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "groupz")
 public class Group {
+    @NotNull
+    @Min(1)
     @Id
     @Column(name = "group_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int groupId;
-    
+
+    @NotNull
+    @Size(min = 2, max = 30)
     @Column(name = "group_note")
     private String specialNotes;
 
@@ -34,9 +41,9 @@ public class Group {
         return groupId;
     }
 
-//    public void setId(int id) {
-//        this.group_id = id;
-//    }
+    public void setId(int id) {
+        this.groupId = id;
+    }
 
     public String getSpecialNotes() {
         return specialNotes;

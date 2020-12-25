@@ -14,15 +14,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "dayschedules")
 public class DaySchedule {
+
+    @NotNull
+    @Min(1)
     @Id
     @Column(name = "dayschedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int dayscheduleId;
     
+    @NotNull
+    @Size(min=2, max=30)
     @Column(name = "the_day")
     private String day;
     
@@ -43,9 +51,9 @@ public class DaySchedule {
         return dayscheduleId;
     }
 
-//    public void setId(int id) {
-//        this.dayschedule_id = id;
-//    }
+    public void setId(int id) {
+        this.dayscheduleId = id;
+    }
 
     public String getDay() {
         return day;

@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.service.CourseService;
 
-@Controller("courseWebController")
-public class CourseWebController {
+@Controller
+public class CourseWebController implements WebMvcConfigurer {
 
     @Autowired
     private CourseService cs;

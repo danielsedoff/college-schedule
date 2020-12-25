@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.GroupDTO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.service.GroupService;
 
 @Controller
-public class GroupWebController {
+public class GroupWebController implements WebMvcConfigurer {
 
     @Autowired
     private GroupService gs;

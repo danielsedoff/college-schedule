@@ -9,18 +9,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import com.danielsedoff.college.schedule.model.validation.LessonDateConstraint;
 
 @Entity
 @Table(name = "lessons")
 public class Lesson {
+    @NotNull
+    @Min(1)
     @Id
     @Column(name = "lesson_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int lessonId;
 
+    @LessonDateConstraint
     @Column(name = "start_time")
     private String startTime;
 
+    @LessonDateConstraint
     @Column(name = "end_time")
     private String endTime;
 
@@ -43,9 +51,9 @@ public class Lesson {
         return lessonId;
     }
 
-//    public void setId(int id) {
-//        this.lesson_id = id;
-//    }
+    public void setId(int id) {
+        this.lessonId = id;
+    }
 
     public String getStartTime() {
         return startTime;

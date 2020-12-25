@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.model.PageLink;
 import com.danielsedoff.college.schedule.repositories.SqlScriptRunner;
 
 @Controller
-public class MainPageController {
+public class MainPageController implements WebMvcConfigurer {
     private static Logger logger = LoggerFactory.getLogger(MainPageController.class);
 
     private static final String SQL_FILE_NAME = "create_tables.sql";

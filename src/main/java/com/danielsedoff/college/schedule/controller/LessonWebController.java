@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
 import com.danielsedoff.college.schedule.model.Lesson;
@@ -20,7 +21,7 @@ import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class LessonWebController {
+public class LessonWebController implements WebMvcConfigurer {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
