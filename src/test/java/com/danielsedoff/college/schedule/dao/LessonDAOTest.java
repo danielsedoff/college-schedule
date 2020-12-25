@@ -17,7 +17,7 @@ import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.model.Professor;
 
-class LessonDAOTest extends DAOTest {
+class LessonDAOTest extends AbstractDAOTest {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

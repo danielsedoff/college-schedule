@@ -14,8 +14,9 @@ import javax.persistence.Table;
 @Table(name = "lessons")
 public class Lesson {
     @Id
+    @Column(name = "lesson_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int lesson_id;
+    private int lessonId;
 
     @Column(name = "start_time")
     private String startTime;
@@ -39,7 +40,7 @@ public class Lesson {
     }
 
     public int getId() {
-        return lesson_id;
+        return lessonId;
     }
 
 //    public void setId(int id) {

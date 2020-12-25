@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
-class StudentDAOTest extends DAOTest {
+class StudentDAOTest extends AbstractDAOTest {
 
     @Autowired
     private DAO<Group> groupdao;

@@ -25,8 +25,9 @@ public class YearSchedule {
     }
 
     @Id
+    @Column(name = "yearschedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int yearschedule_id;
+    private int yearscheduleId;
     
     @Column(name = "year")
     private int year;
@@ -46,7 +47,7 @@ public class YearSchedule {
     }
 
     public int getId() {
-        return yearschedule_id;
+        return yearscheduleId;
     }
 
 //    public void setId(int id) {

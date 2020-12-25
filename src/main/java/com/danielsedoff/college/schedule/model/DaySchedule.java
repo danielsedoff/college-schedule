@@ -19,13 +19,14 @@ import javax.persistence.Table;
 @Table(name = "dayschedules")
 public class DaySchedule {
     @Id
+    @Column(name = "dayschedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int dayschedule_id;
+    private int dayscheduleId;
     
     @Column(name = "the_day")
     private String day;
     
-    @Column(name = "hasOverlaps")
+    @Column(name = "hasoverlaps")
     private boolean hasOverlaps;
 
     @OneToMany(mappedBy = "dayschedule", fetch = FetchType.EAGER, orphanRemoval = true)
@@ -39,7 +40,7 @@ public class DaySchedule {
     }
 
     public int getId() {
-        return dayschedule_id;
+        return dayscheduleId;
     }
 
 //    public void setId(int id) {
@@ -62,12 +63,12 @@ public class DaySchedule {
         this.hasOverlaps = hasOverlaps;
     }
 
-    public int getDayschedule_id() {
-        return dayschedule_id;
+    public int getDayscheduleId() {
+        return dayscheduleId;
     }
 
-    public void setDayschedule_id(int dayschedule_id) {
-        this.dayschedule_id = dayschedule_id;
+    public void setDayscheduleId(int dayscheduleId) {
+        this.dayscheduleId = dayscheduleId;
     }
 
     public List<Lesson> getLessons() {

@@ -17,8 +17,9 @@ import javax.persistence.Table;
 @Table(name = "groupz")
 public class Group {
     @Id
+    @Column(name = "group_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int group_id;
+    private int groupId;
     
     @Column(name = "group_note")
     private String specialNotes;
@@ -30,7 +31,7 @@ public class Group {
     }
 
     public int getId() {
-        return group_id;
+        return groupId;
     }
 
 //    public void setId(int id) {

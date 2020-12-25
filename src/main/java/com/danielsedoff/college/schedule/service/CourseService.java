@@ -22,63 +22,57 @@ public class CourseService {
     private static Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     public List<Integer> getCourseIdList() {
-        List<Integer> idlist = null;
         try {
-            idlist = coursedao.getIdList();
+            return coursedao.getIdList();
         } catch (DAOException e) {
             logger.error("Could not get course ID list");
         }
-        return idlist;
+        return null;
     }
 
     public boolean createCourse(Course course) {
-        boolean result = false;
         try {
-            result = coursedao.create(course);
+            return coursedao.create(course);
         } catch (DAOException e) {
             logger.error("Could not create Course, id: {}", course.getId());
         }
-        return result;
+        return false;
     }
 
     public Course getCourseById(int courseId) {
-        Course result = null;
         try {
-            result = coursedao.getById(courseId);
+            return coursedao.getById(courseId);
         } catch (DAOException e) {
             logger.error("Could not get Course by id: {}", courseId);
         }
-        return result;
+        return null;
     }
 
     public boolean deleteCourseById(int courseId) {
-        boolean result = false;
         try {
-            result = coursedao.delete(coursedao.getById(courseId));
+            return coursedao.delete(coursedao.getById(courseId));
         } catch (DAOException e) {
             logger.error("Could not delete Course by id: {}", courseId);
         }
-        return result;
+        return false;
     }
 
     public boolean updateCourse(int courseId, Course course) {
-        boolean result = false;
         try {
-            result = coursedao.update(courseId, course);
+            return coursedao.update(courseId, course);
         } catch (DAOException e) {
             logger.error("Could not update Course, id: {}", courseId);
         }
-        return result;
+        return false;
     }
 
     public List<Course> getCourseList() {
-        List<Course> result = null;
         try {
-            result = coursedao.getList();
+            return coursedao.getList();
         } catch (DAOException e) {
             logger.error("Could not get a Course List", e);
         }
-        return result;
+        return null;
     }
 
 }

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Group;
 
-class GroupDAOTest extends DAOTest {
+class GroupDAOTest extends AbstractDAOTest {
 
     @Autowired
     private DAO<Group> groupdao;

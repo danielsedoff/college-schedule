@@ -10,11 +10,12 @@ import javax.persistence.MappedSuperclass;
 public abstract class Person {
     
     @Id
+    @Column(name = "person_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int person_id;
+    protected int personId;
     
     public int getId() {
-        return person_id;
+        return personId;
     }
 
 //    public void setId(int id) {
