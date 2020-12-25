@@ -1,4 +1,4 @@
-function submitter() {
+function submitter(actionName) {
     var send = document.getElementById("submitterResult");
     
     radioValue = "";
@@ -22,7 +22,7 @@ function submitter() {
 
     var postMsg = 'encoded=' + encodeURIComponent(postText);
 
-    xhr.open("POST", "/college-schedule/courseEdit", true);
+    xhr.open("POST", "/college-schedule/" + actionName, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onreadystatechange = function() { // (3)

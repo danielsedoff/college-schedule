@@ -84,7 +84,7 @@ public class GroupDAO implements DAO<Group> {
     public boolean create(Group group) throws DAOException {
         boolean result = false;
         try {
-            result = jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(),
+            result = jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes().toString(),
                     group.getDepartmentId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not create", e);

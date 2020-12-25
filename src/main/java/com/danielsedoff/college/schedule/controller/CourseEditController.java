@@ -116,16 +116,4 @@ public class CourseEditController {
         return "The server has recieved an unsupported mode command: " + mode;
     }
 
-    public String getCourses(Model model) {
-        List<Integer> ids = cs.getCourseIdList();
-        List<Course> courses = new ArrayList<>();
-
-        for (int id : ids) {
-            courses.add(cs.getCourseById(id));
-        }
-        model.addAttribute("courses", courses);
-        model.addAttribute("testvalue", "passed");
-        return "courseList";
-    }
-
 }

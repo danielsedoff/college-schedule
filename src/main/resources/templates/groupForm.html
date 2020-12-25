@@ -16,7 +16,7 @@
 				<tr>
 					<td>
 						<h2></h2>
-						<h2>Edit Courses</h2>
+						<h2>Edit Groups</h2>
 						<div id="submitterResult"></div>
 					</td>
 				</tr>
@@ -29,7 +29,7 @@
 				</tr>
 				<tbody>
 					<tr>
-						<td><label class="description" for="idinput">Course
+						<td><label class="description" for="idinput">Group
 								ID </label>
 							<div>
 								<input th:value="${id}" id="idinput" name="idinput" class="element text medium"
@@ -37,32 +37,16 @@
 							</div></td>
 					</tr>
 					<tr>
-						<td><label class="description" for="name">Course Name
+						<td><label class="description" for="name">Group Description
 						</label>
 							<div>
-								<input th:value="${name}" name="name" class="element text medium" type="text"
+								<input th:value="${description}" name="description" class="element text medium" type="text"
 									maxlength="255" value="" />
 							</div></td>
 					</tr>
-					<tr>
-						<td><label class="description" for="description">Course
-								Description </label>
-							<div>
-								<input th:value="${description}" name="description" class="element text medium"
-									type="text" maxlength="255" value="" />
-							</div></td>
-					</tr>
-					<tr>
-						<td><label class="description" for="connectedid1">Professor
-								ID </label>
-							<div>
-								<input th:value="${connectedId1}" name="connectedid1" class="element text medium"
-									type="text" maxlength="255" value="" />
-							</div></td>
-					</tr>
-					<tr>
+			<tr>
 						<td class="buttons"><input class="button_text" type="button"
-							name="submit" value="Done" onclick="submitter('courseForm')"></td>
+							name="submit" value="Done" onclick="submitter('groupForm')"></td>
 					</tr>
 				</tbody>
 			</table>
