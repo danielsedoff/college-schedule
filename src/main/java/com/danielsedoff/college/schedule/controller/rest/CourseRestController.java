@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -37,7 +35,7 @@ class CourseRestController {
     private ProfessorService ps;
 
     @GetMapping
-    public List<CourseDTO> findAll() throws JsonProcessingException {
+    public List<CourseDTO> findAll() {
         List<Course> courses = service.getCourseList();
         List<CourseDTO> result = new ArrayList<>();
         for (Course course : courses) {
@@ -53,7 +51,7 @@ class CourseRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public CourseDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public CourseDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
         Course course = RestPreconditions.checkFound(service.getCourseById(id));
         CourseDTO dto = new CourseDTO();
         dto.setDescription(course.getCourseDescription());

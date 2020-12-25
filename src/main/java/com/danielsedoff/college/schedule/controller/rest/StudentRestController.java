@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
 import com.danielsedoff.college.schedule.service.GroupService;
@@ -37,7 +35,7 @@ class StudentRestController {
     private GroupService gservice;
 
     @GetMapping
-    public List<StudentDTO> findAll() throws JsonProcessingException {
+    public List<StudentDTO> findAll() {
         List<Student> students = service.getStudentList();
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
@@ -53,7 +51,7 @@ class StudentRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public StudentDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public StudentDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
         Student student = RestPreconditions.checkFound(service.getStudentById(id));
         StudentDTO dto = new StudentDTO();
         dto.setId(student.getId());
