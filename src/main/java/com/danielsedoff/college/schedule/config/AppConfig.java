@@ -1,5 +1,7 @@
 package com.danielsedoff.college.schedule.config;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 @Configuration
 @ComponentScan("com.danielsedoff.college.schedule")
 @PropertySource(value = "classpath:database.properties")
-public class AppConfig {
+public class AppConfig implements WebApplicationInitializer {
 
     private static final String URL = "url";
     private static final String USER = "dbuser";
@@ -43,5 +47,12 @@ public class AppConfig {
         template.setDataSource(dataSource());
 
         return template;
+    }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        var context = new AnnotationConfigWebApplicationContext();
+        context.register(AppConfig.class);
+        context.setServletContext(servletContext);
     }
 }
