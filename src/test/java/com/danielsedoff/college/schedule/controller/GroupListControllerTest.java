@@ -52,7 +52,7 @@ class GroupListControllerTest {
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/groups")).andDo(print()).andExpect(view().name("groups"));
+        mockMvc.perform(get("/groups")).andDo(print()).andExpect(view().name("groupList"));
     }
 
     @Test

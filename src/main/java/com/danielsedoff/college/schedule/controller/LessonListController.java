@@ -17,7 +17,7 @@ public class LessonListController {
     @Autowired
     LessonService gs;
 
-    @GetMapping("/lessons")
+    @GetMapping("/lessonList")
     public String main(Model model) {
         List<Integer> ids = gs.getLessonIdList();
         List<Lesson> lessons = new ArrayList<>();
@@ -28,7 +28,7 @@ public class LessonListController {
         model.addAttribute("lessons", lessons);
         model.addAttribute("testvalue", "passed");
 
-        return "lessons";
+        return "lessonList";
     }
 
 }

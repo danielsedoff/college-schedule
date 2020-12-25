@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Course List</title>
+<link rel="stylesheet" type="text/css" href="static/entitylist.css"
+	media="all" />
+</head>
+
+<body>
+	<main role="main" class="container">
+		<div class="starter-template">
+			<h1>Course List</h1>
+		</div>
+		<div class="sticky">
+			<h2>
+				<a href="courseForm.html?id=-1">Create, edit or update Courses</a>
+			</h2>
+		</div>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Description</th>
+			</tr>
+			<tr th:each="course: ${courses}">
+				<td><a
+					th:href="@{/courseForm.html?id={id}(id=${course.getId()})}"><span
+						th:text="${course.getId()}"></span></a>
+				<td th:text="${course.getName()}" />
+				<td th:text="${course.getCourseDescription()}" />
+
+			</tr>
+		</table>
+
+	</main>
+	<script type="text/javascript"
+		></script>
+</body>
+</html>

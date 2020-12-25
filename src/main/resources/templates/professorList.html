@@ -7,34 +7,8 @@
 
 <title>Professor List</title>
 
-<style>
-table {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-}
-
-table td, table th {
-	border: 1px solid #ddd;
-	padding: 8px;
-}
-
-table tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-
-table tr:hover {
-	background-color: #ddd;
-}
-
-table th {
-	padding-top: 12px;
-	padding-bottom: 12px;
-	text-align: left;
-	background-color: #4CAF50;
-	color: white;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="static/entitylist.css"
+	media="all" />
 </head>
 
 <body>
@@ -44,13 +18,21 @@ table th {
 		<div class="starter-template">
 			<h1>Professor List</h1>
 		</div>
+		<div class="sticky">
+			<h2>
+				<a href="professorForm.html?id=-1">Create, edit or update Professors</a>
+			</h2>
+		</div>
+
 		<table>
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
 			</tr>
 			<tr th:each="professor: ${professors}">
-				<td th:text="${professor.getId()}" />
+				<td><a
+					th:href="@{/professorForm.html?id={id}(id=${professor.getId()})}"><span
+						th:text="${professor.getId()}"></span></a></td>
 				<td th:text="${professor.getName()}" />
 			</tr>
 		</table>
@@ -58,6 +40,6 @@ table th {
 	<!-- /.container -->
 
 	<script type="text/javascript"
-		th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+		></script>
 </body>
 </html>

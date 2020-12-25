@@ -7,34 +7,8 @@
 
 <title>Group List</title>
 
-<style>
-table {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-}
-
-table td, table th {
-	border: 1px solid #ddd;
-	padding: 8px;
-}
-
-table tr:nth-child(even) {
-	background-color: #f2f2f2;
-}
-
-table tr:hover {
-	background-color: #ddd;
-}
-
-table th {
-	padding-top: 12px;
-	padding-bottom: 12px;
-	text-align: left;
-	background-color: #4CAF50;
-	color: white;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="static/entitylist.css"
+	media="all" />
 </head>
 
 <body>
@@ -44,13 +18,21 @@ table th {
 		<div class="starter-template">
 			<h1>Group List</h1>
 		</div>
+		<div class="sticky">
+			<h2>
+				<a href="groupForm.html?id=-1">Create, edit or update Groups</a>
+			</h2>
+		</div>
+
 		<table>
 			<tr>
 				<th>ID</th>
 				<th>Special Notes</th>
 			</tr>
 			<tr th:each="group: ${groups}">
-				<td th:text="${group.getId()}" />
+				<td><a
+					th:href="@{/groupForm.html?id={id}(id=${group.getId()})}"><span
+						th:text="${group.getId()}"></span></a></td>
 				<td th:text="${group.getSpecialNotes()}" />
 			</tr>
 		</table>
@@ -58,6 +40,6 @@ table th {
 	<!-- /.container -->
 
 	<script type="text/javascript"
-		th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+		></script>
 </body>
 </html>

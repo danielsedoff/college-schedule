@@ -17,7 +17,7 @@ public class StudentListController {
     @Autowired
     StudentService ss;
 
-    @GetMapping("/students")
+    @GetMapping("/studentList")
     public String main(Model model) {
         List<Integer> ids = ss.getStudentIdList();
         List<Student> students = new ArrayList<>();
@@ -28,6 +28,6 @@ public class StudentListController {
         model.addAttribute("students", students);
         model.addAttribute("testvalue", "passed");
 
-        return "students";
+        return "studentList";
     }
 }

@@ -52,7 +52,7 @@ class ProfessorListControllerTest {
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/professors")).andDo(print()).andExpect(view().name("professors"));
+        mockMvc.perform(get("/professors")).andDo(print()).andExpect(view().name("professorList"));
     }
 
     @Test

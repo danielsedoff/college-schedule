@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
-<link rel="stylesheet" type="text/css" href="form.css" media="all" />
-<script src="submitter.js"></script>
+<link rel="stylesheet" type="text/css" href="static/form.css" media="all" />
+<script src="static/submitter.js"></script>
 </head>
 <body>
 	<div id="form_container">
@@ -32,7 +32,7 @@
 						<td><label class="description" for="idinput">Course
 								ID </label>
 							<div>
-								<input id="idinput" name="idinput" class="element text medium"
+								<input th:value="${id}" id="idinput" name="idinput" class="element text medium"
 									type="text" maxlength="255" value="" disabled />
 							</div></td>
 					</tr>
@@ -40,7 +40,7 @@
 						<td><label class="description" for="name">Course Name
 						</label>
 							<div>
-								<input name="name" class="element text medium" type="text"
+								<input th:value="${name}" name="name" class="element text medium" type="text"
 									maxlength="255" value="" />
 							</div></td>
 					</tr>
@@ -48,7 +48,7 @@
 						<td><label class="description" for="description">Course
 								Description </label>
 							<div>
-								<input name="description" class="element text medium"
+								<input th:value="${description}" name="description" class="element text medium"
 									type="text" maxlength="255" value="" />
 							</div></td>
 					</tr>
@@ -56,7 +56,7 @@
 						<td><label class="description" for="connectedid1">Professor
 								ID </label>
 							<div>
-								<input name="connectedid1" class="element text medium"
+								<input th:value="${connectedId1}" name="connectedid1" class="element text medium"
 									type="text" maxlength="255" value="" />
 							</div></td>
 					</tr>
@@ -68,6 +68,6 @@
 			</table>
 		</form>
 	</div>
-	<script src="radios.js"></script>
+	<script src="static/radios.js"></script>
 </body>
 </html>

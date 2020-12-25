@@ -16,11 +16,11 @@ public class MainPageController {
     public String main(Model model) {
 
         List<PageLink> links = new ArrayList<>();
-        links.add(new PageLink("Student List", "students.html"));
-        links.add(new PageLink("Professor List", "professors.html"));
-        links.add(new PageLink("Course List", "courses.html"));
-        links.add(new PageLink("Group List", "groups.html"));
-        links.add(new PageLink("Lesson List", "lessons.html"));
+        links.add(new PageLink("Student List", "studentList.html"));
+        links.add(new PageLink("Professor List", "professorList.html"));
+        links.add(new PageLink("Course List", "courseList.html"));
+        links.add(new PageLink("Group List", "groupList.html"));
+        links.add(new PageLink("Lesson List", "lessonList.html"));
 
         model.addAttribute("links", links);
         return "index.html";

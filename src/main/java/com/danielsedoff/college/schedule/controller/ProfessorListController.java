@@ -17,7 +17,7 @@ public class ProfessorListController {
     @Autowired
     ProfessorService ps;
 
-    @GetMapping("/professors")
+    @GetMapping("/professorList")
     public String main(Model model) {
         List<Integer> ids = ps.getProfessorIdList();
         List<Professor> professors = new ArrayList<>();
@@ -28,7 +28,7 @@ public class ProfessorListController {
         model.addAttribute("professors", professors);
         model.addAttribute("testvalue", "passed");
 
-        return "professors";
+        return "professorList";
     }
 
 }

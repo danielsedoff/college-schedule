@@ -1,7 +1,7 @@
 input:disabled, input[disabled] {
 	border: 1px solid #999999;
-	background-color: #999999;
-	color: #999999;
+	background-color: #AAAAAA;
+	color: #000000;
 }
 
 input.text {

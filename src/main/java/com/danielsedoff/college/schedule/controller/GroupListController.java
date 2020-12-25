@@ -17,7 +17,7 @@ public class GroupListController {
     @Autowired
     private GroupService gs;
 
-    @GetMapping("/groups")
+    @GetMapping("/groupList")
     public String getGroups(Model model) {
         List<Integer> ids = gs.getGroupIdList();
         List<Group> groups = new ArrayList<>();
@@ -27,7 +27,7 @@ public class GroupListController {
         }
         model.addAttribute("groups", groups);
         model.addAttribute("testvalue", "passed");
-        return "groups";
+        return "groupList";
     }
 
 }

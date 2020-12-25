@@ -17,7 +17,7 @@ public class CourseListController {
     @Autowired
     private CourseService cs; 
 
-    @GetMapping("/courses")
+    @GetMapping("/courseList")
     public String getCourses(Model model) {
         List<Integer> ids = cs.getCourseIdList();
         List<Course> courses = new ArrayList<>();
@@ -27,6 +27,6 @@ public class CourseListController {
         }
         model.addAttribute("courses", courses);
         model.addAttribute("testvalue", "passed");
-        return "courses";
+        return "courseList";
     }
 }
