@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Course;
+import com.danielsedoff.college.schedule.model.Professor;
 
 class CourseDAOTest extends DAOTest {
 
@@ -64,7 +66,7 @@ class CourseDAOTest extends DAOTest {
         String newName = "Chemistry";
         Course course = new Course();
         course.setName(newName);
-        course.setProfessorId(1);
+        course.setProfessor(new ArrayList<Professor>());
         coursedao.create(course);
         assertEquals(expectedSize, coursedao.getIdList().size());
         assertEquals(newName, coursedao.getById(5).getName());

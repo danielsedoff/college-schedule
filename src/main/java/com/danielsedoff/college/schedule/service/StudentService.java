@@ -51,8 +51,7 @@ public class StudentService {
     public boolean createStudent(Student student) {
         boolean result = false;
         try {
-//          DEBUG
-//          System.out.println("StudentService RECEIVES: " + student.toString());
+            logger.debug(">>>>>>>>>>>>>>>> StudentService RECEIVED: " + student.toString());
             result = studentdao.create(student);
         } catch (DAOException e) {
             logger.error("Could not create a Student", e);

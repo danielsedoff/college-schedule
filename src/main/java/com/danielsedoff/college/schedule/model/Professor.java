@@ -1,9 +1,17 @@
 package com.danielsedoff.college.schedule.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -11,24 +19,36 @@ import javax.persistence.Table;
 @Table(name = "professors")
 public class Professor extends Person {
 
-    @Column(name = "department_id")
-    private int departmentId;
-    
     @Column(name = "professor_notes")
     private String specialNotes;
-    
+
     @Column(name = "professor_ranks")
     private String ranksTitles;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Lesson> lessons = new ArrayList<Lesson>();
 
     public Professor() {
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public String getSpecialNotes() {
@@ -49,7 +69,7 @@ public class Professor extends Person {
 
     @Override
     public String toString() {
-        return "Professor [id=" + person_id + ", departmentId=" + departmentId + ", name=" + name + ", specialNotes="
+        return "Professor [id=" + person_id + ", name=" + name + ", specialNotes="
                 + specialNotes + ", ranksTitles=" + ranksTitles + "]";
     }
 

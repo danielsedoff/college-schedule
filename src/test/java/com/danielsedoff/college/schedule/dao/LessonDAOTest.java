@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonDAOTest extends DAOTest {
 
@@ -45,7 +46,7 @@ class LessonDAOTest extends DAOTest {
         lesson.setStartTime(now.format(formatter));
         lesson.setEndTime(now.format(formatter));
         lesson.setStartTime(now.format(formatter));
-        lesson.setProfessorId(2);
+        lesson.setProfessor(new Professor());
         lessondao.update(id, lesson);
         assertEquals(now.format(formatter),
                 lessondao.getById(id).getStartTime());
@@ -68,7 +69,7 @@ class LessonDAOTest extends DAOTest {
         LocalDateTime now = LocalDateTime.now();
         lesson.setStartTime(now.format(formatter));
         lesson.setEndTime(now.format(formatter));
-        lesson.setProfessorId(2);
+        lesson.setProfessor(new Professor());
         lessondao.create(lesson);
         assertEquals(expectedSize, lessondao.getIdList().size());
         assertEquals(now.format(formatter),

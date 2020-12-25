@@ -43,7 +43,7 @@ public class DayScheduleService {
     public boolean createDaySchedule(LocalDateTime date) {
         boolean hasOverlaps = false;
         DaySchedule ds = new DaySchedule();
-        ds.setDay(date);
+        ds.setDay(date.format(formatter));
         ds.setHasOverlaps(hasOverlaps);
         boolean result = false;
         try {
@@ -57,7 +57,7 @@ public class DayScheduleService {
     public boolean updateDaySchedule(int dayschedId, LocalDateTime date,
             boolean hasOverlaps) {
         DaySchedule daysched = new DaySchedule();
-        daysched.setDay(date);
+        daysched.setDay(date.format(formatter));
         daysched.setHasOverlaps(hasOverlaps);
         boolean result = false;
         try {

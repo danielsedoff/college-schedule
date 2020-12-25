@@ -73,7 +73,7 @@ public class CourseDAO implements DAO<Course> {
             Course oldCourse = (Course) em.find(Course.class, id);
             oldCourse.setCourseDescription(course.getCourseDescription());
             oldCourse.setName(course.getName());
-            oldCourse.setProfessorId(course.getProfessorId());
+            oldCourse.setProfessor(course.getProfessors());
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {

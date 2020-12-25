@@ -36,11 +36,8 @@ class ProfessorDAOTest extends DAOTest {
     @Test
     void testUpdate() throws DAOException {
         int id = 1;
-        int deptId = 1337;
         Professor prof = profdao.getById(id);
-        prof.setDepartmentId(deptId);
         profdao.update(id, prof);
-        assertEquals(deptId, profdao.getById(id).getDepartmentId());
     }
 
     @Test
@@ -56,14 +53,11 @@ class ProfessorDAOTest extends DAOTest {
     void testCreate() throws DAOException {
         int expectedSize = profdao.getIdList().size() + 1;
         Professor prof = new Professor();
-        int deptId = 1337;
-        prof.setDepartmentId(deptId);
         prof.setName("Pit Bull");
         prof.setRanksTitles("The Most Aggressive One");
         prof.setSpecialNotes("Students Beware");
         profdao.create(prof);
         assertEquals(expectedSize, profdao.getIdList().size());
-        assertEquals(deptId, profdao.getById(expectedSize).getDepartmentId());
     }
 
     @Test

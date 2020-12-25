@@ -27,6 +27,7 @@ public class ProfessorDAO implements DAO<Professor> {
                 result.add(professor.getId());
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Professor Id List", e);
         }
         return result;
@@ -38,6 +39,7 @@ public class ProfessorDAO implements DAO<Professor> {
             EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Professor.class, id);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Professor By Id", e);
         }
         return result;
@@ -56,6 +58,7 @@ public class ProfessorDAO implements DAO<Professor> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not delete Professor", e);
         }
         return result;
@@ -67,13 +70,13 @@ public class ProfessorDAO implements DAO<Professor> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
-            oldProfessor.setDepartmentId(professor.getDepartmentId());
             oldProfessor.setName(professor.getName());
             oldProfessor.setRanksTitles(professor.getRanksTitles());
             oldProfessor.setSpecialNotes(professor.getSpecialNotes());
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not update Professor", e);
         }
         return result;
@@ -88,6 +91,7 @@ public class ProfessorDAO implements DAO<Professor> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Professor", e);
         }
         return result;
@@ -99,12 +103,11 @@ public class ProfessorDAO implements DAO<Professor> {
         try {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            professors = em.createQuery("from Professor", Professor.class)
-                    .getResultList();
+            professors = em.createQuery("from Professor", Professor.class).getResultList();
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
-            logger.error(e.toString());
+            logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Professor List", e);
         }
         return professors;

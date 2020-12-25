@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +19,6 @@ class DayScheduleDAOTest extends DAOTest {
     private DayScheduleDAO dsdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @BeforeEach
     final void readSQLfile() throws IOException, SQLException {
@@ -40,10 +37,9 @@ class DayScheduleDAOTest extends DAOTest {
     void testUpdate() throws DAOException {
         int id = 1;
         DaySchedule ds = dsdao.getById(id);
-        LocalDateTime today = LocalDateTime.now();
-        ds.setDay(today);
+        ds.setDay("2000-10-10");
         dsdao.update(id, ds);
-        assertEquals(today.format(formatter), dsdao.getById(id).getDay().format(formatter));
+        assertEquals("2000-10-10", dsdao.getById(id).getDay());
     }
 
     @Test
@@ -59,11 +55,10 @@ class DayScheduleDAOTest extends DAOTest {
     void testCreate() throws DAOException {
         int expectedSize = dsdao.getIdList().size() + 1;
         DaySchedule ds = new DaySchedule();
-        LocalDateTime now = LocalDateTime.now();
-        ds.setDay(now);
+        ds.setDay("2000-10-10");
         dsdao.create(ds);
         assertEquals(expectedSize, dsdao.getIdList().size());
-        assertEquals(now.format(formatter), dsdao.getById(5).getDay().format(formatter));
+        assertEquals("2000-10-10", dsdao.getById(5).getDay());
     }
 
     @Test

@@ -4,7 +4,7 @@ public class ProfessorDTO {
     @Override
     public String toString() {
         return "ProfessorDTO [id=" + id + ", mode=" + mode + ", name=" + name + ", ranks=" + ranks
-                + ", notes=" + notes + ", departmentId=" + departmentId + "]";
+                + ", notes=" + notes + "]";
     }
 
     int id;
@@ -12,7 +12,6 @@ public class ProfessorDTO {
     String name;
     String ranks;
     String notes;
-    int departmentId;
 
     public int getId() {
         return id;
@@ -52,14 +51,6 @@ public class ProfessorDTO {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
     }
 
 }

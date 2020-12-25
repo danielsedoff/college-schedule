@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -18,15 +20,25 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int lesson_id;
+    
     @Column(name = "start_time")
     private String startTime;
+    
     @Column(name = "end_time")
     private String endTime;
-    @Column(name = "professor_id")
-    private int professorId;
-    @Column(name = "group_id")
-    private int groupId;
-
+    
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
+    
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
+    
+    @ManyToOne
+    @JoinColumn(name = "dayschedule_id")
+    private DaySchedule dayschedule;
+    
     public Lesson() {
     }
 
@@ -54,19 +66,27 @@ public class Lesson {
         this.endTime = endTime;
     }
 
-    public int getProfessorId() {
-        return professorId;
+    public Professor getProfessor() {
+        return professor;
     }
 
-    public void setProfessorId(int professorId) {
-        this.professorId = professorId;
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public DaySchedule getDayschedule() {
+        return dayschedule;
+    }
+
+    public void setDayschedule(DaySchedule dayschedule) {
+        this.dayschedule = dayschedule;
     }
 }

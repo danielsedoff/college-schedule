@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
@@ -29,6 +30,9 @@ public class LessonWebController {
     @Autowired
     ProfessorService ps;
 
+    @Autowired
+    GroupService gs;
+    
     @GetMapping("/lessonList")
     public String getLessons(Model model) {
         List<Lesson> lessons = ls.getLessonList();
@@ -50,8 +54,8 @@ public class LessonWebController {
         lessondto.setMode("update");
         lessondto.setStartTime((lesson.getStartTime()));
         lessondto.setEndTime((lesson.getEndTime()));
-        lessondto.setGroupId(lesson.getGroupId());
-        int professorId = lesson.getProfessorId();
+        lessondto.setGroupId(lesson.getGroup().getId());
+        int professorId = lesson.getProfessor().getId();
         lessondto.setProfessorId(professorId);
         return "lessonForm";
     }
@@ -68,9 +72,8 @@ public class LessonWebController {
         Lesson lesson = new Lesson();
         lesson.setEndTime((lessondto.getEndTime()));
         lesson.setStartTime((lessondto.getStartTime()));
-        lesson.setGroupId(lessondto.getGroupId());
-        lesson.setProfessorId(lessondto.getProfessorId());
-
+        lesson.setGroup(gs.getGroupById(lessondto.getGroupId()));
+        lesson.setProfessor(ps.getProfessorById(lessondto.getProfessorId()));
         ls.createLesson(lesson);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
         return "resultPage";
@@ -83,12 +86,12 @@ public class LessonWebController {
         lesson.setId(lessondto.getId());
         lesson.setEndTime((lessondto.getEndTime()));
         lesson.setStartTime((lessondto.getStartTime()));
-        lesson.setGroupId(lessondto.getGroupId());
+        lesson.setGroup(gs.getGroupById(lessondto.getGroupId()));
         if (ps.getProfessorById(lessondto.getProfessorId()) == null) {
             model.addAttribute("result", "Error: there is no professor with ID " + lessondto.getProfessorId());
             return "resultPage";
         }
-        lesson.setProfessorId(lessondto.getProfessorId());
+        lesson.setProfessor(ps.getProfessorById(lessondto.getProfessorId()));
         ls.updateLesson(lessondto.getId(), lesson);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";

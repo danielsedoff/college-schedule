@@ -64,7 +64,6 @@ public class GroupDAO implements DAO<Group> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Group oldGroup = (Group) em.find(Group.class, id);
-            oldGroup.setDepartmentId(group.getDepartmentId());
             oldGroup.setSpecialNotes(group.getSpecialNotes());
             em.getTransaction().commit();
             em.close();

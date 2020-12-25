@@ -44,7 +44,6 @@ class GroupDAOTest extends DAOTest {
         int id = 1;
         String note = "Large group";
         Group group = groupdao.getById(id);
-        group.setDepartmentId(4);
         group.setSpecialNotes(note);
         groupdao.update(id, group);
         Group newGroup = groupdao.getById(id);
@@ -64,11 +63,9 @@ class GroupDAOTest extends DAOTest {
     void testCreate() throws DAOException {
         int expectedSize = groupdao.getIdList().size() + 1;
         Group group = new Group();
-        group.setDepartmentId(65535);
         group.setSpecialNotes("Info");
         groupdao.create(group);
         assertEquals(expectedSize, groupdao.getIdList().size());
-        assertEquals(65535, groupdao.getById(expectedSize).getDepartmentId());
     }
 
 }

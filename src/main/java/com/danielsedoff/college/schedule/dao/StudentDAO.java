@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,20 +86,22 @@ public class StudentDAO implements DAO<Student> {
 
     public boolean create(Student student) throws DAOException {
         boolean result = false;
+        EntityManager em = emf.getFactory().createEntityManager();
+        EntityTransaction trn = em.getTransaction();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
+            trn.begin();
 //          DEBUG
             System.out.println("StudentDAO RECEIVES: " + student.toString());
             em.persist(student);
             em.flush();
             em.close();
+            trn.commit();
         } catch (Exception e) {
+            trn.rollback();
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Student", e);
         }
         return result;
-
     }
 
     public List<Student> getList() throws DAOException {

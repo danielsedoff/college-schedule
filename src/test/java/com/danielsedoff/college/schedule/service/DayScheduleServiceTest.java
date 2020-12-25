@@ -56,7 +56,7 @@ class DayScheduleServiceTest {
     @Test
     void testGetDayScheduleById() throws DAOException {
         DaySchedule ds = new DaySchedule();
-        ds.setDay(LocalDateTime.now());
+        ds.setDay("2000-10-10");
         Mockito.when(dsdao.getById(Mockito.anyInt())).thenReturn(ds);
         assertNotNull(dsservice.getDayScheduleById(1));
     }

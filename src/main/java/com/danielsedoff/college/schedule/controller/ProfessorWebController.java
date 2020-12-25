@@ -44,7 +44,6 @@ public class ProfessorWebController {
         Professor professor = ps.getProfessorById(id);
         professordto.setId(id);
         professordto.setMode("update");
-        professordto.setDepartmentId(professor.getDepartmentId());
         professordto.setName(professor.getName());
         professordto.setNotes(professor.getSpecialNotes());
         professordto.setRanks(professor.getRanksTitles());
@@ -62,7 +61,6 @@ public class ProfessorWebController {
     @PostMapping("/createProfessor")
     public String createProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         Professor professor = new Professor();
-        professor.setDepartmentId(professordto.getDepartmentId());
         professor.setName(professordto.getName());
         professor.setSpecialNotes(professordto.getNotes());
         professor.setRanksTitles(professordto.getRanks());
@@ -75,7 +73,6 @@ public class ProfessorWebController {
     public String updateProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         Professor professor = new Professor();
         professor.setId(professordto.getId());
-        professor.setDepartmentId(professordto.getDepartmentId());
         professor.setName(professordto.getName());
         professor.setSpecialNotes(professordto.getNotes());
         professor.setRanksTitles(professordto.getRanks());

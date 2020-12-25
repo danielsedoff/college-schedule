@@ -30,7 +30,6 @@ class GroupServiceTest {
     @Test
     void testCreateGroup() throws DAOException {
         Group group = new Group();
-        group.setDepartmentId(123);
         Mockito.when(groupdao.create(group)).thenReturn(true);
         boolean successfulCreation = gservice.createGroup(group);
         assertTrue(successfulCreation);
@@ -40,7 +39,6 @@ class GroupServiceTest {
     void testUpdateGroup() throws DAOException {
         int groupId = 1;
         Group group = new Group();
-        group.setDepartmentId(123);
         Mockito.when(groupdao.update(groupId, group)).thenReturn(true);
         boolean successfulUpdate = gservice.updateGroup(groupId, group);
         assertTrue(successfulUpdate);
@@ -56,7 +54,6 @@ class GroupServiceTest {
     @Test
     void testGetGroupById() throws DAOException {
         Group group = new Group();
-        group.setDepartmentId(123);
         Mockito.when(groupdao.getById(Mockito.anyInt())).thenReturn(group);
         assertNotNull(gservice.getGroupById(1));
     }

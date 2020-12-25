@@ -1,6 +1,10 @@
 package com.danielsedoff.college.schedule.dto;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import com.danielsedoff.college.schedule.model.Professor;
 
 @Component
 public class CourseDTO {
@@ -8,7 +12,7 @@ public class CourseDTO {
     int id;
     String name;
     String description;
-    int professorId;
+    List<Professor> professors;
 
     public String getMode() {
         return mode;
@@ -42,11 +46,11 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public int getProfessorId() {
-        return professorId;
+    public List<Professor>  getProfessorId() {
+        return professors;
     }
 
-    public void setProfessorId(int professorId) {
-        this.professorId = professorId;
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
     }
 }

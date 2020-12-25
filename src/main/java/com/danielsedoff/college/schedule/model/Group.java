@@ -24,8 +24,7 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int group_id;
-    @Column(name = "department_id")
-    private int departmentId;
+    
     @Column(name = "group_note")
     private String specialNotes;
 
@@ -41,14 +40,6 @@ public class Group {
 
     public void setId(int id) {
         this.group_id = id;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
     }
 
     public String getSpecialNotes() {

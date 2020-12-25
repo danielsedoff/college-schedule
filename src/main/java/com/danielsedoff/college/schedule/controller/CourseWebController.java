@@ -2,6 +2,8 @@ package com.danielsedoff.college.schedule.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ public class CourseWebController {
 
     @Autowired
     private CourseService cs;
+
+    private static Logger logger = LoggerFactory.getLogger(CourseWebController.class);
 
     @GetMapping("/courseList")
     public String getCourses(Model model) throws DAOException {
@@ -46,7 +50,7 @@ public class CourseWebController {
         coursedto.setMode("update");
         coursedto.setName(course.getName());
         coursedto.setDescription(course.getCourseDescription());
-        coursedto.setProfessorId(course.getProfessorId());
+        coursedto.setProfessors(course.getProfessors());
         model.addAttribute("testvalue", "passed");
         return "courseForm";
     }
@@ -61,11 +65,10 @@ public class CourseWebController {
     @PostMapping("/createCourse")
     public String createCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         Course course = new Course();
-        course.setProfessorId(coursedto.getProfessorId());
+        coursedto.setProfessors(course.getProfessors());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());
-//      DEBUG
-//      System.out.println("CourseWebController RECEIVED: " + course.toString());
+        logger.debug(">>>>>>>>>>>>>>>> CourseWebController RECEIVED: " + course.toString());
         cs.createCourse(course);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
         return "resultPage";
@@ -74,7 +77,7 @@ public class CourseWebController {
     @PostMapping("/updateCourse")
     public String updateCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         Course course = new Course();
-        course.setProfessorId(coursedto.getProfessorId());
+        coursedto.setProfessors(course.getProfessors());
         course.setId(coursedto.getId());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());
