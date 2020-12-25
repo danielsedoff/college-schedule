@@ -12,12 +12,6 @@ public class Lesson {
     private int professorId;
     private int groupId;
 
-    @Override
-    public String toString() {
-        return "Lesson [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime
-                + ", professor=" + professorId + ", groupId=" + groupId + "]";
-    }
-    
     public int getId() {
         return id;
     }

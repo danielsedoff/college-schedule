@@ -18,13 +18,13 @@ import com.danielsedoff.college.schedule.model.Student;
 import com.danielsedoff.college.schedule.service.StudentService;
 
 @Controller
-public class StudentListController {
+public class StudentWebController {
 
     @Autowired
     StudentService ss;
 
     @GetMapping("/studentList")
-    public String main(Model model) {
+    public String getStudents(Model model) {
         List<Integer> ids = ss.getStudentIdList();
         List<Student> students = new ArrayList<>();
 
@@ -63,7 +63,6 @@ public class StudentListController {
 
     @PostMapping("/createStudent")
     public String createStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
-        System.out.println(studentdto.toString());
         Student student = new Student();
         student.setGroupId(studentdto.getGroupId());
         student.setName(studentdto.getName());

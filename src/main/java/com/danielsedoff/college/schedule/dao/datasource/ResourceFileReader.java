@@ -13,7 +13,7 @@ public class ResourceFileReader {
         try (BufferedReader bufReader = new BufferedReader(new FileReader(file));
                 Stream<String> resourceContent = bufReader.lines()) {
             return resourceContent.collect(Collectors.joining(System.lineSeparator()));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IOException(String
                     .format("Issues while reading the data from file: %s", fileName), e);
         }

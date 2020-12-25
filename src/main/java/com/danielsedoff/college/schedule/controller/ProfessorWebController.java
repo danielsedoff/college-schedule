@@ -18,13 +18,13 @@ import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class ProfessorListController {
+public class ProfessorWebController {
 
     @Autowired
     ProfessorService ps;
 
     @GetMapping("/professorList")
-    public String main(Model model) {
+    public String getProfessors(Model model) {
         List<Integer> ids = ps.getProfessorIdList();
         List<Professor> professors = new ArrayList<>();
 
@@ -66,7 +66,6 @@ public class ProfessorListController {
     @PostMapping("/createProfessor")
     public String createProfessor(@ModelAttribute("professordto") ProfessorDTO professordto,
             Model model) {
-        System.out.println(professordto.toString());
         Professor professor = new Professor();
         professor.setDepartmentId(professordto.getDepartmentId());
         professor.setName(professordto.getName());

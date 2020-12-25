@@ -20,9 +20,8 @@ import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
-
 @Controller
-public class LessonListController {
+public class LessonWebController {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -33,7 +32,7 @@ public class LessonListController {
     ProfessorService ps;
 
     @GetMapping("/lessonList")
-    public String main(Model model) {
+    public String getLessons(Model model) {
         List<Integer> ids = ls.getLessonIdList();
         List<Lesson> lessons = new ArrayList<>();
 
@@ -99,11 +98,8 @@ public class LessonListController {
             return "resultPage";
         }
         lesson.setProfessorId(lessondto.getProfessorId());
-        System.out.println(lesson.toString());
         ls.updateLesson(lessondto.getId(), lesson);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";
-
     }
-
-}
+} 
