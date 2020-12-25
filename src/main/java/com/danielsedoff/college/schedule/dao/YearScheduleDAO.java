@@ -47,12 +47,12 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
                 new Object[] { yearId }, new YearScheduleMapper());
     }
 
-    public boolean insertDaySchedulesIntoYearSchedule(DaySchedule dayschedule, YearSchedule yearschedule) {
+    public boolean setDayScheduleYearSchedule(DaySchedule dayschedule, YearSchedule yearschedule) {
         return (jdbcTemplate.update(SQL_INSERT_YEARSCHEDULE_DAYSCHEDULE, dayschedule.getId(),
                 yearschedule.getId()) > 0);
     }
 
-    public List<DaySchedule> getDaysByYear(DayScheduleDAO dayscheduledao, YearSchedule yearschedule) {
+    public List<DaySchedule> getDayScheduleYearSchedule(DayScheduleDAO dayscheduledao, YearSchedule yearschedule) {
         List<Integer> dayScheduleIds = jdbcTemplate.queryForList(SQL_SELECT_DAYSCHEDULES_BY_YEAR,
                 Integer.class, yearschedule.getId());
         List<DaySchedule> dayschedules = new ArrayList<>();

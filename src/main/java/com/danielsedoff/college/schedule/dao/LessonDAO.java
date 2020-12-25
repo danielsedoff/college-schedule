@@ -49,7 +49,7 @@ public class LessonDAO implements DAO<Lesson> {
                 new Object[] { lessonId }, new LessonMapper());
     }
 
-    public boolean insertLessonGroup(Lesson lesson, Group group) {
+    public boolean setLessonGroup(Lesson lesson, Group group) {
         return (jdbcTemplate.update(SQL_INSERT_LESSON_GROUP, lesson.getId(),
                 group.getId()) > 0);
     }

@@ -48,7 +48,7 @@ public class GroupDAO implements DAO<Group> {
         return jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(), group.getDepartmentId()) > 0;
     }
 
-    public boolean setStudentList(Group group, List<Student> students) {
+    public boolean setGroupStudent(Group group, List<Student> students) {
         // TODO: Make it batch.
         boolean result = false;
         for(int i = 0; i < students.size(); i++) {
@@ -57,7 +57,7 @@ public class GroupDAO implements DAO<Group> {
         return result;
     }
     
-    public List<Student> getStudentList(StudentDAO studentdao, Group group) {
+    public List<Student> getStudentsByGroup(StudentDAO studentdao, Group group) {
         List<Integer> studentIds = jdbcTemplate.queryForList(SQL_SELECT_STUDENT_BY_GROUP, Integer.class, group.getId());
         List<Student> students = new ArrayList<>();
         for(Integer studentId : studentIds) {
