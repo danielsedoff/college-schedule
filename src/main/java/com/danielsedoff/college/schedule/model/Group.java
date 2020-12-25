@@ -13,13 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "groupz")
-@ToString
-@EqualsAndHashCode
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +33,9 @@ public class Group {
         return group_id;
     }
 
-    public void setId(int id) {
-        this.group_id = id;
-    }
+//    public void setId(int id) {
+//        this.group_id = id;
+//    }
 
     public String getSpecialNotes() {
         return specialNotes;

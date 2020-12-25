@@ -12,7 +12,7 @@ import com.danielsedoff.college.schedule.model.Course;
 
 @Service
 public class CourseService {
-    
+
     private DAO<Course> coursedao;
 
     public CourseService(DAO<Course> coursedao) {

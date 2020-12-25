@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
 class StudentDAOTest extends DAOTest {
@@ -46,21 +47,22 @@ class StudentDAOTest extends DAOTest {
     @Test
     void testDelete() throws DAOException {
         int expectedResult = studentdao.getIdList().size() - 1;
-        Student stud = new Student();
-        stud.setId(1);
-        studentdao.delete(stud);
-        assertEquals(expectedResult, studentdao.getIdList().size());
+        Student student = studentdao.getById(1);
+        studentdao.delete(student);
+        assertEquals(expectedResult, studentdao.getList().size());
     }
 
     @Test
     void testCreate() throws DAOException {
         int expectedSize = studentdao.getIdList().size() + 1;
-        Student stud = new Student();
         String newname = "Jack Scart";
-        stud.setName(newname);
-        studentdao.create(stud);
+        Group group = new Group();
+        Student student = new Student();
+        student.setName(newname);
+        student.setGroup(group);
+        student.setSchoolYear(2);
+        studentdao.create(student);
         assertEquals(expectedSize, studentdao.getIdList().size());
-        assertEquals(newname, studentdao.getById(5).getName());
     }
 
     @Test

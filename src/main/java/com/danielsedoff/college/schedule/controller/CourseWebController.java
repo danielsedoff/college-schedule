@@ -68,7 +68,6 @@ public class CourseWebController {
         coursedto.setProfessors(course.getProfessors());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());
-        logger.debug(">>>>>>>>>>>>>>>> CourseWebController RECEIVED: " + course.toString());
         cs.createCourse(course);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
         return "resultPage";
@@ -77,8 +76,7 @@ public class CourseWebController {
     @PostMapping("/updateCourse")
     public String updateCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         Course course = new Course();
-        coursedto.setProfessors(course.getProfessors());
-        course.setId(coursedto.getId());
+//        course.setProfessors(coursedto.getProfessors());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());
         cs.updateCourse(coursedto.getId(), course);

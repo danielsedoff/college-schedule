@@ -72,7 +72,6 @@ public class ProfessorWebController {
     @PostMapping("/updateProfessor")
     public String updateProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         Professor professor = new Professor();
-        professor.setId(professordto.getId());
         professor.setName(professordto.getName());
         professor.setSpecialNotes(professordto.getNotes());
         professor.setRanksTitles(professordto.getRanks());

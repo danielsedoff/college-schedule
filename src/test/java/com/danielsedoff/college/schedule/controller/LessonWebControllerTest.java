@@ -28,7 +28,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class LessonWebControllerTest {
+class LessonWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -56,8 +56,7 @@ class LessonWebControllerTest {
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/lessonList")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/lessonList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
@@ -67,8 +66,7 @@ class LessonWebControllerTest {
 
     @Test
     void getLessonFormShouldReturnLessonFormTemplate() throws Exception {
-        mockMvc.perform(get("/lessonForm").param("id", "-1")).andDo(print())
-                .andExpect(view().name("lessonForm"));
+        mockMvc.perform(get("/lessonForm").param("id", "-1")).andDo(print()).andExpect(view().name("lessonForm"));
     }
 
     @Test
@@ -78,16 +76,16 @@ class LessonWebControllerTest {
 
     @Test
     void postCreateLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createLesson").param("endTime", "1999-01-01 14:14")
-                .param("startTime", "1999-01-01 13:13")).andDo(print())
-                .andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/createLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateLesson").param("endTime", "1999-01-01 14:14")
-                .param("startTime", "1999-01-01 13:13")).andDo(print())
-                .andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/updateLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

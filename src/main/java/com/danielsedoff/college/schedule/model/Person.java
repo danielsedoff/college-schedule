@@ -17,9 +17,9 @@ public abstract class Person {
         return person_id;
     }
 
-    public void setId(int id) {
-        this.person_id = id;
-    }
+//    public void setId(int id) {
+//        this.person_id = id;
+//    }
 
     @Column(name = "person_name")
     protected String name;

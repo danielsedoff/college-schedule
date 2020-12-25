@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.dao.DAOException;

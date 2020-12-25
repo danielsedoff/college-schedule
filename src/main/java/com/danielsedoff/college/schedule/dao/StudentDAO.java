@@ -54,6 +54,8 @@ public class StudentDAO implements DAO<Student> {
         try {
             Student targetStudent = em.find(Student.class, student.getId());
             em.remove(targetStudent);
+            em.flush();
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
@@ -80,8 +82,8 @@ public class StudentDAO implements DAO<Student> {
     public boolean create(Student student) throws DAOException {
         boolean result = false;
         try {
-            System.out.println("StudentDAO RECEIVES: " + student.toString());
             em.persist(student);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

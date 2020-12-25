@@ -1,10 +1,5 @@
 package com.danielsedoff.college.schedule.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@ToString
-@EqualsAndHashCode
 public class LessonDTO {
     String mode;
     int id;

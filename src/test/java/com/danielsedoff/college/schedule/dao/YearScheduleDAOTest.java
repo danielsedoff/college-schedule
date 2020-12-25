@@ -46,8 +46,7 @@ class YearScheduleDAOTest extends DAOTest {
     @Test
     void testDelete() throws DAOException {
         int expectedResult = yeardao.getIdList().size() - 1;
-        YearSchedule ys = new YearSchedule();
-        ys.setId(1);
+        YearSchedule ys = yeardao.getById(2);
         yeardao.delete(ys);
         assertEquals(expectedResult, yeardao.getIdList().size());
     }

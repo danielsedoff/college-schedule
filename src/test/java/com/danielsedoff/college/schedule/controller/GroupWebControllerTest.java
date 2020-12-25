@@ -28,7 +28,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class GroupWebControllerTest {
+class GroupWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -56,8 +56,7 @@ class GroupWebControllerTest {
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/groupList")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/groupList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
@@ -67,8 +66,7 @@ class GroupWebControllerTest {
 
     @Test
     void getGroupFormShouldReturnGroupFormTemplate() throws Exception {
-        mockMvc.perform(get("/groupForm").param("id", "-1")).andDo(print())
-                .andExpect(view().name("groupForm"));
+        mockMvc.perform(get("/groupForm").param("id", "-1")).andDo(print()).andExpect(view().name("groupForm"));
     }
 
     @Test

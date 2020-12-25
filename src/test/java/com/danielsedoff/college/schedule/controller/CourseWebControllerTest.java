@@ -31,7 +31,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ContextConfiguration(classes = { TestWebConfig.class })
 @ComponentScan(basePackageClasses = { CourseWebController.class })
 @WebAppConfiguration
-class CourseWebControllerTest {
+class CourseWebControllerTest extends ControllerTest {
 
     MainWebAppInitializer mwai = new MainWebAppInitializer();
 

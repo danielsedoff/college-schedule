@@ -28,7 +28,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class ProfessorWebControllerTest {
+class ProfessorWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -67,8 +67,7 @@ class ProfessorWebControllerTest {
 
     @Test
     void getProfessorFormShouldReturnProfessorFormTemplate() throws Exception {
-        mockMvc.perform(get("/professorForm").param("id", "-1")).andDo(print())
-                .andExpect(view().name("professorForm"));
+        mockMvc.perform(get("/professorForm").param("id", "-1")).andDo(print()).andExpect(view().name("professorForm"));
     }
 
     @Test

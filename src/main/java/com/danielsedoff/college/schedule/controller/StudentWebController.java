@@ -72,7 +72,6 @@ public class StudentWebController {
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
-        logger.debug(">>>>>>>>>>>>>>>> StudenteWebController RECEIVED: " + student.toString());
         ss.createStudent(student);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
         return "resultPage";
@@ -81,7 +80,6 @@ public class StudentWebController {
     @PostMapping("/updateStudent")
     public String updateStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         Student student = new Student();
-        student.setId(studentdto.getId());
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());

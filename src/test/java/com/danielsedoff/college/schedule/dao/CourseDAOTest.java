@@ -14,20 +14,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.danielsedoff.college.schedule.config.TestWebConfig;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestWebConfig.class })
-@WebAppConfiguration
+@ContextConfiguration(classes = TestWebConfig.class)
 class CourseDAOTest extends DAOTest {
 
     @Autowired
     private DAO<Course> coursedao;
-    
+
+    @Autowired
+    private DAO<Professor> profdao;
+
     @Autowired
     private SqlScriptRunner ibatisRead;
 
@@ -52,20 +53,23 @@ class CourseDAOTest extends DAOTest {
 
     @Test
     void testDelete() throws DAOException {
-        int expectedResult = coursedao.getIdList().size() - 1;
-        Course course = new Course();
-        course.setId(1);
+        int expectedResult = coursedao.getList().size() - 1;
+        Course course = coursedao.getById(2);
         coursedao.delete(course);
-        assertEquals(expectedResult, coursedao.getIdList().size());
+        assertEquals(expectedResult, coursedao.getList().size());
     }
 
     @Test
     void testUpdate() throws DAOException {
-        int id = 1;
-        Course course = coursedao.getById(id);
-        String newDescription = "New Description";
-        course.setCourseDescription(newDescription);
-        coursedao.update(id, course);
+        int id = 3;
+        Course newCourse = coursedao.getById(id);
+        String newDescription = "Rook Phoenix";
+        newCourse.setCourseDescription(newDescription);
+        newCourse.setName(newDescription);
+        List<Professor> profs = new ArrayList<>();
+        profs.add(profdao.getById(1));
+        newCourse.setProfessor(profs);
+        coursedao.update(id, newCourse);
         assertEquals(newDescription, coursedao.getById(id).getCourseDescription());
     }
 

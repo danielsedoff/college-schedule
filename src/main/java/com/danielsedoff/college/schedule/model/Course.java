@@ -13,12 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
-@ToString
-@EqualsAndHashCode
 @Table(name = "courses")
 public class Course {
     @Id
@@ -41,9 +36,9 @@ public class Course {
         return course_id;
     }
 
-    public void setId(int id) {
-        this.course_id = id;
-    }
+//    public void setId(int id) {
+//        this.course_id = id;
+//    }
 
     public String getName() {
         return name;

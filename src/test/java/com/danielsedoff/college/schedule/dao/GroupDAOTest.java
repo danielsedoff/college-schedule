@@ -54,8 +54,7 @@ class GroupDAOTest extends DAOTest {
     @Test
     void testDelete() throws DAOException {
         int expectedResult = groupdao.getIdList().size() - 1;
-        Group group = new Group();
-        group.setId(1);
+        Group group = groupdao.getById(2);
         groupdao.delete(group);
         assertEquals(expectedResult, groupdao.getIdList().size());
     }

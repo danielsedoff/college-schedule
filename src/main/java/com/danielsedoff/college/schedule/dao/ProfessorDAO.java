@@ -54,6 +54,7 @@ public class ProfessorDAO implements DAO<Professor> {
         try {
             Professor targetProfessor = em.find(Professor.class, professor.getId());
             em.remove(targetProfessor);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
@@ -81,6 +82,7 @@ public class ProfessorDAO implements DAO<Professor> {
         boolean result = false;
         try {
             em.persist(professor);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

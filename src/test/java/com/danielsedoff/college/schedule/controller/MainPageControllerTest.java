@@ -20,7 +20,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class MainPageControllerTest {
+class MainPageControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;

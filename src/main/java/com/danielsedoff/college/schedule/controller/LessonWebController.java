@@ -82,8 +82,6 @@ public class LessonWebController {
     @PostMapping("/updateLesson")
     public String updateLesson(@ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         Lesson lesson = new Lesson();
-
-        lesson.setId(lessondto.getId());
         lesson.setEndTime((lessondto.getEndTime()));
         lesson.setStartTime((lessondto.getStartTime()));
         lesson.setGroup(gs.getGroupById(lessondto.getGroupId()));

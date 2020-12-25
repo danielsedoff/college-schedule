@@ -18,10 +18,10 @@ import com.danielsedoff.college.schedule.model.Group;
 @Component
 public class GroupDAO implements DAO<Group> {
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
+
+    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
 
     @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
@@ -56,6 +56,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             Group targetGroup = em.find(Group.class, group.getId());
             em.remove(targetGroup);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
@@ -81,6 +82,7 @@ public class GroupDAO implements DAO<Group> {
         boolean result = false;
         try {
             em.persist(group);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

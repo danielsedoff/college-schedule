@@ -56,8 +56,6 @@ class StudentServiceTest {
 
     @Test
     void testDeleteStudent() throws DAOException {
-        Student student = new Student();
-        student.setId(1);
         Mockito.when(studentdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = stservice.deleteStudent(1);
         assertTrue(successfulDeletion);

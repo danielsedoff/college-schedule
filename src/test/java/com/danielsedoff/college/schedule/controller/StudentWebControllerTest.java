@@ -28,7 +28,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class StudentWebControllerTest {
+class StudentWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -43,7 +43,6 @@ class StudentWebControllerTest {
     @Test
     void mainPageControllerMustNotBeNull() {
         ServletContext servletContext = wac.getServletContext();
-
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(wac.getBean("studentWebController"));
@@ -56,8 +55,7 @@ class StudentWebControllerTest {
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/studentList")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/studentList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
@@ -67,8 +65,7 @@ class StudentWebControllerTest {
 
     @Test
     void getStudentFormShouldReturnStudentFormTemplate() throws Exception {
-        mockMvc.perform(get("/studentForm").param("id", "-1")).andDo(print())
-                .andExpect(view().name("studentForm"));
+        mockMvc.perform(get("/studentForm").param("id", "-1")).andDo(print()).andExpect(view().name("studentForm"));
     }
 
     @Test
@@ -78,7 +75,13 @@ class StudentWebControllerTest {
 
     @Test
     void postCreateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createStudent")).andDo(print()).andExpect(view().name("resultPage"));
+        
+        mockMvc
+         .perform(post("/createStudent")
+          .param("name", "New Student")
+          .param("groupId", "1") 
+          .param("schoolYear", "3")) 
+          .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test

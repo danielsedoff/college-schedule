@@ -67,10 +67,4 @@ public class Professor extends Person {
         this.ranksTitles = ranksTitles;
     }
 
-    @Override
-    public String toString() {
-        return "Professor [id=" + person_id + ", name=" + name + ", specialNotes="
-                + specialNotes + ", ranksTitles=" + ranksTitles + "]";
-    }
-
 }

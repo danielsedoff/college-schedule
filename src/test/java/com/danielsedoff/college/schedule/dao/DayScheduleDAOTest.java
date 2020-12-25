@@ -46,8 +46,7 @@ class DayScheduleDAOTest extends DAOTest {
     @Test
     void testDelete() throws DAOException {
         int expectedResult = dsdao.getIdList().size() - 1;
-        DaySchedule ds = new DaySchedule();
-        ds.setId(1);
+        DaySchedule ds = dsdao.getById(2);
         dsdao.delete(ds);
         assertEquals(expectedResult, dsdao.getIdList().size());
     }

@@ -31,7 +31,7 @@ CREATE TABLE groupz
 CREATE TABLE students
 (
     person_id SERIAL PRIMARY KEY,
-    group_id INTEGER REFERENCES groupz (group_id),
+    group_id INTEGER,
     student_year INTEGER,
     person_name CHARACTER VARYING(30)
 );
@@ -39,7 +39,7 @@ CREATE TABLE students
 CREATE TABLE dayschedules
 (
     dayschedule_id SERIAL PRIMARY KEY,
-    yearschedule_id INTEGER REFERENCES yearschedules(yearschedule_id),
+    yearschedule_id INTEGER,
     the_day CHARACTER VARYING(30),
     hasOverlaps BOOLEAN
 );
@@ -49,9 +49,9 @@ CREATE TABLE lessons
     lesson_id SERIAL PRIMARY KEY,
     start_time CHARACTER VARYING(30),
     end_time CHARACTER VARYING(30),
-    professor_id INTEGER REFERENCES professors(person_id),
-    group_id INTEGER REFERENCES groupz (group_id),
-    dayschedule_id INTEGER REFERENCES dayschedules(dayschedule_id)
+    professor_id INTEGER,
+    group_id INTEGER,
+    dayschedule_id INTEGER
 );
 
 CREATE TABLE courses
@@ -59,7 +59,7 @@ CREATE TABLE courses
     course_id SERIAL PRIMARY KEY,
     course_name CHARACTER VARYING(30),
     course_description CHARACTER VARYING(300),
-    professor_id INTEGER REFERENCES professors(person_id)
+    professor_id INTEGER
 );
 
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 

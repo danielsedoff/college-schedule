@@ -46,6 +46,8 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         try {
             YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
             em.remove(targetYearSchedule);
+            em.flush();
+            em.clear();
         } catch (Exception e) {
             throw new DAOException("Could not delete YearSchedule", e);
         }
@@ -67,6 +69,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         boolean result = false;
         try {
             em.persist(yearSchedule);
+            em.clear();
         } catch (Exception e) {
             throw new DAOException("Could not create YearSchedule", e);
         }

@@ -17,6 +17,7 @@ import com.danielsedoff.college.schedule.model.Lesson;
 @Transactional
 @Component
 public class LessonDAO implements DAO<Lesson> {
+    
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
@@ -54,9 +55,9 @@ public class LessonDAO implements DAO<Lesson> {
         boolean result = false;
         try {
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
-            em.getTransaction().begin();
             em.remove(targetLesson);
-        } catch (Exception e) {
+            em.clear();
+            } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
             throw new DAOException("Could not delete Lesson", e);
@@ -84,6 +85,7 @@ public class LessonDAO implements DAO<Lesson> {
         boolean result = false;
         try {
             em.persist(lesson);
+            em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

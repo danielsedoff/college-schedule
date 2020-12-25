@@ -15,13 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "dayschedules")
-@ToString
-@EqualsAndHashCode
 public class DaySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +28,7 @@ public class DaySchedule {
     @Column(name = "hasOverlaps")
     private boolean hasOverlaps;
 
-    @OneToMany(mappedBy = "dayschedule", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "dayschedule", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
     
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -47,9 +42,9 @@ public class DaySchedule {
         return dayschedule_id;
     }
 
-    public void setId(int id) {
-        this.dayschedule_id = id;
-    }
+//    public void setId(int id) {
+//        this.dayschedule_id = id;
+//    }
 
     public String getDay() {
         return day;

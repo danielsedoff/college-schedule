@@ -10,13 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "lessons")
-@ToString
-@EqualsAndHashCode
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +42,9 @@ public class Lesson {
         return lesson_id;
     }
 
-    public void setId(int id) {
-        this.lesson_id = id;
-    }
+//    public void setId(int id) {
+//        this.lesson_id = id;
+//    }
 
     public String getStartTime() {
         return startTime;

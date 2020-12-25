@@ -13,13 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "yearschedules")
-@ToString
-@EqualsAndHashCode
 public class YearSchedule {
     public List<DaySchedule> getDayschedules() {
         return dayschedules;
@@ -54,7 +49,7 @@ public class YearSchedule {
         return yearschedule_id;
     }
 
-    public void setId(int id) {
-        this.yearschedule_id = id;
-    }
+//    public void setId(int id) {
+//        this.yearschedule_id = id;
+//    }
 }

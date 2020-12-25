@@ -44,8 +44,7 @@ class ProfessorDAOTest extends DAOTest {
     @Test
     void testDelete() throws DAOException {
         int expectedResult = profdao.getIdList().size() - 1;
-        Professor prof = new Professor();
-        prof.setId(1);
+        Professor prof =  profdao.getById(2);
         profdao.delete(prof);
         assertEquals(expectedResult, profdao.getIdList().size());
     }
