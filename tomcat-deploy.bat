@@ -3,7 +3,7 @@ chcp 1251
 rem mvn install + copy a .war file to tomcat's public directory
 rem mind you, the tests are omitted here.
 
-set warfile=college-schedule-0.0.1-SNAPSHOT.war
+set warfile=*.war
 set tompub=C:\tomcat\apache-tomcat-9.0.38\webapps
 set projectpath=C:\javaprojects\college-schedule
 set skip=-DskipTests

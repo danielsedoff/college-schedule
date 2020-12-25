@@ -51,7 +51,7 @@ public class AppConfig implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        var context = new AnnotationConfigWebApplicationContext();
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(AppConfig.class);
         context.setServletContext(servletContext);
     }
