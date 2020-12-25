@@ -2,6 +2,7 @@ package com.danielsedoff.college.schedule.dao;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+@Component
 public class SqlScriptRunner {
 
     @Autowired

@@ -80,7 +80,7 @@ CREATE TABLE group_student
     group_id INTEGER,
     student_id INTEGER,
     FOREIGN KEY(group_id) REFERENCES groupz(group_id),
-    FOREIGN KEY(student_id) REFERENCES student(student_id)
+    FOREIGN KEY(student_id) REFERENCES students(student_id)
 );
 
 CREATE TABLE lesson_group
@@ -101,9 +101,9 @@ CREATE TABLE lesson_dayschedule
 
 CREATE TABLE yearschedule_dayschedule
 (
-    year INTEGER,
+    year_id INTEGER,
     dayschedule_id INTEGER,
-    FOREIGN KEY(year) REFERENCES yearschedule(year),
+    FOREIGN KEY(year_id) REFERENCES yearschedules(year_id),
     FOREIGN KEY(dayschedule_id) REFERENCES dayschedules(dayschedule_id)
 );
 
@@ -171,8 +171,8 @@ INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (2, 3);
 INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (3, 4);
 INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (4, 1);
 
-INSERT INTO yearschedule_dayschedule (year, dayschedule_id) VALUES (1970, 1);
-INSERT INTO yearschedule_dayschedule (year, dayschedule_id) VALUES (1970, 2);
-INSERT INTO yearschedule_dayschedule (year, dayschedule_id) VALUES (1970, 3);
-INSERT INTO yearschedule_dayschedule (year, dayschedule_id) VALUES (1970, 4);
+INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 1);
+INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 2);
+INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 3);
+INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 4);
 
