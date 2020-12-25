@@ -4,20 +4,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link rel="stylesheet" type="text/css" href="form.css" media="all" />
-
+<script src="submitter.js"></script>
 </head>
 <body>
 	<div id="form_container">
 		<h1>
 			<span>&nbsp;</span>
 		</h1>
-		<form id="collegeform" class="appnitro" method="post"
-			action="/college-schedule/courseEdit">
+		<form>
 			<table>
 				<tr>
 					<td>
 						<h2></h2>
 						<h2>Edit Courses</h2>
+						<div id="submitterResult"></div>
 					</td>
 				</tr>
 				<tr>
@@ -29,45 +29,40 @@
 				</tr>
 				<tbody>
 					<tr>
-						<td id="li_1"><label class="description" for="courseid">Course
+						<td><label class="description" for="idinput">Course
 								ID </label>
 							<div>
-								<input id="element_1" name="courseid"
-									class="element text medium" type="text" maxlength="255"
-									value="" disabled />
+								<input id="idinput" name="idinput" class="element text medium"
+									type="text" maxlength="255" value="" disabled />
 							</div></td>
 					</tr>
 					<tr>
-						<td id="li_2"><label class="description" for="coursename">Course
-								Name </label>
+						<td><label class="description" for="name">Course Name
+						</label>
 							<div>
-								<input id="element_2" name="coursename"
-									class="element text medium" type="text" maxlength="255"
-									value="" />
+								<input name="name" class="element text medium" type="text"
+									maxlength="255" value="" />
 							</div></td>
 					</tr>
 					<tr>
-						<td id="li_3"><label class="description"
-							for="coursedescription]">Course Description </label>
+						<td><label class="description" for="description">Course
+								Description </label>
 							<div>
-								<input id="element_3" name="coursedescription"
-									class="element text medium" type="text" maxlength="255"
-									value="" />
+								<input name="description" class="element text medium"
+									type="text" maxlength="255" value="" />
 							</div></td>
 					</tr>
 					<tr>
-						<td id="li_4"><label class="description" for="professorid">Professor
+						<td><label class="description" for="connectedid1">Professor
 								ID </label>
 							<div>
-								<input id="element_4" name="professorid"
-									class="element text medium" type="text" maxlength="255"
-									value="" />
+								<input name="connectedid1" class="element text medium"
+									type="text" maxlength="255" value="" />
 							</div></td>
 					</tr>
 					<tr>
-						<td class="buttons"><input type="hidden" name="form_id"
-							value="3757" /> <input id="saveForm" class="button_text"
-							type="submit" name="submit" value="Done"></td>
+						<td class="buttons"><input class="button_text" type="button"
+							name="submit" value="Done" onclick="submitter()"></td>
 					</tr>
 				</tbody>
 			</table>
