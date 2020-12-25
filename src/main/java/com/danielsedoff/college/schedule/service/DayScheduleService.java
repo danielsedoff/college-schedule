@@ -18,7 +18,9 @@ import com.danielsedoff.college.schedule.model.Lesson;
 @Service
 public class DayScheduleService {
 
+    @Autowired
     private DayScheduleDAO dayscheduledao;
+    @Autowired
     private LessonDAO lessondao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

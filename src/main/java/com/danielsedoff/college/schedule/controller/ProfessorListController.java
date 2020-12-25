@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
@@ -16,13 +15,13 @@ import com.danielsedoff.college.schedule.service.ProfessorService;
 public class ProfessorListController {
 
     @Autowired
-    private ProfessorDAO professordao;
+    ProfessorService ps;
 
     @GetMapping("/professors")
     public String main(Model model) {
-        ProfessorService ps = new ProfessorService(professordao);
         List<Integer> ids = ps.getProfessorIdList();
         List<Professor> professors = new ArrayList<>();
+        
         for (int id : ids) {
             professors.add(ps.getProfessorById(id));
         }

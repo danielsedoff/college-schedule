@@ -15,12 +15,14 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 
 @Service
 public class YearScheduleService {
+    
+    @Autowired
     private YearScheduleDAO yearscheduledao;
+    @Autowired
     private DayScheduleDAO dayscheduledao;
 
     @Autowired
-    public YearScheduleService(YearScheduleDAO yearscheduledao,
-            DayScheduleDAO dayscheduledao) {
+    public YearScheduleService(YearScheduleDAO yearscheduledao, DayScheduleDAO dayscheduledao) {
         this.yearscheduledao = yearscheduledao;
         this.dayscheduledao = dayscheduledao;
     }
@@ -86,10 +88,10 @@ public class YearScheduleService {
         try {
             YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
             DaySchedule dayschedule = dayscheduledao.getById(daySchedId);
-            result = yearscheduledao.setDayScheduleYearSchedule(dayschedule,
-                    yearschedule);
+            result = yearscheduledao.setDayScheduleYearSchedule(dayschedule, yearschedule);
         } catch (DAOException e) {
-            logger.error("Could not set a Day Schedule-Year Schedule Relation, year Id: {}", yearSchedId);
+            logger.error("Could not set a Day Schedule-Year Schedule Relation, year Id: {}",
+                    yearSchedId);
         }
         return result;
     }
@@ -100,7 +102,8 @@ public class YearScheduleService {
             YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
             result = yearscheduledao.getDayScheduleYearSchedule(yearschedule);
         } catch (DAOException e) {
-            logger.error("Could not get Day Schedules List By Year Schedule, year Id: {}", yearSchedId);
+            logger.error("Could not get Day Schedules List By Year Schedule, year Id: {}",
+                    yearSchedId);
         }
         return result;
     }

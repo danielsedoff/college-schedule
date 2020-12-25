@@ -14,7 +14,7 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class CourseService {
-    
+    @Autowired
     private CourseDAO coursedao;
 
     @Autowired
