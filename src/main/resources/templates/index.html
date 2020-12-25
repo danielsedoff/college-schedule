@@ -15,11 +15,10 @@
 
 	<main role="main" class="container">
 		<div th:each="link: ${links}" class="tile">
-			<a th:href="${link.getAddress()}"> 
-				<img class="tileimg"
+			<a th:href="${link.getAddress()}"> <img class="tileimg"
 				th:src="${link.getImageAddress()}" th:alt="${link.getTitle()}">
 			</a>
-				<p class="caption" th:text="${link.getTitle()}"></p>
+			<p class="caption" th:text="${link.getTitle()}"></p>
 		</div>
 
 	</main>

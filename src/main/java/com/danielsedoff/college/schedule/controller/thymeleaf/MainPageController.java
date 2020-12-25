@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import java.io.IOException;
 import java.sql.SQLException;

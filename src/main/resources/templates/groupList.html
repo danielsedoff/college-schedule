@@ -30,18 +30,18 @@
 				<th>Special Notes</th>
 			</tr>
 			<tr th:each="group: ${groups}">
-				<td><a
-					th:href="@{/groupForm?id={id}(id=${group.getId()})}"><span
+				<td><a th:href="@{/groupForm?id={id}(id=${group.getId()})}"><span
 						th:text="${group.getId()}"></span></a></td>
 				<td th:text="${group.getSpecialNotes()}" />
 			</tr>
 		</table>
-		<div class="goback"><a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a></div>
-		
+		<div class="goback">
+			<a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a>
+		</div>
+
 	</main>
 	<!-- /.container -->
 
-	<script type="text/javascript"
-		></script>
+	<script type="text/javascript"></script>
 </body>
 </html>

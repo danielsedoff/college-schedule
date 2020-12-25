@@ -42,8 +42,8 @@
 									class="element text medium" type="number" th:field="*{id}"
 									maxlength="255" value="" disabled />
 							</div></td>
-							<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal ID</td>
-					</tr>
+							<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal ID</td>
+					</tr></tr>
 					<tr>
 						<td><label class="description" for="description">Group
 								Description </label>
@@ -52,8 +52,8 @@
 									class="element text medium" type="text"
 									th:field="*{description}" maxlength="255" value="" />
 							</div></td>
-							<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Illegal description</td>
-					</tr>
+							<tr><td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Illegal description</td>
+					</tr></tr>
 					<tr>
 						<td class="buttons"><input class="button_text" type="submit"
 							name="submit" value="Done"></td>
