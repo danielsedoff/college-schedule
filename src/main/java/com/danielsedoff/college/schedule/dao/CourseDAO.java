@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.Course;
 
 @Aspect
+@Transactional
 @Component
 public class CourseDAO implements DAO<Course> {
 
@@ -32,38 +33,38 @@ public class CourseDAO implements DAO<Course> {
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Course Id List", e);
         }
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public Course getById(Integer id) throws DAOException {
         Course result = null;
         try {
             result = em.find(Course.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Course By Id", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean delete(Course course) throws DAOException {
-
         boolean result = false;
         try {
             Course targetCourse = em.find(Course.class, course.getId());
             em.remove(targetCourse);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not delete Course", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean create(Course course) throws DAOException {
         boolean result = false;
         try {
@@ -71,12 +72,12 @@ public class CourseDAO implements DAO<Course> {
             em.flush();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not create Course", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean update(Integer id, Course course) throws DAOException {
         boolean result = false;
         try {
@@ -88,18 +89,20 @@ public class CourseDAO implements DAO<Course> {
             em.flush();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not update Course", e);
         }
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Course> getList() throws DAOException {
         List<Course> courses = null;
         try {
             courses = em.createQuery("from Course", Course.class).getResultList();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Course List", e);
         }
         return courses;

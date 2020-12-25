@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Aspect
+@Transactional
 @Component
 public class StudentDAO implements DAO<Student> {
     @PersistenceContext
@@ -22,7 +23,7 @@ public class StudentDAO implements DAO<Student> {
 
     private static Logger logger = LoggerFactory.getLogger(StudentDAO.class);
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -31,24 +32,25 @@ public class StudentDAO implements DAO<Student> {
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student Id List", e);
         }
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
             result = em.find(Student.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student By Id", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean delete(Student student) throws DAOException {
         boolean result = false;
         try {
@@ -56,12 +58,12 @@ public class StudentDAO implements DAO<Student> {
             em.remove(targetStudent);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not delete Student", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
@@ -71,12 +73,12 @@ public class StudentDAO implements DAO<Student> {
             oldStudent.setSchoolYear(student.getSchoolYear());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not update Student", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean create(Student student) throws DAOException {
         boolean result = false;
         try {
@@ -85,18 +87,20 @@ public class StudentDAO implements DAO<Student> {
             em.flush();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not create Student", e);
         }
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Student> getList() throws DAOException {
         List<Student> students = null;
         try {
             students = em.createQuery("from Student", Student.class).getResultList();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student List", e);
         }
         return students;

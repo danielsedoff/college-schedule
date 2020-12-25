@@ -5,20 +5,21 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.stereotype.Component;
-
 import com.danielsedoff.college.schedule.model.YearSchedule;
-import org.aspectj.lang.annotation.Aspect;
 
 @Aspect
+@Transactional
 @Component
 public class YearScheduleDAO implements DAO<YearSchedule> {
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -31,7 +32,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
@@ -42,7 +43,6 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional
     public boolean delete(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
@@ -54,7 +54,6 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional
     public boolean update(Integer id, YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
@@ -66,7 +65,6 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional
     public boolean create(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
@@ -77,7 +75,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {

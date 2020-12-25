@@ -19,7 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @EnableAspectJAutoProxy(proxyTargetClass=true)
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.danielsedoff.college.schedule" })
-@Import({ DataSourceConfig.class, JpaConfig.class })
+@Import({ JpaConfig.class })
 public class WebConfig implements WebMvcConfigurer {
     private ApplicationContext applicationContext;
 

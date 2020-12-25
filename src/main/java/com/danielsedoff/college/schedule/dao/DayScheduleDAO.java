@@ -5,19 +5,21 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.DaySchedule;
 
 @Aspect
+@Transactional
 @Component
 public class DayScheduleDAO implements DAO<DaySchedule> {
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -30,7 +32,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public DaySchedule getById(Integer id) throws DAOException {
         DaySchedule result = null;
         try {
@@ -41,7 +43,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional
     public boolean delete(DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
@@ -53,7 +54,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional
     public boolean update(Integer id, DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
@@ -66,7 +66,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional
     public boolean create(DaySchedule daySchedule) throws DAOException {
         boolean result = false;
         try {
@@ -77,7 +76,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<DaySchedule> getList() throws DAOException {
         List<DaySchedule> daySchedules = null;
         try {

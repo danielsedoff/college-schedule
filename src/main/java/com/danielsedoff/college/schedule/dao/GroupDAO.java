@@ -7,15 +7,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Group;
 
 @Aspect
+@Transactional
 @Component
 public class GroupDAO implements DAO<Group> {
 
@@ -24,7 +25,7 @@ public class GroupDAO implements DAO<Group> {
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -34,13 +35,12 @@ public class GroupDAO implements DAO<Group> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
-
             throw new DAOException("Could not get Group Id List", e);
         }
         return result;
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public Group getById(Integer id) throws DAOException {
         Group result = null;
         try {
@@ -48,13 +48,11 @@ public class GroupDAO implements DAO<Group> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
-
             throw new DAOException("Could not get Group By Id", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean delete(Group group) throws DAOException {
         boolean result = false;
         try {
@@ -63,13 +61,11 @@ public class GroupDAO implements DAO<Group> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
-
             throw new DAOException("Could not delete Group", e);
         }
         return result;
     }
 
-    @Transactional
     public boolean update(Integer id, Group group) throws DAOException {
         boolean result = false;
         try {
@@ -83,7 +79,6 @@ public class GroupDAO implements DAO<Group> {
         return result;
     }
 
-    @Transactional
     public boolean create(Group group) throws DAOException {
         boolean result = false;
         try {
@@ -92,14 +87,13 @@ public class GroupDAO implements DAO<Group> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
-
             throw new DAOException("Could not create Group", e);
         }
         return result;
 
     }
 
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Group> getList() throws DAOException {
         List<Group> groups = null;
         try {
@@ -107,7 +101,6 @@ public class GroupDAO implements DAO<Group> {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
-
             throw new DAOException("Could not get Group List", e);
         }
         return groups;

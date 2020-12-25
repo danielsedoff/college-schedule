@@ -14,7 +14,7 @@ public class Student extends Person {
     @Column(name = "student_year")
     private int schoolYear;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
