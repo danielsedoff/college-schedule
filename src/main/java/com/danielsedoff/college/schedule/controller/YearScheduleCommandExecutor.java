@@ -8,10 +8,15 @@ import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
-import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class YearScheduleCommandExecutor {
+    private static final String WRONG_DAY_SCHEDULE_ID = "Wrong Day Schedule ID.";
+    private static final String WRONG_YEAR_SCHEDULE_ID = "Wrong Year Schedule ID.";
+    private static final String WRONG_YEAR = "Wrong Year.";
+    private static final String WRONG_YEAR_ID = "Wrong Year ID.";
+    private static final String FAILURE = "failure";
+    private static final String SUCCESS = "success";
     private YearScheduleDAO yearscheduledao;
     private DayScheduleDAO dayscheduledao;
 

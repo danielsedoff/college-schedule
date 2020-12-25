@@ -9,11 +9,13 @@ import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.model.DaySchedule;
-import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class DayScheduleCommandExecutor {
 
+    private static final String SUCCESS = "success";
+    private static final String FAILURE = "failure";
+    private static final String WRONG_DAY_SCHEDULE_ID = "Wrong Day Schedule ID.";
     private DayScheduleDAO dayscheduledao;
     private LessonDAO lessondao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

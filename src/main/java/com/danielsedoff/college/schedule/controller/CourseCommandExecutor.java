@@ -2,16 +2,20 @@ package com.danielsedoff.college.schedule.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
-import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class CourseCommandExecutor {
+    private static final String SUCCESS = "success";
+    private static final String FAILURE = "failure";
+    private static final String WRONG_COURSE_ID = "Wrong Course ID.";
     private CourseDAO coursedao;
     private ProfessorDAO professordao;
 

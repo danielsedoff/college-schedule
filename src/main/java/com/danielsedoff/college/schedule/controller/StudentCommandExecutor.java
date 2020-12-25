@@ -1,17 +1,22 @@
 package com.danielsedoff.college.schedule.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Student;
-import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class StudentCommandExecutor {
 
+    private static final String WRONG_STUDENT_ID = "Wrong Student ID.";
+    private static final String FAILURE = "failure";
+    private static final String SUCCESS = "success";
+    private static final String WRONG_YEAR = "Wrong Year";
+    private static final String WRONG_GROUP_ID = "Wrong Group ID";
     private static final String ARGUMENT_DELIMITER = "|";
     private StudentDAO studentdao;
     private ProfessorDAO professordao;
