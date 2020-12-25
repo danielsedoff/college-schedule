@@ -79,7 +79,6 @@ public class ProfessorService {
         } catch (DAOException e) {
             logger.error("Could not get a Professor List", e);
         }
-        return result;
-    }
+        return result;    }
 
 }

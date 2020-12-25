@@ -31,7 +31,7 @@ public class GroupService {
         }
         return result;
     }
-
+    
     public List<Integer> getGroupIdList() {
         List<Integer> result = null;
         try {
@@ -81,5 +81,7 @@ public class GroupService {
         }
         return result;
     }
+
+
 
 }
