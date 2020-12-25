@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Index Page</title>
+
+<link rel="stylesheet" type="text/css" href="static/list.css"
+	media="all" />
+</head>
+
+<body>
+
+	<main role="main" class="container">
+
+		<div class="starter-template">
+			<h1>Please select a table from below</h1>
+		</div>
+		<table>
+			<tr th:each="link: ${links}">
+				<td><a th:href="${link.getAddress()}"
+					th:text="${link.getTitle()}"> </a></td>
+			</tr>
+		</table>
+	</main>
+
+	<script type="text/javascript"
+		></script>
+</body>
+</html>

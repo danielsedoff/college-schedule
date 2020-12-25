@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<configuration scan="true">
+    <property name="MY_HOME" value="c:/javaprojects/college-schedule"/>
+
+	<appender name="daoLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${MY_HOME}/logs/dao.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="serviceLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${MY_HOME}/logs/service.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="springLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${MY_HOME}/logs/spring.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="serverLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${MY_HOME}/logs/server.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root>
+		<appender-ref ref="serverLog" />
+	</root>
+
+	<logger name="com.danielsedoff.college.schedule.dao"
+		level="INFO" additivity="false">
+		<appender-ref ref="daoLog" />
+	</logger>
+
+	<logger name="com.danielsedoff.college.schedule.service"
+		level="INFO" additivity="false">
+		<appender-ref ref="serviceLog" />
+	</logger>
+
+	<logger name="org.springframework" level="INFO"
+		additivity="false">
+		<appender-ref ref="springLog" />
+	</logger>
+
+</configuration>
