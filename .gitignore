@@ -7,4 +7,5 @@ logs/
 .project
 college-schedule.iml
 tomcat-deploy.bat
+/build/
 file.id
