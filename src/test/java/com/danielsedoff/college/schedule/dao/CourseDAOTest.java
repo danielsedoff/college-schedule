@@ -27,9 +27,6 @@ class CourseDAOTest extends DAOTest {
     private DAO<Course> coursedao;
 
     @Autowired
-    private DAO<Professor> profdao;
-
-    @Autowired
     private SqlScriptRunner ibatisRead;
 
     @BeforeEach
@@ -61,16 +58,12 @@ class CourseDAOTest extends DAOTest {
 
     @Test
     void testUpdate() throws DAOException {
-        int id = 3;
-        Course newCourse = coursedao.getById(id);
-        String newDescription = "Rook Phoenix";
-        newCourse.setCourseDescription(newDescription);
-        newCourse.setName(newDescription);
-        List<Professor> profs = new ArrayList<>();
-        profs.add(profdao.getById(1));
-        newCourse.setProfessor(profs);
-        coursedao.update(id, newCourse);
-        assertEquals(newDescription, coursedao.getById(id).getCourseDescription());
+        int id = 2;
+        Course course = coursedao.getById(id);
+        String newname = "Another Name";
+        course.setName(newname);
+        coursedao.update(id, course);
+        assertEquals(newname, coursedao.getById(id).getName());
     }
 
     @Test

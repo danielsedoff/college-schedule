@@ -46,6 +46,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
         try {
             DaySchedule targetDaySchedule = em.find(DaySchedule.class, daySchedule.getId());
             em.remove(targetDaySchedule);
+            em.flush();
             em.clear();
         } catch (Exception e) {
             throw new DAOException("Could not delete DaySchedule", e);

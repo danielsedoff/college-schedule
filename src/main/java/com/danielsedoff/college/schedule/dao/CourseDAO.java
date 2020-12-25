@@ -56,6 +56,7 @@ public class CourseDAO implements DAO<Course> {
         try {
             Course targetCourse = em.find(Course.class, course.getId());
             em.remove(targetCourse);
+            em.flush();
             em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

@@ -56,6 +56,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             Group targetGroup = em.find(Group.class, group.getId());
             em.remove(targetGroup);
+            em.flush();
             em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

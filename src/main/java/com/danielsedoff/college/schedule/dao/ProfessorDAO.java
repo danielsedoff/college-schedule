@@ -54,6 +54,7 @@ public class ProfessorDAO implements DAO<Professor> {
         try {
             Professor targetProfessor = em.find(Professor.class, professor.getId());
             em.remove(targetProfessor);
+            em.flush();
             em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -70,6 +71,7 @@ public class ProfessorDAO implements DAO<Professor> {
             oldProfessor.setName(professor.getName());
             oldProfessor.setRanksTitles(professor.getRanksTitles());
             oldProfessor.setSpecialNotes(professor.getSpecialNotes());
+            em.merge(oldProfessor);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

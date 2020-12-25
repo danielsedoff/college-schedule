@@ -38,7 +38,10 @@ class ProfessorDAOTest extends DAOTest {
     void testUpdate() throws DAOException {
         int id = 1;
         Professor prof = profdao.getById(id);
+        String newname = "Another Name";
+        prof.setName(newname);
         profdao.update(id, prof);
+        assertEquals(newname, profdao.getById(id).getName());
     }
 
     @Test

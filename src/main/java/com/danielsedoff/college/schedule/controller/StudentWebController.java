@@ -83,7 +83,7 @@ public class StudentWebController {
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
-        ss.updateStudent(student.getId(), student);
+        ss.updateStudent(studentdto.getId(), student);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";
     }

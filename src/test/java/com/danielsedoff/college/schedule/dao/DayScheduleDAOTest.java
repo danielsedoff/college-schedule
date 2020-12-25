@@ -35,15 +35,6 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate() throws DAOException {
-        int id = 1;
-        DaySchedule ds = dsdao.getById(id);
-        ds.setDay("2000-10-10");
-        dsdao.update(id, ds);
-        assertEquals("2000-10-10", dsdao.getById(id).getDay());
-    }
-
-    @Test
     void testDelete() throws DAOException {
         int expectedResult = dsdao.getIdList().size() - 1;
         DaySchedule ds = dsdao.getById(2);
@@ -52,6 +43,22 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
+    void testGetById() throws DAOException {
+        DaySchedule ds = dsdao.getById(1);
+        assertNotNull(ds);
+    }
+
+    @Test
+    void testUpdate() throws DAOException {
+        int id = 1;
+        DaySchedule ds = dsdao.getById(id);
+        String day = "2000-10-10";
+        ds.setDay(day);
+        dsdao.update(id, ds);
+        assertEquals(day, dsdao.getById(id).getDay());
+    }
+    
+    @Test
     void testCreate() throws DAOException {
         int expectedSize = dsdao.getIdList().size() + 1;
         DaySchedule ds = new DaySchedule();
@@ -59,12 +66,6 @@ class DayScheduleDAOTest extends DAOTest {
         dsdao.create(ds);
         assertEquals(expectedSize, dsdao.getIdList().size());
         assertEquals("2000-10-10", dsdao.getById(5).getDay());
-    }
-
-    @Test
-    void testGetById() throws DAOException {
-        DaySchedule ds = dsdao.getById(1);
-        assertNotNull(ds);
     }
 
 }

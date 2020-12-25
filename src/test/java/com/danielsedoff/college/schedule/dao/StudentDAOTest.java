@@ -17,6 +17,8 @@ import com.danielsedoff.college.schedule.model.Student;
 class StudentDAOTest extends DAOTest {
 
     @Autowired
+    private DAO<Group> groupdao;
+    @Autowired
     private DAO<Student> studentdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
@@ -55,10 +57,9 @@ class StudentDAOTest extends DAOTest {
     @Test
     void testCreate() throws DAOException {
         int expectedSize = studentdao.getIdList().size() + 1;
-        String newname = "Jack Scart";
-        Group group = new Group();
         Student student = new Student();
-        student.setName(newname);
+        student.setName("Jack Scart");
+        Group group = groupdao.getById(1);
         student.setGroup(group);
         student.setSchoolYear(2);
         studentdao.create(student);

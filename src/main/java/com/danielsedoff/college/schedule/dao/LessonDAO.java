@@ -56,6 +56,7 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
             em.remove(targetLesson);
+            em.flush();
             em.clear();
             } catch (Exception e) {
             logger.error(e.getMessage(), e);
