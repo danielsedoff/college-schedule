@@ -17,10 +17,11 @@ import com.danielsedoff.college.schedule.model.Lesson;
 @Service
 public class DayScheduleService {
 
+    @Autowired
     private DAO<DaySchedule> dayscheduledao;
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    @Autowired
     public DayScheduleService(DAO<DaySchedule> dayscheduledao, DAO<Lesson> lessondao) {
         this.dayscheduledao = dayscheduledao;
     }

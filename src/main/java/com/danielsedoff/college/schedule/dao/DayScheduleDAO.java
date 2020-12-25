@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 
 @Transactional
-@Component
+@Component("dsdao")
 public class DayScheduleDAO implements DAO<DaySchedule> {
     @PersistenceContext
     private EntityManager em;

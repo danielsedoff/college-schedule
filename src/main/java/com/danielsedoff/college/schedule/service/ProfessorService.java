@@ -13,11 +13,12 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class ProfessorService {
-    private DAO<Professor> professordao;
 
     @Autowired
-    public ProfessorService(DAO<Professor> professordao) {
-        this.professordao = professordao;
+    private DAO<Professor> profdao;
+
+    public ProfessorService(DAO<Professor> profdao) {
+        this.profdao = profdao;
     }
 
     private static Logger logger = LoggerFactory.getLogger(ProfessorService.class);
@@ -25,7 +26,7 @@ public class ProfessorService {
     public boolean updateProfessor(int professorId, Professor professor) {
         boolean result = false;
         try {
-            result = professordao.update(professorId, professor);
+            result = profdao.update(professorId, professor);
         } catch (DAOException e) {
             logger.error("Could not Update a Professor, id: {}", professorId);
         }
@@ -35,7 +36,7 @@ public class ProfessorService {
     public boolean createProfessor(Professor professor) {
         boolean result = false;
         try {
-            result = professordao.create(professor);
+            result = profdao.create(professor);
         } catch (DAOException e) {
             logger.error("Could not Create a Professor", e);
         }
@@ -45,7 +46,7 @@ public class ProfessorService {
     public boolean deleteProfessor(int profId) {
         boolean result = false;
         try {
-            result = professordao.delete(professordao.getById(profId));
+            result = profdao.delete(profdao.getById(profId));
         } catch (DAOException e) {
             logger.error("Could not delete a Professor, id: {}", profId);
         }
@@ -55,7 +56,7 @@ public class ProfessorService {
     public Professor getProfessorById(int professorId) {
         Professor result = null;
         try {
-            result = professordao.getById(professorId);
+            result = profdao.getById(professorId);
         } catch (DAOException e) {
             logger.error("Could not get a Professor By id: {}", professorId);
         }
@@ -65,7 +66,7 @@ public class ProfessorService {
     public List<Integer> getProfessorIdList() {
         List<Integer> result = null;
         try {
-            result = professordao.getIdList();
+            result = profdao.getIdList();
         } catch (DAOException e) {
             logger.error("Could not get a Professor Id List", e);
         }
@@ -75,7 +76,7 @@ public class ProfessorService {
     public List<Professor> getProfessorList() {
         List<Professor> result = null;
         try {
-            result = professordao.getList();
+            result = profdao.getList();
         } catch (DAOException e) {
             logger.error("Could not get a Professor List", e);
         }

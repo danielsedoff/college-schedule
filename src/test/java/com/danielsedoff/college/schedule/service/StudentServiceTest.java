@@ -17,16 +17,16 @@ import com.danielsedoff.college.schedule.model.Student;
 
 class StudentServiceTest {
 
-    StudentDAO stdao = Mockito.mock(StudentDAO.class);
-    ProfessorDAO professordao = Mockito.mock(ProfessorDAO.class);
+    StudentDAO studentdao = Mockito.mock(StudentDAO.class);
+    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
     GroupDAO groupdao = Mockito.mock(GroupDAO.class);
-    StudentService stservice = new StudentService(professordao, stdao, groupdao);
+    StudentService stservice = new StudentService(profdao, studentdao, groupdao);
 
     @Test
     void testGetStudentIdList() throws DAOException {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
-        Mockito.when(stdao.getIdList()).thenReturn(mockList);
+        Mockito.when(studentdao.getIdList()).thenReturn(mockList);
         List<Integer> idList = stservice.getStudentIdList();
         assertNotNull(idList);
     }
@@ -34,8 +34,10 @@ class StudentServiceTest {
     @Test
     void testCreateStudent() throws DAOException {
         Student student = new Student();
-        student.setName("Jack");
-        Mockito.when(stdao.create(student)).thenReturn(true);
+        student.setName("John");
+        student.setGroup(groupdao.getById(1));
+        student.setSchoolYear(2);
+        Mockito.when(studentdao.create(student)).thenReturn(true);
         boolean successfulCreation = stservice.createStudent(student);
         assertTrue(successfulCreation);
     }
@@ -45,7 +47,9 @@ class StudentServiceTest {
         int studId = 1;
         Student student = new Student();
         student.setName("John");
-        Mockito.when(stdao.update(studId, student)).thenReturn(true);
+        student.setGroup(groupdao.getById(1));
+        student.setSchoolYear(2);
+        Mockito.when(studentdao.update(studId, student)).thenReturn(true);
         boolean successfulUpdate = stservice.updateStudent(studId, student);
         assertTrue(successfulUpdate);
     }
@@ -54,7 +58,7 @@ class StudentServiceTest {
     void testDeleteStudent() throws DAOException {
         Student student = new Student();
         student.setId(1);
-        Mockito.when(stdao.delete(Mockito.any())).thenReturn(true);
+        Mockito.when(studentdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = stservice.deleteStudent(1);
         assertTrue(successfulDeletion);
     }
@@ -63,7 +67,7 @@ class StudentServiceTest {
     void testGetStudentById() throws DAOException {
         Student student = new Student();
         student.setName("John");
-        Mockito.when(stdao.getById((Mockito.anyInt()))).thenReturn(student);
+        Mockito.when(studentdao.getById((Mockito.anyInt()))).thenReturn(student);
         assertNotNull(stservice.getStudentById(1));
     }
 

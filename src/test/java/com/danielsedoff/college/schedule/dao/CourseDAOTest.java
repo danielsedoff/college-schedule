@@ -10,15 +10,26 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.danielsedoff.college.schedule.config.TestWebConfig;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = { TestWebConfig.class })
+@WebAppConfiguration
 class CourseDAOTest extends DAOTest {
 
     @Autowired
+    @Qualifier("coursedao")
     private CourseDAO coursedao;
+    
     @Autowired
     private SqlScriptRunner ibatisRead;
 

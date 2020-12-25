@@ -15,8 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,13 +24,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.danielsedoff.college.schedule.config.MainWebAppInitializer;
 import com.danielsedoff.college.schedule.config.TestWebConfig;
 
-@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
+@ComponentScan(basePackageClasses = { CourseWebController.class })
 @WebAppConfiguration
 class CourseWebControllerTest {
+
+    MainWebAppInitializer mwai = new MainWebAppInitializer();
 
     @Autowired
     private WebApplicationContext wac;
@@ -45,7 +48,6 @@ class CourseWebControllerTest {
     @Test
     void mainPageControllerMustNotBeNull() {
         ServletContext servletContext = wac.getServletContext();
-
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(wac.getBean("courseWebController"));
@@ -53,8 +55,7 @@ class CourseWebControllerTest {
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/courseList")).andExpect(status().isOk())
-        .andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/courseList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
@@ -64,8 +65,7 @@ class CourseWebControllerTest {
 
     @Test
     void getCourseFormShouldReturnCourseFormTemplate() throws Exception {
-        mockMvc.perform(get("/courseForm").param("id", "-1")).andDo(print())
-                .andExpect(view().name("courseForm"));
+        mockMvc.perform(get("/courseForm").param("id", "-1")).andDo(print()).andExpect(view().name("courseForm"));
     }
 
     @Test

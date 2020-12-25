@@ -15,9 +15,9 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 @Service
 public class YearScheduleService {
 
+    @Autowired
     private DAO<YearSchedule> yearscheduledao;
 
-    @Autowired
     public YearScheduleService(DAO<YearSchedule> yearscheduledao, DAO<DaySchedule> dayscheduledao) {
         this.yearscheduledao = yearscheduledao;
     }
