@@ -31,7 +31,7 @@ public class YearSchedule {
     @Column(name = "year")
     private int year;
 
-    @OneToMany(mappedBy = "yearschedule", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "yearschedule", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<DaySchedule> dayschedules = new ArrayList<>();
     
     public YearSchedule() {

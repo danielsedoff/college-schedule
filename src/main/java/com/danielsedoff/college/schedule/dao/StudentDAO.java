@@ -29,6 +29,8 @@ public class StudentDAO implements DAO<Student> {
                 result.add(student.getId());
             }
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student Id List", e);
         }
         return result;
@@ -40,6 +42,8 @@ public class StudentDAO implements DAO<Student> {
         try {
             result = em.find(Student.class, id);
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student By Id", e);
         }
         return result;
@@ -53,6 +57,8 @@ public class StudentDAO implements DAO<Student> {
             em.flush();
             em.clear();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not delete Student", e);
         }
         return result;
@@ -66,6 +72,8 @@ public class StudentDAO implements DAO<Student> {
             oldStudent.setName(student.getName());
             oldStudent.setSchoolYear(student.getSchoolYear());
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not update Student", e);
         }
         return result;
@@ -77,6 +85,8 @@ public class StudentDAO implements DAO<Student> {
             em.persist(student);
             em.clear();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not create Student", e);
         }
         return result;
@@ -88,6 +98,8 @@ public class StudentDAO implements DAO<Student> {
         try {
             students = em.createQuery("from Student", Student.class).getResultList();
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not get Student List", e);
         }
         return students;
