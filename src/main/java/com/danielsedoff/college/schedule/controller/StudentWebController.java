@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
@@ -21,7 +22,7 @@ import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.StudentService;
 
 @Controller
-public class StudentWebController {
+public class StudentWebController implements WebMvcConfigurer {
 
     @Autowired
     StudentService ss;
@@ -59,9 +60,11 @@ public class StudentWebController {
     }
 
     @PostMapping("/deleteStudent")
-    public String deleteStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult, Model model) {
+    public String deleteStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "studentForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         ss.deleteStudentById(studentdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -69,9 +72,11 @@ public class StudentWebController {
     }
 
     @PostMapping("/createStudent")
-    public String createStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult, Model model) {
+    public String createStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "studentForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Student student = new Student();
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
@@ -83,9 +88,11 @@ public class StudentWebController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult, Model model) {
+    public String updateStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "studentForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Student student = new Student();
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));

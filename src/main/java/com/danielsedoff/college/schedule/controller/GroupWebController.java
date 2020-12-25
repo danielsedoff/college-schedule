@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.GroupDTO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.service.GroupService;
 
 @Controller
-public class GroupWebController {
+public class GroupWebController implements WebMvcConfigurer {
 
     @Autowired
     private GroupService gs;
@@ -34,7 +35,7 @@ public class GroupWebController {
     }
 
     @RequestMapping(value = "/groupForm", params = { "id" }, method = RequestMethod.GET)
-    public String gedItParam(@RequestParam("id") int id, @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+    public String gedItParam(@RequestParam("id") int id, @ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
         if (id == -1) {
             groupdto.setMode("create");
             return "groupForm";
@@ -49,9 +50,11 @@ public class GroupWebController {
     }
 
     @PostMapping("/deleteGroup")
-    public String deleteGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+    public String deleteGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "groupForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         gs.deleteGroupById(groupdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -59,9 +62,11 @@ public class GroupWebController {
     }
 
     @PostMapping("/createGroup")
-    public String createGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+    public String createGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "groupForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Group group = new Group();
         group.setSpecialNotes(groupdto.getDescription());
@@ -71,9 +76,11 @@ public class GroupWebController {
     }
 
     @PostMapping("/updateGroup")
-    public String updateGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+    public String updateGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "groupForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Group group = gs.getGroupById(groupdto.getId());
         group.setSpecialNotes(groupdto.getDescription());

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
@@ -21,11 +22,11 @@ import com.danielsedoff.college.schedule.service.CourseService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class CourseWebController {
+public class CourseWebController implements WebMvcConfigurer {
 
     @Autowired
     private CourseService cs;
-
+    
     @Autowired
     private ProfessorService ps;
 
@@ -60,22 +61,24 @@ public class CourseWebController {
     }
 
     @PostMapping("/deleteCourse")
-    public String deleteCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, BindingResult bindingResult, Model model) {
-
+    public String deleteCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model, BindingResult bindingResult) {
+        
         if (bindingResult.hasErrors()) {
-            return "courseForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
-
+        
         cs.deleteCourseById(coursedto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createCourse")
-    public String createCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, BindingResult bindingResult, Model model) {
-
+    public String createCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model, BindingResult bindingResult) {
+        
         if (bindingResult.hasErrors()) {
-            return "courseForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
 
         Course course = new Course();
@@ -90,10 +93,11 @@ public class CourseWebController {
     }
 
     @PostMapping("/updateCourse")
-    public String updateCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, BindingResult bindingResult, Model model) {
-
+    public String updateCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model, BindingResult bindingResult) {
+        
         if (bindingResult.hasErrors()) {
-            return "courseForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
 
         Course course = new Course();

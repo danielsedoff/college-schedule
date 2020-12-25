@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.ProfessorDTO;
 import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class ProfessorWebController {
+public class ProfessorWebController implements WebMvcConfigurer {
 
     @Autowired
     ProfessorService ps;
@@ -55,9 +56,11 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/deleteProfessor")
-    public String deleteProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, BindingResult bindingResult, Model model) {
+    public String deleteProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "professorForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         ps.deleteProfessorById(professordto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -65,9 +68,11 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/createProfessor")
-    public String createProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, BindingResult bindingResult, Model model) {
+    public String createProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "professorForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Professor professor = new Professor();
         professor.setName(professordto.getName());
@@ -79,9 +84,11 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/updateProfessor")
-    public String updateProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, BindingResult bindingResult, Model model) {
+    public String updateProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, Model model,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "professorForm";
+            model.addAttribute("result", "Your input is invalid.");
+            return "resultPage";
         }
         Professor professor = new Professor();
         professor.setName(professordto.getName());
