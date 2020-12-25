@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -19,8 +19,8 @@ import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @SpringBootTest(classes = { LessonRestController.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LessonRestControllerIntegrationTest {
-
-    int port = 8080;
+    @LocalServerPort
+    private int port;
     
     @Autowired
     private GroupService gservice;
@@ -52,13 +52,4 @@ public class LessonRestControllerIntegrationTest {
                 "http://localhost:" + port + "/lessons", lesson, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
-    
-    @Test
-    public void testGetLessonListAvailability() {
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
-        ResponseEntity<String> response = testRestTemplate.
-          getForEntity("http://localhost:" + port + "/lessons", String.class);
-        assertEquals(response.getStatusCode(), (HttpStatus.OK));
-    }
-
 }

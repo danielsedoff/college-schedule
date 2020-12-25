@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -22,9 +22,9 @@ import com.danielsedoff.college.schedule.service.StudentService;
 @SpringBootTest(classes = { GroupRestController.class }, 
                 webEnvironment = WebEnvironment.RANDOM_PORT)
 public class GroupRestControllerIntegrationTest {
+    @LocalServerPort
+    private int port;
 
-    int port = 8080;
-    
     @Autowired
     StudentService ss;
     
@@ -53,13 +53,4 @@ public class GroupRestControllerIntegrationTest {
                 "http://localhost:" + port + "/groups", group, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
-    
-    @Test
-    public void testGetGroupListAvailability() {
-        TestRestTemplate testRestTemplate = new TestRestTemplate();
-        ResponseEntity<String> response = testRestTemplate.
-          getForEntity("http://localhost:" + port + "/groups", String.class);
-        assertEquals(response.getStatusCode(), (HttpStatus.OK));
-    }
-
 }
