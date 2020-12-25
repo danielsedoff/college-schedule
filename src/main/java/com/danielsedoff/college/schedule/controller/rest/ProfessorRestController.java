@@ -1,10 +1,14 @@
+
 package com.danielsedoff.college.schedule.controller.rest;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.danielsedoff.college.schedule.dto.ProfessorDTO;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -30,7 +33,7 @@ class ProfessorRestController {
     private ProfessorService service;
 
     @GetMapping
-    public String findAll() throws JsonProcessingException {
+    public List<ProfessorDTO> findAll() throws JsonProcessingException {
         List<Professor> professors = service.getProfessorList();
         List<ProfessorDTO> result = new ArrayList<>();
         for (Professor professor : professors) {
@@ -42,12 +45,12 @@ class ProfessorRestController {
             dto.setRanks(professor.getRanksTitles());
             result.add(dto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return (result);
     }
 
     @GetMapping(value = "/{id}")
-    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public ProfessorDTO findById(@PathVariable("id") int id)
+            throws MyResourceNotFoundException, JsonProcessingException {
         Professor professor = RestPreconditions.checkFound(service.getProfessorById(id));
         ProfessorDTO dto = new ProfessorDTO();
         dto.setId(professor.getId());
@@ -55,26 +58,34 @@ class ProfessorRestController {
         dto.setName(professor.getName());
         dto.setNotes(professor.getSpecialNotes());
         dto.setRanks(professor.getRanksTitles());
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(dto);
+        return (dto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean create(@RequestBody Professor resource) {
-        if (null == resource) {
-            return false;
+    public String create(@Valid @RequestBody ProfessorDTO resource, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "illegal Professor instance input";
         }
-        return service.createProfessor(resource);
+        Professor professor = new Professor();
+        professor.setName(resource.getName());
+        professor.setRanksTitles(resource.getRanks());
+        professor.setSpecialNotes(resource.getNotes());
+        return service.createProfessor(professor) ? "success" : "Failed to update Professors";
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") int id, @RequestBody Professor resource) throws MyResourceNotFoundException {
-        if (null == resource) {
-            throw new MyResourceNotFoundException();
+    public String update(@PathVariable("id") int id, @Valid @RequestBody ProfessorDTO resource,
+            BindingResult bindingResult) throws MyResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "illegal Professor instance input";
         }
-        service.updateProfessor(id, resource);
+        Professor professor = new Professor();
+        professor.setName(resource.getName());
+        professor.setRanksTitles(resource.getRanks());
+        professor.setSpecialNotes(resource.getNotes());
+        return service.updateProfessor(id, professor) ? "success" : "Failed to update Professors";
     }
 
     @DeleteMapping(value = "/{id}")

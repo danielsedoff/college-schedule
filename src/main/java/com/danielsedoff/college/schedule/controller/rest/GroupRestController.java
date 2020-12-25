@@ -3,8 +3,11 @@ package com.danielsedoff.college.schedule.controller.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +19,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.danielsedoff.college.schedule.dto.GroupDTO;
 import com.danielsedoff.college.schedule.model.Group;
-import com.danielsedoff.college.schedule.service.GroupService; 
+import com.danielsedoff.college.schedule.model.Student;
+import com.danielsedoff.college.schedule.service.GroupService;
 
 @RestController
 @RequestMapping("/groups")
@@ -30,10 +33,10 @@ class GroupRestController {
     private GroupService service;
 
     @GetMapping
-    public String findAll() throws JsonProcessingException {
+    public List<GroupDTO> findAll() throws JsonProcessingException {
         List<Group> groups = service.getGroupList();
         List<GroupDTO> result = new ArrayList<>();
-        for(Group group : groups) {
+        for (Group group : groups) {
             GroupDTO dto = new GroupDTO();
             dto.setName(group.getSpecialNotes());
             dto.setDescription(group.getSpecialNotes());
@@ -41,38 +44,45 @@ class GroupRestController {
             dto.setMode("update");
             result.add(dto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return result;
     }
 
     @GetMapping(value = "/{id}")
-    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public GroupDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
         Group group = RestPreconditions.checkFound(service.getGroupById(id));
         GroupDTO dto = new GroupDTO();
         dto.setName(group.getSpecialNotes());
         dto.setDescription(group.getSpecialNotes());
         dto.setId(group.getId());
         dto.setMode("update");
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(dto);
+        return dto;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean create(@RequestBody Group resource) {
-        if(null == resource) {
-            return false;
+    public String create(@Valid @RequestBody GroupDTO resource, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "illegal Group instance input";
         }
-        return service.createGroup(resource);
+        Group group = new Group();
+        group.setId(resource.getId());
+        group.setSpecialNotes(resource.getDescription());
+        group.setStudents(new ArrayList<Student>());
+        return service.createGroup(group) ? "success" : "Failed to update Groups";
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable( "id" ) int id, @RequestBody Group resource) throws MyResourceNotFoundException {
-        if(null == resource) {
-            throw new MyResourceNotFoundException();
+    public String update(@PathVariable("id") int id, @Valid @RequestBody GroupDTO resource, BindingResult bindingResult)
+            throws MyResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "illegal Group instance input";
         }
-        service.updateGroup(id, resource);
+        Group group = new Group();
+        group.setId(resource.getId());
+        group.setSpecialNotes(resource.getDescription());
+        group.setStudents(new ArrayList<Student>());
+        return service.updateGroup(id, group) ? "success" : "Failed to update Groups";
     }
 
     @DeleteMapping(value = "/{id}")
@@ -82,4 +92,3 @@ class GroupRestController {
     }
 
 }
-

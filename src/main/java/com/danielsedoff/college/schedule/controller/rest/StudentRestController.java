@@ -1,10 +1,14 @@
+
 package com.danielsedoff.college.schedule.controller.rest;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +20,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
+import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.StudentService;
 
 @RestController
@@ -29,8 +33,11 @@ class StudentRestController {
     @Autowired
     private StudentService service;
 
+    @Autowired
+    private GroupService gservice;
+
     @GetMapping
-    public String findAll() throws JsonProcessingException {
+    public List<StudentDTO> findAll() throws JsonProcessingException {
         List<Student> students = service.getStudentList();
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
@@ -42,12 +49,11 @@ class StudentRestController {
             dto.setSchoolYear(student.getSchoolYear());
             result.add(dto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return (result);
     }
 
     @GetMapping(value = "/{id}")
-    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public StudentDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
         Student student = RestPreconditions.checkFound(service.getStudentById(id));
         StudentDTO dto = new StudentDTO();
         dto.setId(student.getId());
@@ -55,26 +61,34 @@ class StudentRestController {
         dto.setName(student.getName());
         dto.setGroupId(student.getGroup().getId());
         dto.setSchoolYear(student.getSchoolYear());
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(dto);
+        return (dto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean create(@RequestBody Student resource) {
-        if (null == resource) {
-            return false;
+    public String create(@Valid @RequestBody StudentDTO resource, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "illegal Student instance input";
         }
-        return service.createStudent(resource);
+        Student student = new Student();
+        student.setGroup(gservice.getGroupById(resource.getGroupId()));
+        student.setName(resource.getName());
+        student.setSchoolYear(resource.getSchoolYear());
+        return service.createStudent(student) ? "success" : "Failed to update Students";
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") int id, @RequestBody Student resource) throws MyResourceNotFoundException {
-        if (null == resource) {
-            throw new MyResourceNotFoundException();
+    public String update(@PathVariable("id") int id, @Valid @RequestBody StudentDTO resource,
+            BindingResult bindingResult) throws MyResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "illegal Student instance input";
         }
-        service.updateStudent(id, resource);
+        Student student = new Student();
+        student.setGroup(gservice.getGroupById(resource.getGroupId()));
+        student.setName(resource.getName());
+        student.setSchoolYear(resource.getSchoolYear());
+        return service.updateStudent(id, student) ? "success" : "Failed to update Students";
     }
 
     @DeleteMapping(value = "/{id}")

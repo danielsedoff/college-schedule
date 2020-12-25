@@ -3,8 +3,11 @@ package com.danielsedoff.college.schedule.controller.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +19,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
-import com.danielsedoff.college.schedule.service.CourseService; 
+import com.danielsedoff.college.schedule.model.Professor;
+import com.danielsedoff.college.schedule.service.CourseService;
+import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @RestController
 @RequestMapping("/courses")
@@ -28,12 +32,15 @@ class CourseRestController {
 
     @Autowired
     private CourseService service;
+    
+    @Autowired
+    private ProfessorService ps;
 
     @GetMapping
-    public String findAll() throws JsonProcessingException {
+    public List<CourseDTO> findAll() throws JsonProcessingException {
         List<Course> courses = service.getCourseList();
         List<CourseDTO> result = new ArrayList<>();
-        for(Course course : courses) {
+        for (Course course : courses) {
             CourseDTO dto = new CourseDTO();
             dto.setDescription(course.getCourseDescription());
             dto.setId(course.getId());
@@ -42,12 +49,11 @@ class CourseRestController {
             dto.setProfessorId(course.getProfessors().get(0).getId());
             result.add(dto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return result;
     }
 
     @GetMapping(value = "/{id}")
-    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public CourseDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
         Course course = RestPreconditions.checkFound(service.getCourseById(id));
         CourseDTO dto = new CourseDTO();
         dto.setDescription(course.getCourseDescription());
@@ -55,26 +61,39 @@ class CourseRestController {
         dto.setMode("update");
         dto.setName(course.getName());
         dto.setProfessorId(course.getProfessors().get(0).getId());
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(dto);
+        return dto;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean create(@RequestBody Course resource) {
-        if(null == resource) {
-            return false;
+    public String create(@Valid @RequestBody CourseDTO resource, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult.getAllErrors());
+            return "illegal Course instance input";
         }
-        return service.createCourse(resource);
+        Course course = new Course();
+        course.setCourseDescription(resource.getDescription());
+        course.setName(resource.getName());
+        List<Professor> proflist = new ArrayList<>();
+        proflist.add(ps.getProfessorById(resource.getProfessorId()));
+        course.setProfessor(proflist);
+        return service.createCourse(course) ? "success" : "Failed to update Courses";
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable( "id" ) int id, @RequestBody Course resource) throws MyResourceNotFoundException {
-        if(null == resource) {
-            throw new MyResourceNotFoundException();
+    public String update(@PathVariable("id") int id, @Valid @RequestBody CourseDTO resource, BindingResult bindingResult)
+            throws MyResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "illegal Course instance input";
         }
-        service.updateCourse(id, resource);
+        Course course = new Course();
+        course.setCourseDescription(resource.getDescription());
+        course.setName(resource.getName());
+        List<Professor> proflist = new ArrayList<>();
+        proflist.add(ps.getProfessorById(resource.getProfessorId()));
+        course.setProfessor(proflist);
+        return service.updateCourse(id, course) ? "success" : "Failed to update Courses";
     }
 
     @DeleteMapping(value = "/{id}")
@@ -84,4 +103,3 @@ class CourseRestController {
     }
 
 }
-

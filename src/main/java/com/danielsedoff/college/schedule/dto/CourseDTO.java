@@ -13,7 +13,6 @@ public class CourseDTO {
     @Min(-1)
     int id;
     
-    
     @NotNull
     @Size(min = 2, max = 30)
     String name;

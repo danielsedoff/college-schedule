@@ -1,10 +1,14 @@
+
 package com.danielsedoff.college.schedule.controller.rest;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +20,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
+import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.LessonService;
+import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @RestController
 @RequestMapping("/lessons")
@@ -29,8 +35,14 @@ class LessonRestController {
     @Autowired
     private LessonService service;
 
+    @Autowired
+    private GroupService gservice;
+
+    @Autowired
+    private ProfessorService pservice;
+
     @GetMapping
-    public String findAll() throws JsonProcessingException {
+    public List<LessonDTO> findAll() throws JsonProcessingException {
         List<Lesson> lessons = service.getLessonList();
         List<LessonDTO> result = new ArrayList<>();
         for (Lesson lesson : lessons) {
@@ -43,12 +55,11 @@ class LessonRestController {
             dto.setStartTime(lesson.getStartTime());
             result.add(dto);
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return (result);
     }
 
     @GetMapping(value = "/{id}")
-    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+    public LessonDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
         Lesson lesson = RestPreconditions.checkFound(service.getLessonById(id));
         LessonDTO dto = new LessonDTO();
         dto.setEndTime(lesson.getEndTime());
@@ -57,26 +68,38 @@ class LessonRestController {
         dto.setMode("update");
         dto.setProfessorId(lesson.getProfessor().getId());
         dto.setStartTime(lesson.getStartTime());
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(dto);
+        return (dto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean create(@RequestBody Lesson resource) {
-        if (null == resource) {
-            return false;
+    public String create(@Valid @RequestBody LessonDTO resource, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "illegal Lesson instance input";
         }
-        return service.createLesson(resource);
+        Lesson lesson = new Lesson();
+        lesson.setDayschedule(new DaySchedule());
+        lesson.setEndTime(resource.getEndTime());
+        lesson.setStartTime(resource.getStartTime());
+        lesson.setGroup(gservice.getGroupById(resource.getGroupId()));
+        lesson.setProfessor(pservice.getProfessorById(resource.getProfessorId()));
+        return service.createLesson(lesson) ? "success" : "Failed to update Lessons";
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") int id, @RequestBody Lesson resource) throws MyResourceNotFoundException {
-        if (null == resource) {
-            throw new MyResourceNotFoundException();
+    public String update(@PathVariable("id") int id, @Valid @RequestBody LessonDTO resource,
+            BindingResult bindingResult) throws MyResourceNotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "illegal Lesson instance input";
         }
-        service.updateLesson(id, resource);
+        Lesson lesson = new Lesson();
+        lesson.setDayschedule(new DaySchedule());
+        lesson.setEndTime(resource.getEndTime());
+        lesson.setStartTime(resource.getStartTime());
+        lesson.setGroup(gservice.getGroupById(resource.getGroupId()));
+        lesson.setProfessor(pservice.getProfessorById(resource.getProfessorId()));
+        return service.updateLesson(id, lesson) ? "success" : "Failed to update Lessons";
     }
 
     @DeleteMapping(value = "/{id}")
