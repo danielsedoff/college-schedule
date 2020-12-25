@@ -47,17 +47,17 @@ class GroupListControllerTest {
 
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("groupListController"));
+        assertNotNull(wac.getBean("groupWebController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/groups")).andDo(print()).andExpect(view().name("groupList"));
+        mockMvc.perform(get("/groupList")).andDo(print()).andExpect(view().name("groupList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/groups")).andExpect(status().isOk())
+        mockMvc.perform(get("/groupList")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("testvalue"));
     }
 }

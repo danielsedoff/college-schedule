@@ -44,15 +44,13 @@ class GroupDAOTest extends DAOTest {
     @Test
     void testUpdate() throws DAOException {
         int id = 1;
-        List<String> noteList = new ArrayList<>();
         String note = "Large group";
-        noteList.add(note);
         Group group = groupdao.getById(id);
         group.setDepartmentId(4);
-        group.setSpecialNotes(noteList);
+        group.setSpecialNotes(note);
         groupdao.update(id, group);
         Group newGroup = groupdao.getById(id);
-        assertEquals(note, newGroup.getSpecialNotes().get(0));
+        assertEquals(note, newGroup.getSpecialNotes());
     }
 
     @Test
@@ -69,9 +67,7 @@ class GroupDAOTest extends DAOTest {
         int expectedSize = groupdao.getIdList().size() + 1;
         Group group = new Group();
         group.setDepartmentId(65535);
-        List<String> specialNotes = new ArrayList<>();
-        specialNotes.add("Info");
-        group.setSpecialNotes(specialNotes);
+        group.setSpecialNotes("Info");
         groupdao.create(group);
         assertEquals(expectedSize, groupdao.getIdList().size());
         assertEquals(65535, groupdao.getById(expectedSize).getDepartmentId());

@@ -17,14 +17,15 @@ CREATE TABLE courses
 (
     course_id SERIAL PRIMARY KEY,
     course_name CHARACTER VARYING(30),
-    course_description CHARACTER VARYING(300)
+    course_description CHARACTER VARYING(300),
+    professor_id INTEGER
 );
 
 CREATE TABLE dayschedules
 (
     dayschedule_id SERIAL PRIMARY KEY,
     date CHARACTER VARYING(30),
-    hasOverlaps INTEGER 
+    hasOverlaps BOOLEAN 
 );
 
 CREATE TABLE groupz
@@ -39,7 +40,8 @@ CREATE TABLE lessons
     lesson_id SERIAL PRIMARY KEY,
     start_time CHARACTER VARYING(30),
     end_time CHARACTER VARYING(30),
-    professor_id INTEGER
+    professor_id INTEGER,
+    group_id INTEGER
 );
 
 CREATE TABLE professors
@@ -106,20 +108,20 @@ INSERT INTO groupz(group_note, department_id) VALUES ('Worst Group', 1);
 INSERT INTO groupz(group_note, department_id) VALUES ('Best Group', 1);
 INSERT INTO groupz(group_note, department_id) VALUES ('Nonsense Group', 1);
 
-INSERT INTO courses(course_name, course_description) VALUES ('Maths', 'Mathematics');
-INSERT INTO courses(course_name, course_description) VALUES ('Bio', 'Biology');
-INSERT INTO courses(course_name, course_description) VALUES ('Eng', 'English');
-INSERT INTO courses(course_name, course_description) VALUES ('Hist', 'History');
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Maths', 'Mathematics', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Bio', 'Biology', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Eng', 'English', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Hist', 'History', 2);
 
-INSERT INTO lessons(start_time, end_time, professor_id) VALUES ('1970-01-01 00:01', '1970-01-01 01:01', 1);
-INSERT INTO lessons(start_time, end_time, professor_id) VALUES ('1970-02-01 00:01', '1970-02-01 01:01', 2);
-INSERT INTO lessons(start_time, end_time, professor_id) VALUES ('1970-03-01 00:01', '1970-03-01 01:01', 3);
-INSERT INTO lessons(start_time, end_time, professor_id) VALUES ('1970-04-01 00:01', '1970-04-01 01:01', 4);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-01-01 00:01', '1970-01-01 01:01', 1, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-02-01 00:01', '1970-02-01 01:01', 2, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-03-01 00:01', '1970-03-01 01:01', 3, 2);
+INSERT INTO lessons(start_time, end_time, professor_id, group_id) VALUES ('1970-04-01 00:01', '1970-04-01 01:01', 4, 2);
 
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-01-01 00:01', 0);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-02-01 00:01', 1);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-03-01 00:01', 0);
-INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-04-01 00:01', 1);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-01-01 00:01', FALSE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-02-01 00:01', TRUE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-03-01 00:01', FALSE);
+INSERT INTO dayschedules(date, hasOverlaps) VALUES ('1970-04-01 00:01', TRUE);
 
 INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
     values ('John Lennon', 'Most Excellent Order of the British Empire ', 'Husband of Yoko Ono', 1);

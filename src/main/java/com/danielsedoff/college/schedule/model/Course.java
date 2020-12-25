@@ -1,7 +1,5 @@
 package com.danielsedoff.college.schedule.model;
 
-import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -11,7 +9,7 @@ public class Course {
     private int id;
     private String name;
     private String courseDescription;
-    private List<Professor> professors;
+    private int professorId;
 
     public int getId() {
         return id;
@@ -37,11 +35,11 @@ public class Course {
         this.courseDescription = courseDescription;
     }
 
-    public List<Professor> getProfessors() {
-        return professors;
+    public int getProfessorId() {
+        return this.professorId;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 }

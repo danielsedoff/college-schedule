@@ -66,6 +66,7 @@ class CourseDAOTest extends DAOTest {
         String newName = "Chemistry";
         Course course = new Course();
         course.setName(newName);
+        course.setProfessorId(1);
         coursedao.create(course);
         assertEquals(expectedSize, coursedao.getIdList().size());
         assertEquals(newName, coursedao.getById(5).getName());

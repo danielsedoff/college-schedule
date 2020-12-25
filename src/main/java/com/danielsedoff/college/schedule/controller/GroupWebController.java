@@ -62,10 +62,7 @@ public class GroupWebController {
     @PostMapping("/createGroup")
     public String createGroup(@ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
         Group group = new Group();
-
-        List<String> specialNotes = new ArrayList<>();
-        specialNotes.add(groupdto.getDescription());
-        group.setSpecialNotes(specialNotes);
+        group.setSpecialNotes(groupdto.getDescription());
         gs.createGroup(group);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
         return "resultPage";
@@ -76,9 +73,7 @@ public class GroupWebController {
         Group group = new Group();
 
         group.setId(groupdto.getId());
-        List<String> specialNotes = new ArrayList<>();
-        specialNotes.add(groupdto.getDescription());
-        group.setSpecialNotes(specialNotes);
+        group.setSpecialNotes(groupdto.getDescription());
         gs.updateGroup(groupdto.getId(), group);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";

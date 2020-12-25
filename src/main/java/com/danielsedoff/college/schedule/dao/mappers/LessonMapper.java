@@ -20,10 +20,8 @@ public class LessonMapper implements RowMapper<Lesson> {
                 LocalDateTime.parse(resultSet.getString("start_time"), formatter));
         lesson.setEndTime(
                 LocalDateTime.parse(resultSet.getString("end_time"), formatter));
-        lesson.setProfessor(null);
-        // TODO: Implement Lesson-Professor relation
-        lesson.setGroups(null);
-        // TODO: Implement Lesson-Group relation
+        lesson.setProfessorId(resultSet.getInt("professor_id"));
+        lesson.setGroupId(resultSet.getInt("group_id"));
         return lesson;
     }
 }

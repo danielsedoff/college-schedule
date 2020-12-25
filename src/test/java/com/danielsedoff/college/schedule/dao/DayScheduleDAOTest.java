@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.DaySchedule;
-import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.model.Professor;
 
 class DayScheduleDAOTest extends DAOTest {
 
@@ -47,8 +44,7 @@ class DayScheduleDAOTest extends DAOTest {
         LocalDateTime today = LocalDateTime.now();
         ds.setDay(today);
         dsdao.update(id, ds);
-        assertEquals(today.format(formatter),
-                dsdao.getById(id).getDay().format(formatter));
+        assertEquals(today.format(formatter), dsdao.getById(id).getDay().format(formatter));
     }
 
     @Test
@@ -79,19 +75,14 @@ class DayScheduleDAOTest extends DAOTest {
 
     @Test
     void testSetLessonDayschedule() throws DAOException {
-     
-        List<Group> groupList = new ArrayList<Group>();
-        Group group = new Group();
-        group.setId(1);
-        groupList.add(group);
 
         Lesson originalLesson = new Lesson();
-        originalLesson.setGroups(groupList);
+        originalLesson.setGroupId(1);
         originalLesson.setId(3);
         originalLesson.setEndTime(LocalDateTime.now());
         originalLesson.setStartTime(LocalDateTime.now());
-        originalLesson.setProfessor(new Professor());
-        
+        originalLesson.setProfessorId(2);
+
         DaySchedule ds = dsdao.getById(3);
         ds.setId(3);
 

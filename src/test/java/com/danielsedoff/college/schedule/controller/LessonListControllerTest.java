@@ -52,12 +52,12 @@ class LessonListControllerTest {
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/lessons")).andDo(print()).andExpect(view().name("lessonList"));
+        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/lessons")).andExpect(status().isOk())
+        mockMvc.perform(get("/lessonList")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("testvalue"));
     }
 }

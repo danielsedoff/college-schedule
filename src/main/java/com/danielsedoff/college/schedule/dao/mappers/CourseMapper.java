@@ -13,8 +13,7 @@ public class CourseMapper implements RowMapper<Course> {
         course.setId(resultSet.getInt("course_id"));
         course.setName(resultSet.getString("course_name"));
         course.setCourseDescription(resultSet.getString("course_description"));
-        course.setProfessors(null);
-        // TODO: Implement the Professor / Course relations
+        course.setProfessorId(resultSet.getInt("professor_id"));
         return course;
     }
 }

@@ -8,7 +8,7 @@ public class CourseDTO {
     int id;
     String name;
     String description;
-    int connectedId1;
+    int professorId;
 
     public String getMode() {
         return mode;
@@ -42,11 +42,11 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public int getConnectedId1() {
-        return connectedId1;
+    public int getProfessorId() {
+        return professorId;
     }
 
-    public void setConnectedId1(int connectedId1) {
-        this.connectedId1 = connectedId1;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 }

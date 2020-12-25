@@ -45,7 +45,7 @@ public class LessonDAO implements DAO<Lesson> {
         boolean result = false;
         try {
             result = jdbcTemplate.update(SQL_UPDATE_LESSONS, lesson.getStartTime().format(formatter),
-                    lesson.getEndTime().format(formatter), lesson.getProfessor().getId(),
+                    lesson.getEndTime().format(formatter), lesson.getProfessorId(),
                     lesson.getId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not update", e);
@@ -67,7 +67,7 @@ public class LessonDAO implements DAO<Lesson> {
         boolean result = false;
         try {
             result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime().format(formatter),
-                    lesson.getEndTime().format(formatter), lesson.getProfessor().getId()) > 0;
+                    lesson.getEndTime().format(formatter), lesson.getProfessorId()) > 0;
         } catch (Exception e) {
             throw new DAOException("Could not create", e);
         }

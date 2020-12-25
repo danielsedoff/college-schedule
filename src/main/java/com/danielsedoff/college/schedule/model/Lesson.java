@@ -1,20 +1,23 @@
 package com.danielsedoff.college.schedule.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-@ToString
 @EqualsAndHashCode
 public class Lesson {
     private int id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Professor professor;
-    private List<Group> groups;
+    private int professorId;
+    private int groupId;
 
+    @Override
+    public String toString() {
+        return "Lesson [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime
+                + ", professor=" + professorId + ", groupId=" + groupId + "]";
+    }
+    
     public int getId() {
         return id;
     }
@@ -39,19 +42,19 @@ public class Lesson {
         this.endTime = endTime;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public int getProfessorId() {
+        return professorId;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public int getGroup() {
+        return groupId;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }

@@ -15,7 +15,6 @@ import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonServiceTest {
 
@@ -45,7 +44,7 @@ class LessonServiceTest {
     @Test
     void testGetLessonById() throws DAOException {
         Lesson lesson = new Lesson();
-        lesson.setProfessor(new Professor());
+        lesson.setProfessorId(2);
         Mockito.when(lessondao.getById(Mockito.anyInt())).thenReturn(lesson);
         assertNotNull(lservice.getLessonById(1));
     }
@@ -53,7 +52,7 @@ class LessonServiceTest {
     @Test
     void testCreateLesson() throws DAOException {
         Lesson lesson = new Lesson();
-        lesson.setProfessor(new Professor());
+        lesson.setProfessorId(2);
         Mockito.when(lessondao.create(lesson)).thenReturn(true);
         boolean successfulCreation = lservice.createLesson(lesson);
         assertTrue(successfulCreation);
@@ -70,7 +69,7 @@ class LessonServiceTest {
     void testUpdateLesson() throws DAOException {
         int lessonId = 1;
         Lesson lesson = new Lesson();
-        lesson.setProfessor(new Professor());
+        lesson.setProfessorId(2);
         Mockito.when(lessondao.update(Mockito.anyInt(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = lservice.updateLesson(lessonId, lesson);
         assertTrue(successfulUpdate);

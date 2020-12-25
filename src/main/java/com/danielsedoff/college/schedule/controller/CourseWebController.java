@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
-import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.service.CourseService;
 
 @Controller
@@ -50,13 +49,7 @@ public class CourseWebController {
         coursedto.setMode("update");
         coursedto.setName(course.getName());
         coursedto.setDescription(course.getCourseDescription());
-        List<Professor> profs = course.getProfessors();
-        if (null != profs) {
-            int profId = profs.get(0).getId();
-            coursedto.setConnectedId1(profId);
-        } else {
-            coursedto.setConnectedId1(0);
-        }
+        coursedto.setProfessorId(course.getProfessorId());
         model.addAttribute("testvalue", "passed");
         return "courseForm";
     }
@@ -71,14 +64,9 @@ public class CourseWebController {
     @PostMapping("/createCourse")
     public String createCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         Course course = new Course();
+        coursedto.setProfessorId(course.getProfessorId());
 
-        if (coursedto.getConnectedId1() > 0) {
-            List<Professor> professors = new ArrayList<Professor>();
-            Professor prof = new Professor();
-            prof.setId(coursedto.getConnectedId1());
-            professors.add(prof);
-            course.setProfessors(professors);
-        }
+        course.setProfessorId(coursedto.getProfessorId());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());
         cs.createCourse(course);
@@ -89,15 +77,7 @@ public class CourseWebController {
     @PostMapping("/updateCourse")
     public String updateCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         Course course = new Course();
-
-        if (coursedto.getConnectedId1() > 0) {
-            List<Professor> professors = new ArrayList<Professor>();
-            Professor prof = new Professor();
-            prof.setId(coursedto.getConnectedId1());
-            professors.add(prof);
-            course.setProfessors(professors);
-        }
-
+        course.setProfessorId(coursedto.getProfessorId());
         course.setId(coursedto.getId());
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());

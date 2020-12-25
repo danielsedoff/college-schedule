@@ -8,7 +8,7 @@ public class Group {
     private int id;
     private int departmentId;
     private List<Student> studentList;
-    private List<String> specialNotes;
+    private String specialNotes;
 
     public int getId() {
         return id;
@@ -34,11 +34,11 @@ public class Group {
         this.studentList = studentList;
     }
 
-    public List<String> getSpecialNotes() {
+    public String getSpecialNotes() {
         return specialNotes;
     }
 
-    public void setSpecialNotes(List<String> specialNotes) {
+    public void setSpecialNotes(String specialNotes) {
         this.specialNotes = specialNotes;
     }
 }

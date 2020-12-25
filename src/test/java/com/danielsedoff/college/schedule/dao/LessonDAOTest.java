@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonDAOTest extends DAOTest {
 
@@ -47,9 +46,7 @@ class LessonDAOTest extends DAOTest {
         lesson.setStartTime(now);
         lesson.setEndTime(now);
         lesson.setStartTime(now);
-        Professor prof = new Professor();
-        prof.setName("John Deere");
-        lesson.setProfessor(prof);
+        lesson.setProfessorId(2);
         lessondao.update(id, lesson);
         assertEquals(now.format(formatter),
                 lessondao.getById(id).getStartTime().format(formatter));
@@ -72,9 +69,7 @@ class LessonDAOTest extends DAOTest {
         LocalDateTime now = LocalDateTime.now();
         lesson.setStartTime(now);
         lesson.setEndTime(now);
-        Professor prof = new Professor();
-        prof.setName("John Deere");
-        lesson.setProfessor(prof);
+        lesson.setProfessorId(2);
         lessondao.create(lesson);
         assertEquals(expectedSize, lessondao.getIdList().size());
         assertEquals(now.format(formatter),

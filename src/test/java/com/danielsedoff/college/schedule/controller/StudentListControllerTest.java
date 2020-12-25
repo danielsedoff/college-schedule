@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -52,12 +51,11 @@ class StudentListControllerTest {
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/students")).andDo(print()).andExpect(view().name("studentList"));
+        mockMvc.perform(get("/studentList")).andDo(print()).andExpect(view().name("studentList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/students")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/studentList")).andExpect(status().isOk());
     }
 }

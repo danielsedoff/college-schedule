@@ -47,17 +47,17 @@ class CourseListControllerTest {
 
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("courseListController"));
+        assertNotNull(wac.getBean("courseWebController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/courses")).andDo(print()).andExpect(view().name("courseList"));
+        mockMvc.perform(get("/courseList")).andDo(print()).andExpect(view().name("courseList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/courses")).andExpect(status().isOk())
+        mockMvc.perform(get("/courseList")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("testvalue"));
     }
 }
