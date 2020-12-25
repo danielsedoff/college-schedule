@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
-<link rel="stylesheet" type="text/css" href="static/list.css"
-	media="all" />
+<link th:href="@{/css/list.css}" rel="stylesheet"></link>
+
 </head>
 <body>
 	<input type="hidden" id="entityname" value="course" />
@@ -77,6 +77,7 @@
 			</table>
 		</form>
 	</div>
-	<script src="static/radios.js"></script>
+		<script th:src="@{/js/radios.js}" type="text/javascript"></script>
+	
 </body>
 </html>
