@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,7 +13,7 @@ public class Student extends Person {
     @Column(name = "student_year")
     private int schoolYear;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne // (cascade = CascadeType.MERGE)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 

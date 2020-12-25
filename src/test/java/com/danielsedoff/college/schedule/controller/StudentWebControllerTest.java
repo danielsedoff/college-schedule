@@ -70,7 +70,6 @@ class StudentWebControllerTest extends ControllerTest {
 
     @Test
     void postCreateStudentShouldReturnResultPage() throws Exception {
-        
         mockMvc
          .perform(post("/createStudent")
           .param("name", "New Student")
@@ -81,7 +80,13 @@ class StudentWebControllerTest extends ControllerTest {
 
     @Test
     void postUpdateStudentShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateStudent")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc
+        .perform(post("/updateStudent")
+         .param("id", "2")
+         .param("name", "New Student")
+         .param("groupId", "1") 
+         .param("schoolYear", "3")) 
+         .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

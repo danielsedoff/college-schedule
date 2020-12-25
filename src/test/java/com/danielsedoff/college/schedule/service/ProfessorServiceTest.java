@@ -10,13 +10,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.ProfessorRepository;
 import com.danielsedoff.college.schedule.model.Professor;
+import com.danielsedoff.college.schedule.repositories.ProfessorRepository;
 
 @SpringBootTest
 class ProfessorServiceTest extends AbstractServiceTest {
 
-    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
+    ProfessorRepository profRepo = Mockito.mock(ProfessorRepository.class);
 
     @Autowired
     ProfessorService profservice = new ProfessorService();
@@ -25,7 +25,7 @@ class ProfessorServiceTest extends AbstractServiceTest {
     void testCreateProfessor() throws Exception {
         Professor professor = new Professor();
         professor.setName("Jack");
-        Mockito.when(profdao.save(Mockito.any())).thenReturn(true);
+        Mockito.when(profRepo.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = profservice.createProfessor(professor);
         assertTrue(successfulCreation);
     }
@@ -34,13 +34,13 @@ class ProfessorServiceTest extends AbstractServiceTest {
     void testGetProfessorById() throws Exception {
         Professor professor = new Professor();
         professor.setName("John");
-        Mockito.when(profdao.findById(Mockito.anyInt())).thenReturn(Optional.of(professor));
+        Mockito.when(profRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(professor));
         assertNotNull(profservice.getProfessorById(1));
     }
 
     @Test
     void testDeleteProfessor() throws Exception {
-        profdao.delete(Mockito.any());
+        profRepo.delete(Mockito.any());
         boolean successfulDeletion = profservice.deleteProfessorById(1);
         assertTrue(successfulDeletion);
     }

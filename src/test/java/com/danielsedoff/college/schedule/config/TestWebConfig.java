@@ -35,6 +35,7 @@ public class TestWebConfig {
 
     @Bean
     public DataSource dataSource() {
+        @SuppressWarnings("rawtypes")
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create(); 
         dataSourceBuilder.driverClassName("org.h2.Driver");
         dataSourceBuilder.url("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1");

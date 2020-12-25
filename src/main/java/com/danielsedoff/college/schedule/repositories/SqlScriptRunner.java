@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.dao;
+package com.danielsedoff.college.schedule.repositories;
 
 import java.io.File;
 import java.io.FileReader;
@@ -24,6 +24,5 @@ public class SqlScriptRunner {
         runner.setAutoCommit(true);
         runner.setStopOnError(true);
         runner.runScript(new FileReader(file));
-        runner.closeConnection();
     }
 }

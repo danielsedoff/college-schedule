@@ -64,7 +64,7 @@ public class GroupWebController {
 
     @PostMapping("/updateGroup")
     public String updateGroup(@ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
-        Group group = new Group();
+        Group group = gs.getGroupById(groupdto.getId());
         group.setSpecialNotes(groupdto.getDescription());
         gs.updateGroup(groupdto.getId(), group);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");

@@ -72,14 +72,16 @@ class LessonWebControllerTest extends ControllerTest {
     @Test
     void postCreateLessonShouldReturnResultPage() throws Exception {
         mockMvc.perform(
-                post("/createLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13"))
+                post("/createLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13")
+                .param("groupId", "1").param("professorId", "1"))
                 .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateLessonShouldReturnResultPage() throws Exception {
         mockMvc.perform(
-                post("/updateLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13"))
+                post("/updateLesson").param("id", "3").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13")
+                .param("groupId", "1").param("professorId", "1"))
                 .andDo(print()).andExpect(view().name("resultPage"));
     }
 

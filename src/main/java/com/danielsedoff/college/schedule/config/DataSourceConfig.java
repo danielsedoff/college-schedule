@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 public class DataSourceConfig {
     @Bean 
     public DataSource getDataSource() { 
+        @SuppressWarnings("rawtypes")
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create(); 
         dataSourceBuilder.username("postgres"); 
         dataSourceBuilder.password("mallocError"); 

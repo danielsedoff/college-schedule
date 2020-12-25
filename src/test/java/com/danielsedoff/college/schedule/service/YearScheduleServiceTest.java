@@ -10,22 +10,22 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DayScheduleRepository;
-import com.danielsedoff.college.schedule.dao.YearScheduleRepository;
 import com.danielsedoff.college.schedule.model.YearSchedule;
+import com.danielsedoff.college.schedule.repositories.DayScheduleRepository;
+import com.danielsedoff.college.schedule.repositories.YearScheduleRepository;
 
 @SpringBootTest
 class YearScheduleServiceTest extends AbstractServiceTest {
 
-    DayScheduleRepository dsdao = Mockito.mock(DayScheduleRepository.class);
-    YearScheduleRepository ysdao = Mockito.mock(YearScheduleRepository.class);
+    DayScheduleRepository dsRepo = Mockito.mock(DayScheduleRepository.class);
+    YearScheduleRepository ysRepo = Mockito.mock(YearScheduleRepository.class);
 
     @Autowired
     YearScheduleService yservice = new YearScheduleService();
 
     @Test
     void testCreateYearSchedule() throws Exception {
-        Mockito.when(ysdao.save(Mockito.any())).thenReturn(true);
+        Mockito.when(ysRepo.save(Mockito.any())).thenReturn(true);
         YearSchedule ys = new YearSchedule();
         ys.setYear(1234);
         boolean successfulCreation = yservice.createYearSchedule(ys);
@@ -36,13 +36,13 @@ class YearScheduleServiceTest extends AbstractServiceTest {
     void testGetYearScheduleById() throws Exception {
         YearSchedule ys = new YearSchedule();
         ys.setYear(1234);
-        Mockito.when(ysdao.findById(Mockito.anyInt())).thenReturn(Optional.of(ys));
+        Mockito.when(ysRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(ys));
         assertNotNull(yservice.getYearScheduleById(1));
     }
     
     @Test
     void testDeleteYearSchedule() throws Exception {
-        ysdao.delete(Mockito.any());
+        ysRepo.delete(Mockito.any());
         boolean successfulDeletion = yservice.deleteYearScheduleById(1);
         assertTrue(successfulDeletion);
     }

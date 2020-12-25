@@ -11,12 +11,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DayScheduleRepository;
 import com.danielsedoff.college.schedule.model.DaySchedule;
+import com.danielsedoff.college.schedule.repositories.DayScheduleRepository;
 @SpringBootTest
 class DayScheduleServiceTest extends AbstractServiceTest {
 
-    DayScheduleRepository dsdao = Mockito.mock(DayScheduleRepository.class);
+    DayScheduleRepository dsRepo = Mockito.mock(DayScheduleRepository.class);
 
     @Autowired
     DayScheduleService dsservice = new DayScheduleService();
@@ -38,7 +38,7 @@ class DayScheduleServiceTest extends AbstractServiceTest {
 
     @Test
     void testDeleteDayScheduleById() throws Exception {
-        dsdao.delete(Mockito.any());
+        dsRepo.delete(Mockito.any());
         boolean successfulDeletion = dsservice.deleteDayScheduleById(1);
         assertTrue(successfulDeletion);
     }
@@ -47,7 +47,7 @@ class DayScheduleServiceTest extends AbstractServiceTest {
     void testGetDayScheduleById() throws Exception {
         DaySchedule ds = new DaySchedule();
         ds.setDay("2000-10-10");
-        Mockito.when(dsdao.findById(Mockito.anyInt())).thenReturn(Optional.of(ds));
+        Mockito.when(dsRepo.findById(Mockito.anyInt())).thenReturn(Optional.of(ds));
         assertNotNull(dsservice.getDayScheduleById(1));
     }
 
