@@ -62,7 +62,7 @@ public class Lesson {
         this.professorId = professorId;
     }
 
-    public int getGroupId() {
+    public int getGroup() {
         return groupId;
     }
 

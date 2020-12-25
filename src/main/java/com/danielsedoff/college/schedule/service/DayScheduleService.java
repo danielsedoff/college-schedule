@@ -19,11 +19,14 @@ public class DayScheduleService {
 
     @Autowired
     private DayScheduleDAO dayscheduledao;
+    @Autowired
+    private LessonDAO lessondao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     public DayScheduleService(DayScheduleDAO dayscheduledao, LessonDAO lessondao) {
         this.dayscheduledao = dayscheduledao;
+        this.lessondao = lessondao;
     }
 
     private static Logger logger = LoggerFactory.getLogger(DayScheduleService.class);

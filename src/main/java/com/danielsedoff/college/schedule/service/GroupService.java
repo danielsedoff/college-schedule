@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.model.Group;
+import com.danielsedoff.college.schedule.model.Student;
 
 @Service
 public class GroupService {

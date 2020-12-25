@@ -50,7 +50,7 @@ public class LessonWebController {
         lessondto.setMode("update");
         lessondto.setStartTime((lesson.getStartTime()));
         lessondto.setEndTime((lesson.getEndTime()));
-        lessondto.setGroupId(lesson.getGroupId());
+        lessondto.setGroupId(lesson.getGroup());
         int professorId = lesson.getProfessorId();
         lessondto.setProfessorId(professorId);
         return "lessonForm";

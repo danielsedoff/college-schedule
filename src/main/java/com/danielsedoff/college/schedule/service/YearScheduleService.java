@@ -17,10 +17,13 @@ public class YearScheduleService {
     
     @Autowired
     private YearScheduleDAO yearscheduledao;
+    @Autowired
+    private DayScheduleDAO dayscheduledao;
 
     @Autowired
     public YearScheduleService(YearScheduleDAO yearscheduledao, DayScheduleDAO dayscheduledao) {
         this.yearscheduledao = yearscheduledao;
+        this.dayscheduledao = dayscheduledao;
     }
 
     private static Logger logger = LoggerFactory.getLogger(YearScheduleService.class);
