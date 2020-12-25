@@ -1,16 +1,34 @@
 package com.danielsedoff.college.schedule.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class StudentDTO {
     @Override
     public String toString() {
-        return "StudentDTO [id=" + id + ", mode=" + mode + ", name=" + name + ", groupId=" + groupId
-                + ", schoolYear=" + schoolYear + "]";
+        return "StudentDTO [id=" + id + ", mode=" + mode + ", name=" + name + ", groupId=" + groupId + ", schoolYear="
+                + schoolYear + "]";
     }
 
+    @NotNull
+    @Min(1)
     int id;
+
     String mode;
+
+    @NotNull
+    @Size(min = 2, max = 30)
     String name;
+
+    @NotNull
+    @Min(1)
     int groupId;
+
+    @NotNull
+    @Min(1)
+    @Max(6)
     int schoolYear;
 
     public int getId() {

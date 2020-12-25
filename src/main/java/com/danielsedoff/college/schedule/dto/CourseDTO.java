@@ -2,6 +2,10 @@ package com.danielsedoff.college.schedule.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.model.Professor;
@@ -9,9 +13,19 @@ import com.danielsedoff.college.schedule.model.Professor;
 @Component
 public class CourseDTO {
     String mode;
+
+    @Min(1)
     int id;
+    
+    
+    @NotNull
+    @Size(min = 2, max = 30)
     String name;
+    
+    @NotNull
+    @Size(min = 2, max = 30)
     String description;
+    
     List<Professor> professors;
 
     public String getMode() {

@@ -1,11 +1,30 @@
 package com.danielsedoff.college.schedule.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import com.danielsedoff.college.schedule.model.validation.LessonDateConstraint;
+
 public class LessonDTO {
+
     String mode;
+
+    @NotNull
+    @Min(1)
     int id;
+
+    @LessonDateConstraint
     String startTime;
+
+    @LessonDateConstraint
     String endTime;
+
+    @NotNull
+    @Min(1)
     int professorId;
+
+    @NotNull
+    @Min(1)
     int groupId;
 
     public String getMode() {
