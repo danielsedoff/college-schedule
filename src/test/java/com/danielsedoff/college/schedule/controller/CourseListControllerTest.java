@@ -43,12 +43,6 @@ import com.danielsedoff.college.schedule.service.CourseService;
 
 @WebAppConfiguration
 public class CourseListControllerTest {
-    @Mock
-    CourseDAO coursedao;
-    
-    @Mock
-    CourseService courseService;
-
     @Autowired
     private WebApplicationContext wac;
 
@@ -56,8 +50,8 @@ public class CourseListControllerTest {
 
     @BeforeEach
     public void mockInitializer() throws Exception {
-        MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -68,6 +62,12 @@ public class CourseListControllerTest {
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(wac.getBean("mainPageController"));
     }
+
+    @Mock
+    CourseDAO coursedao;
+
+    @Mock
+    CourseService courseService;
 
     @Test
     public void givenCourseURI_whenMockMVC_thenReturnsCourseViewName() throws Exception {
