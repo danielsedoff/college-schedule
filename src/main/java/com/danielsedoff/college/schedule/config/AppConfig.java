@@ -10,15 +10,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.danielsedoff.college.schedule.controller.StudentListingController;
 
 @Configuration
 @ComponentScan("com.danielsedoff.college.schedule")
-@PropertySource(value = "classpath:database.properties")
-public class AppConfig implements WebMvcConfigurer {
+@PropertySource("classpath:database.properties")
+public class AppConfig {
 
     private static final String URL = "url";
     private static final String USER = "dbuser";
@@ -26,8 +24,8 @@ public class AppConfig implements WebMvcConfigurer {
     private static final String PASSWORD = "dbpassword";
 
     @Autowired
-    public Environment env;
-
+    private Environment env;
+    
     @Bean
     public DataSource dataSource() {
 
@@ -36,7 +34,6 @@ public class AppConfig implements WebMvcConfigurer {
         dataSource.setUrl(env.getProperty(URL));
         dataSource.setUsername(env.getProperty(USER));
         dataSource.setPassword(env.getProperty(PASSWORD));
-
         return dataSource;
     }
 
@@ -45,21 +42,11 @@ public class AppConfig implements WebMvcConfigurer {
 
         JdbcTemplate template = new JdbcTemplate();
         template.setDataSource(dataSource());
-
         return template;
     }
-
-    @Override
-    public void configureDefaultServletHandling(
-            DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
-
+    
     @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver bean = new InternalResourceViewResolver();
-        bean.setPrefix("/WEB-INF/");
-        bean.setSuffix(".html");
-        return bean;
+    public StudentListingController studentListingController() {
+        return new StudentListingController();
     }
 }
