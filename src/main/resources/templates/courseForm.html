@@ -41,8 +41,10 @@
 									class="element text medium" type="number" th:field="*{id}"
 									maxlength="255" value="" disabled />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal ID</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
+							ID</td>
+					</tr>
+					</tr>
 					<tr>
 						<td><label class="description" for="name">Course Name
 						</label>
@@ -51,10 +53,11 @@
 									class="element  text medium" type="text" th:field="*{name}"
 									maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal name</td>
+						<tr>
+					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
+							name</td>
 					</tr>
-					</tr>
-					<tr>
+					</tr><tr>
 						<td><label class="description" for="description">Course
 								Description </label>
 							<div>
@@ -62,8 +65,10 @@
 									class="element text medium" type="text"
 									th:field="*{description}" maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Illegal description</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('description')}"
+							th:errors="*{description}">Illegal description</td>
+					</tr>
+					</tr>
 					<tr>
 						<td><label class="description" for="connectedid1">Professor
 								ID </label>
@@ -72,19 +77,23 @@
 									class="element text medium" type="number"
 									th:field="*{professorId}" maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('professorId')}" th:errors="*{professorId}">Illegal professor ID</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('professorId')}"
+							th:errors="*{professorId}">Illegal professor ID</td>
+					</tr>
+					</tr>
 					<tr>
 						<td class="buttons"><input class="button_text" type="submit"
 							name="submit" value="Done"></td>
 					</tr>
 				</tbody>
 			</table>
-					<div class="goback"><a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a></div>
-			
+			<div class="goback">
+				<a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a>
+			</div>
+
 		</form>
 	</div>
-		<script th:src="@{/js/radios.js}" type="text/javascript"></script>
-	
+	<script th:src="@{/js/radios.js}" type="text/javascript"></script>
+
 </body>
 </html>

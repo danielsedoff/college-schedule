@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
-import com.danielsedoff.college.schedule.service.StudentService; 
+import com.danielsedoff.college.schedule.service.StudentService;
 
 @RestController
 @RequestMapping("/students")
@@ -25,19 +30,39 @@ class StudentRestController {
     private StudentService service;
 
     @GetMapping
-    public List<Student> findAll() {
-        return service.getStudentList();
+    public String findAll() throws JsonProcessingException {
+        List<Student> students = service.getStudentList();
+        List<StudentDTO> result = new ArrayList<>();
+        for (Student student : students) {
+            StudentDTO dto = new StudentDTO();
+            dto.setId(student.getId());
+            dto.setMode("update");
+            dto.setName(student.getName());
+            dto.setGroupId(student.getGroup().getId());
+            dto.setSchoolYear(student.getSchoolYear());
+            result.add(dto);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(result);
     }
 
     @GetMapping(value = "/{id}")
-    public Student findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
-        return RestPreconditions.checkFound(service.getStudentById(id));
+    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+        Student student = RestPreconditions.checkFound(service.getStudentById(id));
+        StudentDTO dto = new StudentDTO();
+        dto.setId(student.getId());
+        dto.setMode("update");
+        dto.setName(student.getName());
+        dto.setGroupId(student.getGroup().getId());
+        dto.setSchoolYear(student.getSchoolYear());
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(dto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public boolean create(@RequestBody Student resource) {
-        if(null == resource) {
+        if (null == resource) {
             return false;
         }
         return service.createStudent(resource);
@@ -45,8 +70,8 @@ class StudentRestController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable( "id" ) int id, @RequestBody Student resource) throws MyResourceNotFoundException {
-        if(null == resource) {
+    public void update(@PathVariable("id") int id, @RequestBody Student resource) throws MyResourceNotFoundException {
+        if (null == resource) {
             throw new MyResourceNotFoundException();
         }
         service.updateStudent(id, resource);
@@ -59,4 +84,3 @@ class StudentRestController {
     }
 
 }
-

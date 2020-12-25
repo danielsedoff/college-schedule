@@ -44,8 +44,10 @@
 									class="element text medium" type="number" th:field="*{id}"
 									maxlength="255" value="" disabled />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal ID</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
+							ID</td>
+					</tr>
+					</tr>
 					<tr>
 						<td><label class="description" for="name">Lesson
 								Start Time </label>
@@ -55,8 +57,10 @@
 									class="element  text medium" disabled type="text"
 									th:field="*{startTime}" maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">Illegal time value</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('startTime')}"
+							th:errors="*{startTime}">Illegal time value</td>
+					</tr>
+					</tr>
 					<tr>
 						<td><label class="description" for="name">Lesson End
 								Time </label>
@@ -66,8 +70,10 @@
 									disabled type="text" th:field="*{endTime}" maxlength="255"
 									value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Illegal time value</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">Illegal
+							time value</td>
+					</tr>
+					</tr>
 
 					<tr>
 						<td><label class="description" for="connectedid1">Professor
@@ -77,8 +83,10 @@
 									class="element text medium" type="number"
 									th:field="*{professorId}" maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('professorId')}" th:errors="*{professorId}">Illegal professor ID</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('professorId')}"
+							th:errors="*{professorId}">Illegal professor ID</td>
+					</tr>
+					</tr>
 					<tr>
 						<td><label class="description" for="connectedid1">Group
 								ID </label>
@@ -87,8 +95,10 @@
 									class="element text medium" type="number" th:field="*{groupId}"
 									maxlength="255" value="" />
 							</div></td>
-							<tr><td th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}">Illegal group ID</td>
-					</tr></tr>
+						<tr><td th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}">Illegal
+							group ID</td>
+					</tr>
+					</tr>
 					<tr>
 						<td class="buttons"><input class="button_text" type="submit"
 							name="submit" value="Done"></td>
@@ -96,7 +106,9 @@
 
 				</tbody>
 			</table>
-			<div class="goback"><a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a></div>
+			<div class="goback">
+				<a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a>
+			</div>
 
 		</form>
 	</div>

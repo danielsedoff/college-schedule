@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.danielsedoff.college.schedule.dto.GroupDTO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.service.GroupService; 
 
@@ -25,13 +30,31 @@ class GroupRestController {
     private GroupService service;
 
     @GetMapping
-    public List<Group> findAll() {
-        return service.getGroupList();
+    public String findAll() throws JsonProcessingException {
+        List<Group> groups = service.getGroupList();
+        List<GroupDTO> result = new ArrayList<>();
+        for(Group group : groups) {
+            GroupDTO dto = new GroupDTO();
+            dto.setName(group.getSpecialNotes());
+            dto.setDescription(group.getSpecialNotes());
+            dto.setId(group.getId());
+            dto.setMode("update");
+            result.add(dto);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(result);
     }
 
     @GetMapping(value = "/{id}")
-    public Group findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
-        return RestPreconditions.checkFound(service.getGroupById(id));
+    public String findById(@PathVariable("id") int id) throws MyResourceNotFoundException, JsonProcessingException {
+        Group group = RestPreconditions.checkFound(service.getGroupById(id));
+        GroupDTO dto = new GroupDTO();
+        dto.setName(group.getSpecialNotes());
+        dto.setDescription(group.getSpecialNotes());
+        dto.setId(group.getId());
+        dto.setMode("update");
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(dto);
     }
 
     @PostMapping
