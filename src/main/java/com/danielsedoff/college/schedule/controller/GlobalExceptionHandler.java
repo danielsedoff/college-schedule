@@ -1,6 +1,11 @@
-package com.danielsedoff.college.schedule.config;
+package com.danielsedoff.college.schedule.controller;
 
-import com.danielsedoff.college.schedule.controller.rest.MyResourceNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,12 +15,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
+import com.danielsedoff.college.schedule.controller.rest.MyResourceNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {

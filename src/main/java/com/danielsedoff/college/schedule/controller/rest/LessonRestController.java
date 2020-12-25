@@ -71,10 +71,7 @@ class LessonRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody LessonDTO resource, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "illegal Lesson instance input";
-        }
+    public String create(@Valid @RequestBody LessonDTO resource) {
         Lesson lesson = new Lesson();
         lesson.setDayschedule(new DaySchedule());
         lesson.setEndTime(resource.getEndTime());
@@ -88,9 +85,6 @@ class LessonRestController {
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id, @Valid @RequestBody LessonDTO resource,
             BindingResult bindingResult) throws MyResourceNotFoundException {
-        if (bindingResult.hasErrors()) {
-            return "illegal Lesson instance input";
-        }
         Lesson lesson = new Lesson();
         lesson.setDayschedule(new DaySchedule());
         lesson.setEndTime(resource.getEndTime());

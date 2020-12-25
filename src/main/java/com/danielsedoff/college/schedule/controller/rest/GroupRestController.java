@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,10 +57,7 @@ class GroupRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody GroupDTO resource, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "illegal Group instance input";
-        }
+    public String create(@Valid @RequestBody GroupDTO resource) {
         Group group = new Group();
         group.setId(resource.getId());
         group.setSpecialNotes(resource.getDescription());
@@ -71,11 +67,8 @@ class GroupRestController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String update(@PathVariable("id") int id, @Valid @RequestBody GroupDTO resource, BindingResult bindingResult)
+    public String update(@PathVariable("id") int id, @Valid @RequestBody GroupDTO resource)
             throws MyResourceNotFoundException {
-        if (bindingResult.hasErrors()) {
-            return "illegal Group instance input";
-        }
         Group group = new Group();
         group.setId(resource.getId());
         group.setSpecialNotes(resource.getDescription());

@@ -60,10 +60,7 @@ class ProfessorRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody ProfessorDTO resource, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "illegal Professor instance input";
-        }
+    public String create(@Valid @RequestBody ProfessorDTO resource) {
         Professor professor = new Professor();
         professor.setName(resource.getName());
         professor.setRanksTitles(resource.getRanks());
@@ -75,9 +72,6 @@ class ProfessorRestController {
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id, @Valid @RequestBody ProfessorDTO resource,
             BindingResult bindingResult) throws MyResourceNotFoundException {
-        if (bindingResult.hasErrors()) {
-            return "illegal Professor instance input";
-        }
         Professor professor = new Professor();
         professor.setName(resource.getName());
         professor.setRanksTitles(resource.getRanks());

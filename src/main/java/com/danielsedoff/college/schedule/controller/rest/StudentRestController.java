@@ -64,10 +64,7 @@ class StudentRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody StudentDTO resource, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "illegal Student instance input";
-        }
+    public String create(@Valid @RequestBody StudentDTO resource) {
         Student student = new Student();
         student.setGroup(gservice.getGroupById(resource.getGroupId()));
         student.setName(resource.getName());
@@ -79,9 +76,6 @@ class StudentRestController {
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id, @Valid @RequestBody StudentDTO resource,
             BindingResult bindingResult) throws MyResourceNotFoundException {
-        if (bindingResult.hasErrors()) {
-            return "illegal Student instance input";
-        }
         Student student = new Student();
         student.setGroup(gservice.getGroupById(resource.getGroupId()));
         student.setName(resource.getName());

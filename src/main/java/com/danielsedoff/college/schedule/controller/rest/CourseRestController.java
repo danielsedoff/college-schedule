@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,11 +63,7 @@ class CourseRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody CourseDTO resource, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors());
-            return "illegal Course instance input";
-        }
+    public String create(@Valid @RequestBody CourseDTO resource) {
         Course course = new Course();
         course.setCourseDescription(resource.getDescription());
         course.setName(resource.getName());
@@ -80,11 +75,8 @@ class CourseRestController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String update(@PathVariable("id") int id, @Valid @RequestBody CourseDTO resource, BindingResult bindingResult)
+    public String update(@PathVariable("id") int id, @Valid @RequestBody CourseDTO resource)
             throws MyResourceNotFoundException {
-        if (bindingResult.hasErrors()) {
-            return "illegal Course instance input";
-        }
         Course course = new Course();
         course.setCourseDescription(resource.getDescription());
         course.setName(resource.getName());

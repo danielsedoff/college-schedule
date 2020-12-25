@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,20 +63,14 @@ public class LessonWebController {
     }
 
     @PostMapping("/deleteLesson")
-    public String deleteLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "lessonForm";
-        }
+    public String deleteLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         ls.deleteLessonById(lessondto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createLesson")
-    public String createLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "lessonForm";
-        }
+    public String createLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         Lesson lesson = new Lesson();
         lesson.setEndTime(lessondto.getEndTime());
         lesson.setStartTime(lessondto.getStartTime());
@@ -89,10 +82,7 @@ public class LessonWebController {
     }
 
     @PostMapping("/updateLesson")
-    public String updateLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "lessonForm";
-        }
+    public String updateLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         Lesson lesson = new Lesson();
         lesson.setEndTime(lessondto.getEndTime());
         lesson.setStartTime(lessondto.getStartTime());
