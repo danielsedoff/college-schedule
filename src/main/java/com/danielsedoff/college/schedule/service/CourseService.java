@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
@@ -18,7 +17,7 @@ public class CourseService {
     private CourseDAO coursedao;
 
     @Autowired
-    public CourseService(CourseDAO coursedao, ProfessorDAO professordao) {
+    public CourseService(CourseDAO coursedao) {
         this.coursedao = coursedao;
     }
 

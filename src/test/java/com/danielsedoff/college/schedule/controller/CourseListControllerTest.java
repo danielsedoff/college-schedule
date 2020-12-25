@@ -9,17 +9,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.List;
-
 import javax.servlet.ServletContext;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockServletContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -28,17 +25,23 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.config.WebConfig;
-import com.danielsedoff.college.schedule.model.Course;
+import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.service.CourseService;
 
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = {  NameServiceTestConfiguration.class })
 @WebAppConfiguration
 public class CourseListControllerTest {
     @Autowired
+    CourseService courseService;
+
+    @Autowired
+    CourseDAO coursedao;
+
+    @Autowired
     private WebApplicationContext wac;
-    
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -55,18 +58,8 @@ public class CourseListControllerTest {
         assertNotNull(wac.getBean("mainPageController"));
     }
 
-    @Mock
-    CourseService courseService;
-    
     @Test
     public void givenCourseURI_whenMockMVC_thenReturnsCourseViewName() throws Exception {
-        courseService = Mockito.mock(CourseService.class);
-        Course course = new Course();
-        course.setId(1);
-        course.setName("Algebra");
-        List<Integer> ids = List.of(1, 2, 3);
-        Mockito.doReturn(ids).when(courseService).getCourseIdList();
-        Mockito.doReturn(course).when(courseService).getCourseById(Mockito.anyInt());
         this.mockMvc.perform(get("/courses")).andDo(print()).andExpect(view().name("courses"));
     }
 

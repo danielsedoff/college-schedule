@@ -19,7 +19,7 @@ class CourseServiceTest {
 
     CourseDAO coursedao = Mockito.mock(CourseDAO.class);
     ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
-    CourseService cservice = new CourseService(coursedao, profdao);
+    CourseService cservice = new CourseService(coursedao);
 
     @Test
     void testGetCourseIdList() throws DAOException {
