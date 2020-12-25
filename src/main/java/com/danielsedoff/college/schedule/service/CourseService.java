@@ -50,6 +50,7 @@ public class CourseService {
             courseRepo.save(managedCourse);
         } catch (Exception e) {
             logger.error("Could not update Course, id: {}", courseId);
+            e.printStackTrace();
             return false;
         }
         return true;

@@ -12,7 +12,7 @@ public class ProfessorDTO {
     }
 
     @NotNull
-    @Min(1)
+    @Min(-1)
     int id;
 
     String mode;

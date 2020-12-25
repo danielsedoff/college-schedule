@@ -10,7 +10,7 @@ public class LessonDTO {
     String mode;
 
     @NotNull
-    @Min(1)
+    @Min(-1)
     int id;
 
     @LessonDateConstraint

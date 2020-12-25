@@ -9,7 +9,7 @@ public class GroupDTO {
     String mode;
     
     @NotNull
-    @Min(1)
+    @Min(-1)
     int id;
     
     @NotNull

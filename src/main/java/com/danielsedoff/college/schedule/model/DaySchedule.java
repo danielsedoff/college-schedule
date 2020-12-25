@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ import javax.validation.constraints.Size;
 public class DaySchedule {
 
     @NotNull
-    @Min(1)
+    @Min(-1)
     @Id
     @Column(name = "dayschedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +36,7 @@ public class DaySchedule {
     @Column(name = "hasoverlaps")
     private boolean hasOverlaps;
 
-    @OneToMany(mappedBy = "dayschedule", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "dayschedule") //, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
     
     @ManyToOne(cascade = CascadeType.MERGE)

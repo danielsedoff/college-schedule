@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public abstract class Person {
 
     @NotNull
-    @Min(1)
+    @Min(-1)
     @Id
     @Column(name = "person_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

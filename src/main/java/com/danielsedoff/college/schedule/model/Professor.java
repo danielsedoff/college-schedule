@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -34,7 +33,7 @@ public class Professor extends Person {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "professor") //, cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
 
     public Professor() {

@@ -1,20 +1,16 @@
 package com.danielsedoff.college.schedule.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.model.Professor;
-
 @Component
 public class CourseDTO {
     String mode;
 
-    @Min(1)
+    @Min(-1)
     int id;
     
     
@@ -26,7 +22,7 @@ public class CourseDTO {
     @Size(min = 2, max = 30)
     String description;
     
-    List<Professor> professors;
+    int professorId;
 
     public String getMode() {
         return mode;
@@ -60,11 +56,11 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public List<Professor>  getProfessorId() {
-        return professors;
+    public int  getProfessorId() {
+        return professorId;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public void setProfessorId(int professors) {
+        this.professorId = professors;
     }
 }

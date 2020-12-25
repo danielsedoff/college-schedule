@@ -51,7 +51,7 @@ public class DayScheduleService {
             managedDaysched.setHasOverlaps(hasOverlaps);
             dayscheduleRepo.save(managedDaysched);
         } catch (Exception e) {
-            logger.error("Could not update Course, id: {}", dayschedId);
+            logger.error("Could not update DaySchedule, id: {}", dayschedId);
             return false;
         }
         return true;

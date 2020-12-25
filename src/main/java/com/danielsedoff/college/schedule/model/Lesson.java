@@ -18,7 +18,7 @@ import com.danielsedoff.college.schedule.model.validation.LessonDateConstraint;
 @Table(name = "lessons")
 public class Lesson {
     @NotNull
-    @Min(1)
+    @Min(-1)
     @Id
     @Column(name = "lesson_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
