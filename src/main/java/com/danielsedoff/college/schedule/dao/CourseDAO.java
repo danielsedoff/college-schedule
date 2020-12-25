@@ -3,8 +3,6 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -34,15 +32,12 @@ public class CourseDAO implements DAO<Course> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
-
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = null;
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -54,7 +49,6 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_COURSE_BY_ID,
                     new Object[] { id }, new CourseMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -67,7 +61,6 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -79,7 +72,6 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.update(SQL_UPDATE_COURSES, course.getName(),
                     course.getCourseDescription(), course.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -91,7 +83,6 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_COURSES, course.getName(),
                     course.getCourseDescription()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -108,7 +99,6 @@ public class CourseDAO implements DAO<Course> {
                         professors.get(i).getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -120,7 +110,6 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -138,7 +127,6 @@ public class CourseDAO implements DAO<Course> {
                 professors.add(professordao.getById(professorId));
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return professors;

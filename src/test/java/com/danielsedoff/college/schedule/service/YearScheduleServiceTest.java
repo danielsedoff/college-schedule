@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -21,7 +22,7 @@ class YearScheduleServiceTest {
     YearScheduleService yservice = new YearScheduleService(ysdao, dsdao);
 
     @Test
-    void testGetYearScheduleIdList()  {
+    void testGetYearScheduleIdList() throws DAOException {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(ysdao.getIdList()).thenReturn(mockList);
@@ -30,7 +31,7 @@ class YearScheduleServiceTest {
     }
 
     @Test
-    void testGetYearScheduleById()  {
+    void testGetYearScheduleById() throws DAOException {
         YearSchedule ys = new YearSchedule();
         ys.setYear(1234);
         Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(ys);
@@ -38,21 +39,21 @@ class YearScheduleServiceTest {
     }
 
     @Test
-    void testCreateYearSchedule()  {
+    void testCreateYearSchedule() throws DAOException {
         Mockito.when(ysdao.create(Mockito.any())).thenReturn(true);
         boolean successfulCreation = yservice.createYearSchedule(1861);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testDeleteYearSchedule()  {
+    void testDeleteYearSchedule() throws DAOException {
         Mockito.when(ysdao.delete(Mockito.any())).thenReturn(true);
         boolean successfulDeletion = yservice.deleteYearSchedule(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testUpdateYearSchedule()  {
+    void testUpdateYearSchedule() throws DAOException {
         Mockito.when(ysdao.update(Mockito.any(), Mockito.any())).thenReturn(true);
         Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(new YearSchedule());
         boolean successfulUpdate = yservice.updateYearSchedule(1, 1234);
@@ -60,8 +61,7 @@ class YearScheduleServiceTest {
     }
 
     @Test
-    void testSetDayScheduleYearSchedule()
-            {
+    void testSetDayScheduleYearSchedule() throws DAOException {
         Mockito.when(ysdao.setDayScheduleYearSchedule(Mockito.any(), Mockito.any()))
                 .thenReturn(true);
         boolean successfulSetDY = yservice.setDayScheduleYearSchedule(2, 2);
@@ -69,8 +69,7 @@ class YearScheduleServiceTest {
     }
 
     @Test
-    void testGetDayScheduleByYearSchedule()
-            {
+    void testGetDayScheduleByYearSchedule() throws DAOException {
         List<DaySchedule> mockList = new ArrayList<DaySchedule>();
         DaySchedule ds = new DaySchedule();
         mockList.add(ds);

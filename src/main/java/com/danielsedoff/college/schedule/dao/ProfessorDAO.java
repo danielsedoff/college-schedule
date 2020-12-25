@@ -2,8 +2,6 @@ package com.danielsedoff.college.schedule.dao;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -13,7 +11,6 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Component
 public class ProfessorDAO implements DAO<Professor> {
-
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_PROFESSOR = "SELECT professor_id FROM professors;";
     private static final String SQL_UPDATE_PROFESSORS = "UPDATE professors SET professor_name = ?, professor_ranks = ?, professor_notes = ?, department_id = ? WHERE professor_id = ?;";
@@ -26,15 +23,13 @@ public class ProfessorDAO implements DAO<Professor> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_PROFESSOR,
                     Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -46,7 +41,7 @@ public class ProfessorDAO implements DAO<Professor> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_PROFESSOR_BY_ID,
                     new Object[] { professorId }, new ProfessorMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
+
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -58,11 +53,10 @@ public class ProfessorDAO implements DAO<Professor> {
             result = jdbcTemplate.update(SQL_DELETE_FROM_PROFESSORS,
                     professor.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
+
             throw new DAOException(e.getMessage(), e);
         }
         return result;
-
     }
 
     public boolean update(Integer id, Professor professor) throws DAOException {
@@ -72,7 +66,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     professor.getRanksTitles(), professor.getSpecialNotes(),
                     professor.getDepartmentId(), professor.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
+
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -85,7 +79,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     professor.getRanksTitles(), professor.getSpecialNotes(),
                     professor.getDepartmentId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
+
             throw new DAOException(e.getMessage(), e);
         }
         return result;

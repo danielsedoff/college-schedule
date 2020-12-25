@@ -26,7 +26,7 @@ class StudentDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = studentdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -34,7 +34,7 @@ class StudentDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         int deptId = 1337;
         Student stud = studentdao.getById(id);
@@ -44,7 +44,7 @@ class StudentDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = studentdao.getIdList().size() - 1;
         Student stud = new Student();
         stud.setId(1);
@@ -53,7 +53,7 @@ class StudentDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = studentdao.getIdList().size() + 1;
         Student stud = new Student();
         int deptId = 1337;
@@ -64,7 +64,7 @@ class StudentDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         Student stud = studentdao.getById(1);
         assertNotNull(stud);
     }

@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -25,45 +28,87 @@ public class DayScheduleService {
         this.lessondao = lessondao;
     }
 
-    public List<Integer> getDayscheduleIdList()  {
-        return dayscheduledao.getIdList();
+    private static Logger logger = LoggerFactory.getLogger(DayScheduleService.class);
+
+    public List<Integer> getDayscheduleIdList() {
+        List<Integer> result = null;
+        try {
+            result = dayscheduledao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean createDaySchedule(LocalDateTime date)  {
+    public boolean createDaySchedule(LocalDateTime date) {
         boolean hasOverlaps = false;
         DaySchedule ds = new DaySchedule();
         ds.setDay(date);
         ds.setHasOverlaps(hasOverlaps);
-        return dayscheduledao.create(ds);
+        boolean result = false;
+        try {
+            result = dayscheduledao.create(ds);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
     public boolean updateDaySchedule(int dayschedId, LocalDateTime date,
-            boolean hasOverlaps)  {
+            boolean hasOverlaps) {
         DaySchedule daysched = new DaySchedule();
         daysched.setDay(date);
         daysched.setHasOverlaps(hasOverlaps);
-        return dayscheduledao.update(dayschedId, daysched);
+        boolean result = false;
+        try {
+            result = dayscheduledao.update(dayschedId, daysched);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean deleteDayScheduleById(int dayschedId)  {
-        return dayscheduledao.delete(dayscheduledao.getById(dayschedId));
+    public boolean deleteDayScheduleById(int dayschedId) {
+        boolean result = false;
+        try {
+            result = dayscheduledao.delete(dayscheduledao.getById(dayschedId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public DaySchedule getDayScheduleById(int dayschedId)  {
-        return dayscheduledao.getById(dayschedId);
+    public DaySchedule getDayScheduleById(int dayschedId) {
+        DaySchedule result = null;
+        try {
+            result = dayscheduledao.getById(dayschedId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean setLessonDaySchedule(int lessonId, int dayschedId)
-            {
-        Lesson lesson = lessondao.getById(lessonId);
-        DaySchedule daysched = dayscheduledao.getById(dayschedId);
-        return dayscheduledao.setLessonDayschedule(lesson, daysched);
+    public boolean setLessonDaySchedule(int lessonId, int dayschedId) {
+        boolean result = false;
+        try {
+            Lesson lesson = lessondao.getById(lessonId);
+            DaySchedule daysched = dayscheduledao.getById(dayschedId);
+            result = dayscheduledao.setLessonDayschedule(lesson, daysched);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public List<Lesson> getLessonsByDayScheduleById(int dayschedId)
-            {
-        DaySchedule daysched = dayscheduledao.getById(dayschedId);
-        return dayscheduledao.getLessonsByDayschedule(daysched);
+    public List<Lesson> getLessonsByDayScheduleById(int dayschedId) {
+        List<Lesson> result = null;
+        try {
+            DaySchedule daysched = dayscheduledao.getById(dayschedId);
+            result = dayscheduledao.getLessonsByDayschedule(daysched);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
 }

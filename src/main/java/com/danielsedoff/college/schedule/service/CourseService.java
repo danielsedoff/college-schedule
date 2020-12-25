@@ -2,10 +2,13 @@ package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.CourseDAO;
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
@@ -19,35 +22,77 @@ public class CourseService {
         this.coursedao = coursedao;
     }
 
-    public List<Integer> getCourseIdList()  {
-        return coursedao.getIdList();
+    private static Logger logger = LoggerFactory.getLogger(CourseService.class);
+
+    public List<Integer> getCourseIdList() {
+        List<Integer> idlist = null;
+        try {
+            idlist = coursedao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return idlist;
     }
 
-    public boolean createCourse(Course course)  {
-        return coursedao.create(course);
+    public boolean createCourse(Course course) {
+        boolean result = false;
+        try {
+            result = coursedao.create(course);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public Course getCourseById(int courseId)  {
-        return coursedao.getById(courseId);
+    public Course getCourseById(int courseId) {
+        Course result = null;
+        try {
+            result = coursedao.getById(courseId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean deleteCourseById(int courseId)  {
-        return coursedao.delete(coursedao.getById(courseId));
+    public boolean deleteCourseById(int courseId) {
+        boolean result = false;
+        try {
+            result = coursedao.delete(coursedao.getById(courseId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean updateCourse(int courseId, Course course)  {
-        return coursedao.update(courseId, course);
+    public boolean updateCourse(int courseId, Course course) {
+        boolean result = false;
+        try {
+            result = coursedao.update(courseId, course);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean setCourseProfessors(int courseId, List<Professor> profs)
-             {
-        return coursedao.setCourseProfessor(coursedao.getById(courseId), profs);
+    public boolean setCourseProfessors(int courseId, List<Professor> profs) {
+        boolean result = false;
+        try {
+            result = coursedao.setCourseProfessor(coursedao.getById(courseId), profs);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public List<Professor> getProfessorsByCourseById(int courseId)
-             {
-        Course course = coursedao.getById(courseId);
-        return coursedao.getProfessorByCourse(course);
+    public List<Professor> getProfessorsByCourseById(int courseId) {
+        List<Professor> result = null;
+        try {
+            Course course = coursedao.getById(courseId);
+            result = coursedao.getProfessorByCourse(course);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
 }

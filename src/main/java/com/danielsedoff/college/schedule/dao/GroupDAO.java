@@ -3,8 +3,6 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -35,14 +33,11 @@ public class GroupDAO implements DAO<Group> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_GROUPZ, Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -54,7 +49,6 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID,
                     new Object[] { id }, new GroupMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -65,9 +59,7 @@ public class GroupDAO implements DAO<Group> {
         boolean result = false;
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_GROUPZ, group.getId()) > 0;
-            ;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -76,7 +68,7 @@ public class GroupDAO implements DAO<Group> {
 
     public boolean update(Integer id, Group group) throws DAOException {
         boolean result = false;
-        StringBuffer notes = new StringBuffer();
+        StringBuilder notes = new StringBuilder();
         group.getSpecialNotes()
                 .forEach(listItem -> notes.append(listItem).append(SEPARATOR));
 
@@ -84,7 +76,6 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.update(SQL_UPDATE_GROUPZ, notes.toString(),
                     group.getDepartmentId(), group.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -96,7 +87,6 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(),
                     group.getDepartmentId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -112,7 +102,6 @@ public class GroupDAO implements DAO<Group> {
                         students.get(0).getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -123,7 +112,6 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = 0 < jdbcTemplate.update(SQL_DELETE_GROUP_STUDENT, group.getId());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -138,7 +126,6 @@ public class GroupDAO implements DAO<Group> {
                 students.add(studentdao.getById(studentId));
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
 

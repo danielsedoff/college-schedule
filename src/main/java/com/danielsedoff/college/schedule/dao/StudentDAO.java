@@ -2,8 +2,6 @@ package com.danielsedoff.college.schedule.dao;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -28,15 +26,12 @@ public class StudentDAO implements DAO<Student> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS,
                     Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -48,7 +43,6 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID,
                     new Object[] { studentId }, new StudentMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -60,7 +54,6 @@ public class StudentDAO implements DAO<Student> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_STUDENTS, student.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -73,7 +66,6 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
                     student.getSchoolYear(), student.getName(), student.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -85,7 +77,6 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
                     student.getSchoolYear(), student.getName()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -97,7 +88,6 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP,
                     group.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;

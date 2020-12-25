@@ -13,6 +13,10 @@ public class UserMessages {
     public static final String WRONG_PROFESSOR_ID = "Wrong Professor ID.";
     public static final String WRONG_YEAR = "Wrong Year";
     public static final String WRONG_YEAR_SCHEDULE_ID = "Wrong Year Schedule ID.";
-    public static final String WRONG_yearschedule_id = "Wrong Year ID.";
+    public static final String WRONG_YEARSCHEDULE_ID = "Wrong Year ID.";
 
+    private UserMessages() {
+        
+    }
+    
 }

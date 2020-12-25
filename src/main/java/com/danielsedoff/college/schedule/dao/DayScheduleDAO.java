@@ -4,8 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -19,8 +17,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
 
     @Autowired
     private LessonDAO lessondao;
-
-    private static Logger logger = LoggerFactory.getLogger(LessonDAO.class);
 
     JdbcTemplate jdbcTemplate;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -43,7 +39,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_DAYSCHEDULES,
                     Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -55,7 +50,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_UPDATE_DAYSCHEDULES, daySchedule.getDay(),
                     daySchedule.getHasOverlaps(), daySchedule.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -67,7 +61,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_DELETE_FROM_DAYSCHEDULES,
                     daySchedule.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -81,7 +74,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_DAYSCHEDULES, dateText,
                     daySchedule.getHasOverlaps()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -93,7 +85,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_DAYSCHEDULE_BY_ID,
                     new Object[] { dayScheduleId }, new DayScheduleMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -106,7 +97,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = (jdbcTemplate.update(SQL_INSERT_LESSON_DAYSCHEDULE, lesson.getId(),
                     dayschedule.getId()) > 0);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -123,7 +113,6 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                 lessons.add(lessondao.getById(lessonId));
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return lessons;

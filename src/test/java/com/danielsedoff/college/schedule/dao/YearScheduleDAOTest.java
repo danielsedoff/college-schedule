@@ -28,7 +28,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = yeardao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -36,7 +36,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         int hundredYearWarBeginning = 1337;
         YearSchedule ys = yeardao.getById(id);
@@ -46,7 +46,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = yeardao.getIdList().size() - 1;
         YearSchedule ys = new YearSchedule();
         ys.setId(1);
@@ -55,7 +55,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = yeardao.getIdList().size() + 1;
         YearSchedule ys = new YearSchedule();
         int hundredYearWarBeginning = 1337;
@@ -66,14 +66,13 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         YearSchedule ys = yeardao.getById(1);
         assertNotNull(ys);
     }
 
     @Test
-    void testSetDayScheduleYearSchedule()
-            {
+    void testSetDayScheduleYearSchedule() throws DAOException {
         YearSchedule ys = yeardao.getById(1);
         DaySchedule ds = new DaySchedule();
         ds.setDay(LocalDateTime.now());
@@ -84,8 +83,7 @@ class YearScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetDayScheduleYearSchedule()
-            {
+    void testGetDayScheduleYearSchedule() throws DAOException {
         YearSchedule ys = yeardao.getById(1);
         List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
         assertNotNull(requested);

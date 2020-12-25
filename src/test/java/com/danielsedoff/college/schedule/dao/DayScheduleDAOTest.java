@@ -30,7 +30,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = dsdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -38,7 +38,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         DaySchedule ds = dsdao.getById(id);
         LocalDateTime today = LocalDateTime.now();
@@ -48,7 +48,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = dsdao.getIdList().size() - 1;
         DaySchedule ds = new DaySchedule();
         ds.setId(1);
@@ -57,7 +57,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = dsdao.getIdList().size() + 1;
         DaySchedule ds = new DaySchedule();
         LocalDateTime now = LocalDateTime.now();
@@ -68,13 +68,13 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         DaySchedule ds = dsdao.getById(1);
         assertNotNull(ds);
     }
 
     @Test
-    void testSetLessonDayschedule() {
+    void testSetLessonDayschedule() throws DAOException {
         LocalDateTime now = LocalDateTime.now();
         Lesson originalLesson = new Lesson();
         originalLesson.setStartTime(now);
@@ -86,8 +86,7 @@ class DayScheduleDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetLessonsByDayschedule()
-            {
+    void testGetLessonsByDayschedule() throws DAOException {
         DaySchedule ds = dsdao.getById(3);
         assertNotNull(dsdao.getLessonsByDayschedule(ds));
     }

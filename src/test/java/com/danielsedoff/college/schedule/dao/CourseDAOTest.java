@@ -28,7 +28,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = coursedao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -36,13 +36,13 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         Course result = coursedao.getById(1);
         assertNotNull(result);
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = coursedao.getIdList().size() - 1;
         Course course = new Course();
         course.setId(1);
@@ -51,7 +51,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         Course course = coursedao.getById(id);
         String newDescription = "New Description";
@@ -61,7 +61,7 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = coursedao.getIdList().size() + 1;
         String newName = "Chemistry";
         Course course = new Course();
@@ -72,10 +72,10 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testSetProfessorList()  {
+    void testSetProfessorList() throws DAOException {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new  Professor();
+        Professor prof = new Professor();
         prof.setId(1);
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);
@@ -85,10 +85,10 @@ class CourseDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetProfessorByCourse()  {
+    void testGetProfessorByCourse() throws DAOException {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new  Professor();
+        Professor prof = new Professor();
         prof.setId(2);
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);

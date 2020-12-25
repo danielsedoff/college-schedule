@@ -2,23 +2,17 @@ package com.danielsedoff.college.schedule.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
 import com.danielsedoff.college.schedule.dao.mappers.LessonMapper;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 
 @Component
 public class LessonDAO implements DAO<Lesson> {
-
     @Autowired
     private GroupDAO groupdao;
-
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_LESSONS = "SELECT lesson_id FROM lessons;";
     private static final String SQL_UPDATE_LESSONS = "UPDATE lessons SET start_time = ?, end_time = ?, professor_id = ? WHERE lesson_id = ?;";
@@ -33,14 +27,11 @@ public class LessonDAO implements DAO<Lesson> {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_LESSONS, Integer.class);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -53,7 +44,6 @@ public class LessonDAO implements DAO<Lesson> {
                     lesson.getEndTime(), lesson.getProfessor().getId(),
                     lesson.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -64,11 +54,9 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_LESSONS, lesson.getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
-
     }
 
     public boolean create(Lesson lesson) throws DAOException {
@@ -77,7 +65,6 @@ public class LessonDAO implements DAO<Lesson> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime(),
                     lesson.getEndTime(), lesson.getProfessor().getId()) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -89,7 +76,6 @@ public class LessonDAO implements DAO<Lesson> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_LESSON_BY_ID,
                     new Object[] { lessonId }, new LessonMapper());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -101,7 +87,6 @@ public class LessonDAO implements DAO<Lesson> {
             result = (jdbcTemplate.update(SQL_INSERT_LESSON_GROUP, lesson.getId(),
                     group.getId()) > 0);
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return result;
@@ -116,10 +101,8 @@ public class LessonDAO implements DAO<Lesson> {
                 groups.add(groupdao.getById(groupId));
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
             throw new DAOException(e.getMessage(), e);
         }
         return groups;
     }
-
 }

@@ -29,7 +29,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = lessondao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -37,7 +37,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         Lesson lesson = lessondao.getById(id);
         LocalDateTime today = LocalDateTime.now();
@@ -47,7 +47,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = lessondao.getIdList().size() - 1;
         Lesson lesson = new Lesson();
         lesson.setId(1);
@@ -56,7 +56,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = lessondao.getIdList().size() + 1;
         Lesson lesson = new Lesson();
         LocalDateTime now = LocalDateTime.now();
@@ -67,13 +67,13 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         Lesson lesson = lessondao.getById(1);
         assertNotNull(lesson);
     }
 
     @Test
-    void testSetLessonGroup() {
+    void testSetLessonGroup() throws DAOException {
         Lesson lesson = lessondao.getById(3);
         Group group = new Group();
         String note = "Some New Group";
@@ -85,7 +85,7 @@ class LessonDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetGroupsByLesson() {
+    void testGetGroupsByLesson() throws DAOException {
         Lesson lesson = lessondao.getById(3);
         assertNotNull(lessondao.getGroupsByLesson(lesson));
     }

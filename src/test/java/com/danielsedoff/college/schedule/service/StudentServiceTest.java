@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
@@ -22,7 +23,7 @@ class StudentServiceTest {
     StudentService stservice = new StudentService(professordao, stdao, groupdao);
 
     @Test
-    void testGetStudentIdList() {
+    void testGetStudentIdList() throws DAOException {
         List<Integer> mockList = new ArrayList<>();
         mockList.add(123);
         Mockito.when(stdao.getIdList()).thenReturn(mockList);
@@ -31,7 +32,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testCreateStudent() {
+    void testCreateStudent() throws DAOException {
         Student student = new Student();
         student.setName("Jack");
         Mockito.when(stdao.create(student)).thenReturn(true);
@@ -40,7 +41,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testUpdateStudent() {
+    void testUpdateStudent() throws DAOException {
         int studId = 1;
         Student student = new Student();
         student.setName("John");
@@ -50,7 +51,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testDeleteStudent() {
+    void testDeleteStudent() throws DAOException {
         Student student = new Student();
         student.setId(1);
         Mockito.when(stdao.delete(Mockito.any())).thenReturn(true);
@@ -59,7 +60,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void testGetStudentById() {
+    void testGetStudentById() throws DAOException {
         Student student = new Student();
         student.setName("John");
         Mockito.when(stdao.getById((Mockito.anyInt()))).thenReturn(student);

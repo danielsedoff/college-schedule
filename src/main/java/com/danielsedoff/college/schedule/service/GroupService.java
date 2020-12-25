@@ -2,9 +2,12 @@ package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
@@ -20,34 +23,77 @@ public class GroupService {
         this.groupdao = groupdao;
     }
 
-    public List<Integer> getGroupIdList()  {
-        return groupdao.getIdList();
+    private static Logger logger = LoggerFactory.getLogger(GroupService.class);
+
+    public List<Integer> getGroupIdList() {
+        List<Integer> result = null;
+        try {
+            result = groupdao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean createGroup(Group group)  {
-        return groupdao.create(group);
+    public boolean createGroup(Group group) {
+        boolean result = false;
+        try {
+            result = groupdao.create(group);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean updateGroup(int groupId, Group group)  {
-        return groupdao.update(groupId, group);
+    public boolean updateGroup(int groupId, Group group) {
+        boolean result = false;
+        try {
+            result = groupdao.update(groupId, group);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean deleteGroupById(int groupId)  {
-        return groupdao.delete(groupdao.getById(groupId));
+    public boolean deleteGroupById(int groupId) {
+        boolean result = false;
+        try {
+            result = groupdao.delete(groupdao.getById(groupId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public Group getGroupById(int groupId)  {
-        return groupdao.getById(groupId);
+    public Group getGroupById(int groupId) {
+        Group result = null;
+        try {
+            result = groupdao.getById(groupId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    public boolean setGroupStudent(int groupId, List<Student> students)
-             {
-        return groupdao.setGroupStudent(groupdao.getById(groupId), students);
+    public boolean setGroupStudent(int groupId, List<Student> students) {
+        boolean result = false;
+        try {
+            result = groupdao.setGroupStudent(groupdao.getById(groupId), students);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
     public List<Student> getStudentsByGroupId(int groupId) {
-        Group group = groupdao.getById(groupId);
-        return groupdao.getStudentsByGroup(group);
+        List<Student> result = null;
+        try {
+            Group group = groupdao.getById(groupId);
+            result = groupdao.getStudentsByGroup(group);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
 }

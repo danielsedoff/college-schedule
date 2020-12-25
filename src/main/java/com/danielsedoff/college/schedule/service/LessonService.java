@@ -3,9 +3,12 @@ package com.danielsedoff.college.schedule.service;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
@@ -26,35 +29,77 @@ public class LessonService {
         this.groupdao = groupdao;
     }
 
-    List<Group> getGroupsByLessonId(int lessonId)
-            {
-        Lesson lesson = lessondao.getById(lessonId);
-        return lessondao.getGroupsByLesson(lesson);
+    private static Logger logger = LoggerFactory.getLogger(LessonService.class);
+
+    public List<Group> getGroupsByLessonId(int lessonId) {
+        List<Group> result = null;
+        try {
+            Lesson lesson = lessondao.getById(lessonId);
+            result = lessondao.getGroupsByLesson(lesson);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean setLessonGroup(int lessonId, int groupId)
-            {
-        return lessondao.setLessonGroup(lessondao.getById(lessonId),
-                groupdao.getById(groupId));
+    public boolean setLessonGroup(int lessonId, int groupId) {
+        boolean result = false;
+        try {
+            result = lessondao.setLessonGroup(lessondao.getById(lessonId),
+                    groupdao.getById(groupId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    Lesson getLessonById(int lessonId)  {
-        return lessondao.getById(lessonId);
+    public Lesson getLessonById(int lessonId) {
+        Lesson result = null;
+        try {
+            result = lessondao.getById(lessonId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean createLesson(Lesson lesson)  {
-        return lessondao.create(lesson);
+    public boolean createLesson(Lesson lesson) {
+        boolean result = false;
+        try {
+            result = lessondao.create(lesson);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean deleteLessonById(int lessonId)  {
-        return lessondao.delete(lessondao.getById(lessonId));
+    public boolean deleteLessonById(int lessonId) {
+        boolean result = false;
+        try {
+            result = lessondao.delete(lessondao.getById(lessonId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean updateLesson(int lessonId, Lesson lesson)  {
-        return lessondao.update(lessonId, lesson);
+    public boolean updateLesson(int lessonId, Lesson lesson) {
+        boolean result = false;
+        try {
+            result = lessondao.update(lessonId, lesson);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    List<Integer> getLessonIdList()  {
-        return lessondao.getIdList();
+    public List<Integer> getLessonIdList() {
+        List<Integer> result = null;
+        try {
+            result = lessondao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 }

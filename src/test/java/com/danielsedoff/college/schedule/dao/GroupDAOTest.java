@@ -28,7 +28,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetIdList()  {
+    void testGetIdList() throws DAOException {
         List<Integer> result = groupdao.getIdList();
         Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
@@ -36,13 +36,13 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetById()  {
+    void testGetById() throws DAOException {
         Group group = groupdao.getById(1);
         assertNotNull(group);
     }
 
     @Test
-    void testUpdate()  {
+    void testUpdate() throws DAOException {
         int id = 1;
         List<String> noteList = new ArrayList<>();
         String note = "Large group";
@@ -56,7 +56,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testDelete()  {
+    void testDelete() throws DAOException {
         int expectedResult = groupdao.getIdList().size() - 1;
         Group group = new Group();
         group.setId(1);
@@ -65,7 +65,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testCreate()  {
+    void testCreate() throws DAOException {
         int expectedSize = groupdao.getIdList().size() + 1;
         Group group = new Group();
         group.setDepartmentId(65535);
@@ -78,7 +78,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testSetGroupStudent() {
+    void testSetGroupStudent() throws DAOException {
         Group group = groupdao.getById(1);
         List<Student> students = new ArrayList<>();
         Student student = new Student();
@@ -91,7 +91,7 @@ class GroupDAOTest extends DAOTest {
     }
 
     @Test
-    void testGetStudentsByGroup() {
+    void testGetStudentsByGroup() throws DAOException {
         Group group = groupdao.getById(3);
         assertNotNull(groupdao.getStudentsByGroup(group));
     }

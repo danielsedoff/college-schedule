@@ -2,9 +2,12 @@ package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
@@ -22,41 +25,84 @@ public class YearScheduleService {
         this.dayscheduledao = dayscheduledao;
     }
 
-    List<Integer> getYearScheduleIdList()  {
-        return yearscheduledao.getIdList();
+    private static Logger logger = LoggerFactory.getLogger(YearScheduleService.class);
+
+    public List<Integer> getYearScheduleIdList() {
+        List<Integer> result = null;
+        try {
+            result = yearscheduledao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    YearSchedule getYearScheduleById(int yearId)  {
-        return yearscheduledao.getById(yearId);
+    public YearSchedule getYearScheduleById(int yearId) {
+        YearSchedule result = null;
+        try {
+            result = yearscheduledao.getById(yearId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean createYearSchedule(int year)  {
+    public boolean createYearSchedule(int year) {
         YearSchedule yearschedule = new YearSchedule();
         yearschedule.setYear(year);
-        return yearscheduledao.create(yearschedule);
+        boolean result = false;
+        try {
+            result = yearscheduledao.create(yearschedule);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean deleteYearSchedule(int yearId)  {
-        return yearscheduledao.delete(yearscheduledao.getById(yearId));
+    public boolean deleteYearSchedule(int yearId) {
+        boolean result = false;
+        try {
+            result = yearscheduledao.delete(yearscheduledao.getById(yearId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean updateYearSchedule(int yearId, int year)  {
-        YearSchedule ys = yearscheduledao.getById(yearId);
-        ys.setYear(year);
-        return yearscheduledao.update(year, ys);
+    public boolean updateYearSchedule(int yearId, int year) {
+        boolean result = false;
+        try {
+            YearSchedule ys = yearscheduledao.getById(yearId);
+            ys.setYear(year);
+            result = yearscheduledao.update(year, ys);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean setDayScheduleYearSchedule(int daySchedId, int yearSchedId)
-            {
-        YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
-        DaySchedule dayschedule = dayscheduledao.getById(daySchedId);
-        return yearscheduledao.setDayScheduleYearSchedule(dayschedule, yearschedule);
+    public boolean setDayScheduleYearSchedule(int daySchedId, int yearSchedId) {
+        boolean result = false;
+        try {
+            YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
+            DaySchedule dayschedule = dayscheduledao.getById(daySchedId);
+            result = yearscheduledao.setDayScheduleYearSchedule(dayschedule,
+                    yearschedule);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    List<DaySchedule> getDayScheduleByYearSchedule(int yearSchedId)
-            {
-        YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
-        return yearscheduledao.getDayScheduleYearSchedule(yearschedule);
+    public List<DaySchedule> getDayScheduleByYearSchedule(int yearSchedId) {
+        List<DaySchedule> result = null;
+        try {
+            YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
+            result = yearscheduledao.getDayScheduleYearSchedule(yearschedule);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
 }

@@ -2,9 +2,12 @@ package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
@@ -23,29 +26,58 @@ public class StudentService {
         this.studentdao = studentdao;
     }
 
-    List<Integer> getStudentIdList()  {
-        return professordao.getIdList();
+    private static Logger logger = LoggerFactory.getLogger(StudentService.class);
+
+    List<Integer> getStudentIdList() {
+        List<Integer> result = null;
+        try {
+            result = professordao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean createStudent(Student student)
-            {
-        return studentdao.create(student);
+    public boolean createStudent(Student student) {
+        boolean result = false;
+        try {
+            result = studentdao.create(student);
 
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean updateStudent(int studId, Student student)
-            {
-        return studentdao.update(studId, student);
+    public boolean updateStudent(int studId, Student student) {
+        boolean result = false;
+        try {
+            result = studentdao.update(studId, student);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean deleteStudent(int studId) {
-        Student st = studentdao.getById(studId);
-        return studentdao.delete(st);
+    public boolean deleteStudent(int studId) {
+        boolean result = false;
+        try {
+            Student st = studentdao.getById(studId);
+            result = studentdao.delete(st);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    Student getStudentById(int studentId)
-            {
-        return studentdao.getById(studentId);
+    public Student getStudentById(int studentId) {
+        Student result = null;
+        try {
+            result = studentdao.getById(studentId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
 }

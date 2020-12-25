@@ -2,9 +2,12 @@ package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Professor;
 
@@ -17,24 +20,55 @@ public class ProfessorService {
         this.professordao = professordao;
     }
 
-    boolean updateProfessor(int professorId, Professor professor)
-             {
-        return professordao.update(professorId, professor);
+    private static Logger logger = LoggerFactory.getLogger(ProfessorService.class);
+
+    public boolean updateProfessor(int professorId, Professor professor) {
+        boolean result = false;
+        try {
+            result = professordao.update(professorId, professor);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean createProfessor(Professor professor)  {
-        return professordao.create(professor);
+    public boolean createProfessor(Professor professor) {
+        boolean result = false;
+        try {
+            result = professordao.create(professor);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    boolean deleteProfessor(int profId)  {
-        return professordao.delete(professordao.getById(profId));
+    public boolean deleteProfessor(int profId) {
+        boolean result = false;
+        try {
+            result = professordao.delete(professordao.getById(profId));
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    Professor getProfessorById(int professorId)  {
-        return professordao.getById(professorId);
+    public Professor getProfessorById(int professorId) {
+        Professor result = null;
+        try {
+            result = professordao.getById(professorId);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 
-    List<Integer> getProfessorIdList()  {
-        return professordao.getIdList();
+    public List<Integer> getProfessorIdList() {
+        List<Integer> result = null;
+        try {
+            result = professordao.getIdList();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return result;
     }
 }
