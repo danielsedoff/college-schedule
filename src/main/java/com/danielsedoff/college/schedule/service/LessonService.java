@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.service;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,11 @@ import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
-import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class LessonService {
 
     private LessonDAO lessondao;
-    private ProfessorDAO professordao;
     private GroupDAO groupdao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -24,128 +21,36 @@ public class LessonService {
     public LessonService(ProfessorDAO professordao, LessonDAO lessondao,
             GroupDAO groupdao) {
         this.lessondao = lessondao;
-        this.professordao = professordao;
         this.groupdao = groupdao;
     }
 
-    String getGroupsByLesson(String[] arguments) {
-        String lessonIdStr = arguments[0];
-        int lessonId = -1;
-        try {
-            lessonId = Integer.parseInt(lessonIdStr);
-        } catch (Exception e) {
-            return WRONG_LESSON_ID;
-        }
-        Lesson lesson = null;
-        try {
-            lesson = lessondao.getById(lessonId);
-        } catch (Exception e) {
-            return "Could not find lesson.";
-        }
-        StringBuilder result = new StringBuilder();
-        List<Group> groups = lessondao.getGroupsByLesson(groupdao, lesson);
-        for (Group group : groups) {
-            result.append(System.lineSeparator()).append(group.toString());
-        }
-        return result.toString();
+    List<Group> getGroupsByLessonId(int lessonId) {
+        Lesson lesson = lessondao.getById(lessonId);
+        return lessondao.getGroupsByLesson(groupdao, lesson);
     }
 
-    String setLessonGroup(String[] arguments) {
-        String lessonIdStr = arguments[0];
-        int lessonId = -1;
-        try {
-            lessonId = Integer.parseInt(lessonIdStr);
-        } catch (Exception e) {
-            return WRONG_LESSON_ID;
-        }
-        String groupIdStr = arguments[1];
-        int groupId = -1;
-        try {
-            groupId = Integer.parseInt(groupIdStr);
-        } catch (Exception e) {
-            return WRONG_GROUP_ID;
-        }
-        boolean result = false;
-        result = lessondao.setLessonGroup(lessondao.getById(lessonId),
+    boolean setLessonGroup(int lessonId, int groupId) {
+        return lessondao.setLessonGroup(lessondao.getById(lessonId),
                 groupdao.getById(groupId));
-        return result ? SUCCESS : FAILURE;
     }
 
-    String getLessonById(String[] arguments) {
-        String lessonIdStr = arguments[0];
-        int lessonId = -1;
-        try {
-            lessonId = Integer.parseInt(lessonIdStr);
-        } catch (Exception e) {
-            return WRONG_LESSON_ID;
-        }
-        return lessondao.getById(lessonId).toString();
+    Lesson getLessonById(int lessonId) {
+        return lessondao.getById(lessonId);
     }
 
-    String createLesson(String[] arguments) {
-        boolean result = false;
-        String startTime = arguments[0];
-        String endTime = arguments[1];
-        String professorIdStr = arguments[2];
-        int professorId = -1;
-        try {
-            professorId = Integer.parseInt(professorIdStr);
-        } catch (Exception e) {
-            return "Wrong Professor ID.";
-        }
-        Lesson lesson = new Lesson();
-        lesson.setStartTime(LocalDateTime.parse(startTime, formatter));
-        lesson.setEndTime(LocalDateTime.parse(endTime, formatter));
-        lesson.setProfessor(professordao.getById(professorId));
-        result = lessondao.create(lesson);
-        return result ? SUCCESS : FAILURE;
+    boolean createLesson(Lesson lesson) {
+        return lessondao.create(lesson);
     }
 
-    String deleteLesson(String[] arguments) {
-        boolean result = false;
-        String lessonIdStr = arguments[0];
-        int lessonId = -1;
-        try {
-            lessonId = Integer.parseInt(lessonIdStr);
-        } catch (Exception e) {
-            return WRONG_LESSON_ID;
-        }
-        result = lessondao.delete(lessondao.getById(lessonId));
-        return result ? SUCCESS : FAILURE;
+    boolean deleteLessonById(int lessonId) {
+        return lessondao.delete(lessondao.getById(lessonId));
     }
 
-    String updateLesson(String[] arguments) {
-        boolean result = false;
-        String startTime = arguments[0];
-        String endTime = arguments[1];
-        String professorIdStr = arguments[2];
-        String lessonIdStr = arguments[3];
-        int professorId = -1;
-        int lessonId = -1;
-        try {
-            professorId = Integer.parseInt(professorIdStr);
-        } catch (Exception e) {
-            return "Wrong Professor ID.";
-        }
-        try {
-            lessonId = Integer.parseInt(lessonIdStr);
-        } catch (Exception e) {
-            return WRONG_LESSON_ID;
-        }
-        Lesson lesson = new Lesson();
-        lesson.setStartTime(LocalDateTime.parse(startTime, formatter));
-        lesson.setEndTime(LocalDateTime.parse(endTime, formatter));
-        lesson.setProfessor(professordao.getById(professorId));
-        result = lessondao.update(lessonId, lesson);
-        return result ? SUCCESS : FAILURE;
+    boolean updateLesson(int lessonId, Lesson lesson) {
+        return lessondao.update(lessonId, lesson);
     }
 
-    String getLessonIdList() {
-        StringBuilder result = new StringBuilder();
-        List<Integer> ids = lessondao.getIdList();
-        for (Integer id : ids) {
-            result.append(String.valueOf(id)).append(System.lineSeparator());
-        }
-        return result.toString();
+    List<Integer> getLessonIdList() {
+        return lessondao.getIdList();
     }
 }
