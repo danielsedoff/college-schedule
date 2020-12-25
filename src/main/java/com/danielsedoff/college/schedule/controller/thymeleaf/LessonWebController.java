@@ -65,6 +65,7 @@ public class LessonWebController {
     @PostMapping("/deleteLesson")
     public String deleteLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         ls.deleteLessonById(lessondto.getId());
+        System.out.println(lessondto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }

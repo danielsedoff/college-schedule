@@ -73,7 +73,6 @@ class LessonRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @RequestBody LessonDTO resource) {
         Lesson lesson = new Lesson();
-        lesson.setDayschedule(new DaySchedule());
         lesson.setEndTime(resource.getEndTime());
         lesson.setStartTime(resource.getStartTime());
         lesson.setGroup(gservice.getGroupById(resource.getGroupId()));

@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LessonWebControllerTest extends ControllerTest {
+class ProfessorWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -41,48 +41,43 @@ class LessonWebControllerTest extends ControllerTest {
 
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("lessonWebController"));
+        assertNotNull(wac.getBean("professorWebController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
+        mockMvc.perform(get("/professorList")).andDo(print()).andExpect(view().name("professorList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/lessonList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/professorList")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
-    void getLessonListShouldReturnLessonListTemplate() throws Exception {
-        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
+    void getProfessorListShouldReturnProfessorListTemplate() throws Exception {
+        mockMvc.perform(get("/professorList")).andDo(print()).andExpect(view().name("professorList"));
     }
 
     @Test
-    void getLessonFormShouldReturnLessonFormTemplate() throws Exception {
-        mockMvc.perform(get("/lessonForm").param("id", "-1")).andDo(print()).andExpect(view().name("lessonForm"));
+    void getProfessorFormShouldReturnProfessorFormTemplate() throws Exception {
+        mockMvc.perform(get("/professorForm").param("id", "-1")).andDo(print()).andExpect(view().name("professorForm"));
     }
 
     @Test
-    void postDeleteLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteLesson")).andDo(print()).andExpect(view().name("resultPage"));
+    void postDeleteProfessorShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/deleteProfessor").param("id", "3")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postCreateLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/createLesson").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13")
-                .param("groupId", "1").param("professorId", "1"))
-                .andDo(print()).andExpect(view().name("resultPage"));
+    void postCreateProfessorShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/createProfessor")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postUpdateLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(
-                post("/updateLesson").param("id", "3").param("endTime", "1999-01-01 14:14").param("startTime", "1999-01-01 13:13")
-                .param("groupId", "1").param("professorId", "1"))
-                .andDo(print()).andExpect(view().name("resultPage"));
+    void postUpdateProfessorShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/updateProfessor")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

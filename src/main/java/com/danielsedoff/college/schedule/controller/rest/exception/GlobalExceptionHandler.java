@@ -1,8 +1,6 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.controller.rest.exception;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,19 +19,17 @@ import com.danielsedoff.college.schedule.controller.rest.MyResourceNotFoundExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    Map<String, Object> body = Map.of("timestamp", LocalDate.now());
+
     @ExceptionHandler(MyResourceNotFoundException.class)
     public ResponseEntity<Object> handleCityNotFoundException(MyResourceNotFoundException ex, WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("message", "City not found");
+        body.put("message", "Resource not found");
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
         body.put("status", status.value());
         List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
                 .collect(Collectors.toList());
@@ -43,8 +39,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     protected ResponseEntity<Object> handleOtherExceptions(Exception ex, HttpHeaders headers, HttpStatus status,
             WebRequest request) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
         body.put("status", status.value());
         String errors = ex.getStackTrace().toString();
         body.put("errors", errors);

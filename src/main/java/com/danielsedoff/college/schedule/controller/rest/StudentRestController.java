@@ -80,7 +80,7 @@ class StudentRestController {
         student.setGroup(gservice.getGroupById(resource.getGroupId()));
         student.setName(resource.getName());
         student.setSchoolYear(resource.getSchoolYear());
-        return service.updateStudent(id, student) ? "success" : "Failed to update Students";
+        return service.updateStudent(resource.getId(), student) ? "success" : "Failed to update Students";
     }
 
     @DeleteMapping(value = "/{id}")

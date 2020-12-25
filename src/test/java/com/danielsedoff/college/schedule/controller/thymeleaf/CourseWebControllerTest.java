@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -60,7 +60,7 @@ class CourseWebControllerTest extends ControllerTest {
 
     @Test
     void postDeleteCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteCourse")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/deleteCourse").param("id", "3")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GroupWebControllerTest extends ControllerTest {
+class StudentWebControllerTest extends ControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -38,45 +38,55 @@ class GroupWebControllerTest extends ControllerTest {
     @Test
     void mainPageControllerMustNotBeNull() {
         ServletContext servletContext = wac.getServletContext();
-
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("groupWebController"));
+        assertNotNull(wac.getBean("studentWebController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/groupList")).andDo(print()).andExpect(view().name("groupList"));
+        mockMvc.perform(get("/studentList")).andDo(print()).andExpect(view().name("studentList"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/groupList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
+        mockMvc.perform(get("/studentList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
-    void getGroupListShouldReturnGroupListTemplate() throws Exception {
-        mockMvc.perform(get("/groupList")).andDo(print()).andExpect(view().name("groupList"));
+    void getStudentListShouldReturnStudentListTemplate() throws Exception {
+        mockMvc.perform(get("/studentList")).andDo(print()).andExpect(view().name("studentList"));
     }
 
     @Test
-    void getGroupFormShouldReturnGroupFormTemplate() throws Exception {
-        mockMvc.perform(get("/groupForm").param("id", "-1")).andDo(print()).andExpect(view().name("groupForm"));
+    void getStudentFormShouldReturnStudentFormTemplate() throws Exception {
+        mockMvc.perform(get("/studentForm").param("id", "-1")).andDo(print()).andExpect(view().name("studentForm"));
     }
 
     @Test
-    void postDeleteGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteGroup")).andDo(print()).andExpect(view().name("resultPage"));
+    void postDeleteStudentShouldReturnResultPage() throws Exception {
+        mockMvc.perform(post("/deleteStudent")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postCreateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createGroup")).andDo(print()).andExpect(view().name("resultPage"));
+    void postCreateStudentShouldReturnResultPage() throws Exception {
+        mockMvc
+         .perform(post("/createStudent")
+          .param("name", "New Student")
+          .param("groupId", "1") 
+          .param("schoolYear", "3")) 
+          .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
-    void postUpdateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateGroup")).andDo(print()).andExpect(view().name("resultPage"));
+    void postUpdateStudentShouldReturnResultPage() throws Exception {
+        mockMvc
+        .perform(post("/updateStudent")
+         .param("id", "2")
+         .param("name", "New Student")
+         .param("groupId", "1") 
+         .param("schoolYear", "3")) 
+         .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }
