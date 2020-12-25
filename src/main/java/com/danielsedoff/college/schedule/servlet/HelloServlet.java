@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "MyServlet", urlPatterns = { "/hello" })
+@WebServlet(name = "HelloServlet", urlPatterns = { "/hello" })
 public class HelloServlet extends HttpServlet {
 
     private static final long serialVersionUID = 3837865670959058152L;
