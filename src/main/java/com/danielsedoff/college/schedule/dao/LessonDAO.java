@@ -7,8 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,6 @@ public class LessonDAO implements DAO<Lesson> {
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
-    private static Logger logger = LoggerFactory.getLogger(LessonDAO.class);
-
     @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -31,8 +27,6 @@ public class LessonDAO implements DAO<Lesson> {
                 result.add(lesson.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson Id List", e);
         }
         return result;
@@ -44,8 +38,6 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson By Id", e);
         }
         return result;
@@ -56,10 +48,9 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
             em.remove(targetLesson);
+            em.flush();
             em.clear();
             } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not delete Lesson", e);
         }
         return result;
@@ -74,8 +65,6 @@ public class LessonDAO implements DAO<Lesson> {
             oldLesson.setProfessor(lesson.getProfessor());
             oldLesson.setGroup(lesson.getGroup());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not update Lesson", e);
         }
         return result;
@@ -87,8 +76,6 @@ public class LessonDAO implements DAO<Lesson> {
             em.persist(lesson);
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not create Lesson", e);
         }
         return result;
@@ -100,8 +87,6 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             lessons = em.createQuery("from Lesson", Lesson.class).getResultList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson List", e);
         }
         return lessons;

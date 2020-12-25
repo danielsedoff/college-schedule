@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.danielsedoff.college.schedule.dao.SqlScriptRunner;
 
 public abstract class ControllerTest {
-    final String SQL_FILE_NAME = "create_tables.sql";
+    public static final String SQL_FILE_NAME = "create_tables.sql";
 
     @Autowired
     private SqlScriptRunner ibatisRead;

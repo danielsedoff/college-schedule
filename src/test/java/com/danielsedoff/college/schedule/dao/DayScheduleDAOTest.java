@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.DaySchedule;
 
-class DayScheduleDAOTest extends DAOTest {
+class DayScheduleDAOTest extends AbstractDAOTest {
 
     @Autowired
     private DAO<DaySchedule> dsdao;

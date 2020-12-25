@@ -2,8 +2,6 @@ package com.danielsedoff.college.schedule.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +25,6 @@ public class StudentWebController {
 
     @Autowired
     GroupService gs;
-
-    private static Logger logger = LoggerFactory.getLogger(CourseWebController.class);
 
     @GetMapping("/studentList")
     public String getStudents(Model model) {
@@ -83,7 +79,7 @@ public class StudentWebController {
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
-        ss.updateStudent(student.getId(), student);
+        ss.updateStudent(studentdto.getId(), student);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";
     }

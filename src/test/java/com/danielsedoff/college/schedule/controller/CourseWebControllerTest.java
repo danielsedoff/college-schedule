@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.config.MainWebAppInitializer;
 import com.danielsedoff.college.schedule.config.TestWebConfig;
 
 @ExtendWith(SpringExtension.class)
@@ -32,8 +31,6 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ComponentScan(basePackageClasses = { CourseWebController.class })
 @WebAppConfiguration
 class CourseWebControllerTest extends ControllerTest {
-
-    MainWebAppInitializer mwai = new MainWebAppInitializer();
 
     @Autowired
     private WebApplicationContext wac;

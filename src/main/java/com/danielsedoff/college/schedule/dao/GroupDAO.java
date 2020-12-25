@@ -7,8 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,6 @@ public class GroupDAO implements DAO<Group> {
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
-    private static Logger logger = LoggerFactory.getLogger(GroupDAO.class);
-
     @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -31,8 +27,6 @@ public class GroupDAO implements DAO<Group> {
                 result.add(group.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group Id List", e);
         }
         return result;
@@ -44,8 +38,6 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = em.find(Group.class, id);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group By Id", e);
         }
         return result;
@@ -56,10 +48,9 @@ public class GroupDAO implements DAO<Group> {
         try {
             Group targetGroup = em.find(Group.class, group.getId());
             em.remove(targetGroup);
+            em.flush();
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not delete Group", e);
         }
         return result;
@@ -71,8 +62,6 @@ public class GroupDAO implements DAO<Group> {
             Group oldGroup = (Group) em.find(Group.class, id);
             oldGroup.setSpecialNotes(group.getSpecialNotes());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not update Group", e);
         }
         return result;
@@ -84,8 +73,6 @@ public class GroupDAO implements DAO<Group> {
             em.persist(group);
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not create Group", e);
         }
         return result;
@@ -98,8 +85,6 @@ public class GroupDAO implements DAO<Group> {
         try {
             groups = em.createQuery("from Group", Group.class).getResultList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group List", e);
         }
         return groups;

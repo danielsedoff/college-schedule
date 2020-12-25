@@ -7,8 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,6 @@ public class CourseDAO implements DAO<Course> {
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
-    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
-
     @Transactional(readOnly=true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -31,8 +27,6 @@ public class CourseDAO implements DAO<Course> {
                 result.add(course.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Course Id List", e);
         }
         return result;
@@ -44,8 +38,6 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = em.find(Course.class, id);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Course By Id", e);
         }
         return result;
@@ -56,10 +48,9 @@ public class CourseDAO implements DAO<Course> {
         try {
             Course targetCourse = em.find(Course.class, course.getId());
             em.remove(targetCourse);
+            em.flush();
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not delete Course", e);
         }
         return result;
@@ -71,8 +62,6 @@ public class CourseDAO implements DAO<Course> {
             em.persist(course);
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not create Course", e);
         }
         return result;
@@ -86,8 +75,6 @@ public class CourseDAO implements DAO<Course> {
             newCourse.setName(course.getName());
             newCourse.setProfessor(course.getProfessors());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not update Course", e);
         }
         return result;
@@ -99,8 +86,6 @@ public class CourseDAO implements DAO<Course> {
         try {
             courses = em.createQuery("from Course", Course.class).getResultList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Course List", e);
         }
         return courses;

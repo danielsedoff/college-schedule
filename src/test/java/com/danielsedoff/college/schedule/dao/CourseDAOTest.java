@@ -21,7 +21,7 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestWebConfig.class)
-class CourseDAOTest extends DAOTest {
+class CourseDAOTest extends AbstractDAOTest {
 
     @Autowired
     private DAO<Course> coursedao;
