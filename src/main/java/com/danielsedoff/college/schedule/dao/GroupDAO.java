@@ -25,6 +25,7 @@ public class GroupDAO implements DAO<Group> {
     private static final String SQL_SELECT_GROUP_BY_ID = "SELECT * FROM groupz where group_id = ?";
     private static final String SQL_INSERT_GROUP_STUDENT = "INSERT INTO group_student (group_id, student_id) VALUES(?, ?)";
     private static final String SQL_SELECT_STUDENT_BY_GROUP = "SELECT student_id FROM group_student WHERE group_id = ?";
+    private static final String SQL_DELETE_LESSON_GROUP = "DELETE FROM lesson_group WHERE group_id = ?;";
     private static final String SQL_DELETE_GROUP_STUDENT = "DELETE FROM group_student WHERE group_id = ?;";
     private static final String SEPARATOR = "|";
 
@@ -46,8 +47,8 @@ public class GroupDAO implements DAO<Group> {
     public Group getById(Integer id) throws DAOException {
         Group result = null;
         try {
-            result = jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID,
-                    new Object[] { id }, new GroupMapper());
+            result = jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID, new Object[] { id },
+                    new GroupMapper());
         } catch (Exception e) {
             throw new DAOException("Could not get By Id", e);
         }
@@ -60,6 +61,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_GROUPZ, group.getId()) > 0;
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             throw new DAOException("Could not delete", e);
         }
         return result;
@@ -69,8 +71,7 @@ public class GroupDAO implements DAO<Group> {
     public boolean update(Integer id, Group group) throws DAOException {
         boolean result = false;
         StringBuilder notes = new StringBuilder();
-        group.getSpecialNotes()
-                .forEach(listItem -> notes.append(listItem).append(SEPARATOR));
+        group.getSpecialNotes().forEach(listItem -> notes.append(listItem).append(SEPARATOR));
 
         try {
             result = jdbcTemplate.update(SQL_UPDATE_GROUPZ, notes.toString(),
@@ -92,8 +93,7 @@ public class GroupDAO implements DAO<Group> {
         return result;
     }
 
-    public boolean setGroupStudent(Group group, List<Student> students)
-            throws DAOException {
+    public boolean setGroupStudent(Group group, List<Student> students) throws DAOException {
         // TODO: Make it batch.
         boolean result = false;
         try {
@@ -120,8 +120,8 @@ public class GroupDAO implements DAO<Group> {
     public List<Student> getStudentsByGroup(Group group) throws DAOException {
         List<Student> students = new ArrayList<>();
         try {
-            List<Integer> studentIds = jdbcTemplate.queryForList(
-                    SQL_SELECT_STUDENT_BY_GROUP, Integer.class, group.getId());
+            List<Integer> studentIds = jdbcTemplate.queryForList(SQL_SELECT_STUDENT_BY_GROUP,
+                    Integer.class, group.getId());
             for (Integer studentId : studentIds) {
                 students.add(studentdao.getById(studentId));
             }

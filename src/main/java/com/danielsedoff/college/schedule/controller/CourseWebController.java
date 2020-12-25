@@ -41,6 +41,7 @@ public class CourseWebController {
     public String gedItParam(@RequestParam("id") int id,
             @ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
         if (id == -1) {
+            coursedto.setMode("create");
             return "courseForm";
         }
 
@@ -60,53 +61,48 @@ public class CourseWebController {
         return "courseForm";
     }
 
-    @PostMapping("/courseForm")
-    public String editCourses(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
-
-        if (null != coursedto.getMode() && coursedto.getMode().equals("delete")) {
-            cs.deleteCourseById(coursedto.getId());
-            model.addAttribute("result", "Your DELETE request has been accepted by the server.");
-            return "resultPage";
-        }
-
-        if (null != coursedto.getMode() && coursedto.getMode().equals("create")) {
-            Course course = new Course();
-
-            if (coursedto.getConnectedId1() > 0) {
-                List<Professor> professors = new ArrayList<Professor>();
-                Professor prof = new Professor();
-                prof.setId(coursedto.getConnectedId1());
-                professors.add(prof);
-                course.setProfessors(professors);
-            }
-            course.setCourseDescription(coursedto.getDescription());
-            course.setName(coursedto.getName());
-            cs.createCourse(course);
-            model.addAttribute("result", "Your CREATE request has been accepted by the server.");
-            return "resultPage";
-        }
-
-        if (null != coursedto.getMode() && coursedto.getMode().equals("update")) {
-            Course course = new Course();
-
-            if (coursedto.getConnectedId1() > 0) {
-                List<Professor> professors = new ArrayList<Professor>();
-                Professor prof = new Professor();
-                prof.setId(coursedto.getConnectedId1());
-                professors.add(prof);
-                course.setProfessors(professors);
-            }
-
-            course.setId(coursedto.getId());
-            course.setCourseDescription(coursedto.getDescription());
-            course.setName(coursedto.getName());
-            cs.updateCourse(coursedto.getId(), course);
-            model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
-            return "resultPage";
-        }
-
-        model.addAttribute("result", "The server has recieved an unsupported request.");
+    @PostMapping("/deleteCourse")
+    public String deleteCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+        cs.deleteCourseById(coursedto.getId());
+        model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
+    @PostMapping("/createCourse")
+    public String createCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+        Course course = new Course();
+
+        if (coursedto.getConnectedId1() > 0) {
+            List<Professor> professors = new ArrayList<Professor>();
+            Professor prof = new Professor();
+            prof.setId(coursedto.getConnectedId1());
+            professors.add(prof);
+            course.setProfessors(professors);
+        }
+        course.setCourseDescription(coursedto.getDescription());
+        course.setName(coursedto.getName());
+        cs.createCourse(course);
+        model.addAttribute("result", "Your CREATE request has been accepted by the server.");
+        return "resultPage";
+    }
+
+    @PostMapping("/updateCourse")
+    public String updateCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+        Course course = new Course();
+
+        if (coursedto.getConnectedId1() > 0) {
+            List<Professor> professors = new ArrayList<Professor>();
+            Professor prof = new Professor();
+            prof.setId(coursedto.getConnectedId1());
+            professors.add(prof);
+            course.setProfessors(professors);
+        }
+
+        course.setId(coursedto.getId());
+        course.setCourseDescription(coursedto.getDescription());
+        course.setName(coursedto.getName());
+        cs.updateCourse(coursedto.getId(), course);
+        model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
+        return "resultPage";
+    }
 }

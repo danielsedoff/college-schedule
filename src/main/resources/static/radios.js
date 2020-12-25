@@ -1,8 +1,8 @@
-radioCreate = document.getElementById("radioCreate");
-radioDelete = document.getElementById("radioDelete");
-radioUpdate = document.getElementById("radioUpdate");
+var radioCreate = document.getElementById("radioCreate");
+var radioDelete = document.getElementById("radioDelete");
+var radioUpdate = document.getElementById("radioUpdate");
 
-radios = [radioCreate, radioDelete, radioUpdate];
+var radios = [radioCreate, radioDelete, radioUpdate];
 
 radioCreate.addEventListener('change', radioChanged);
 radioDelete.addEventListener('change', radioChanged);
@@ -10,6 +10,8 @@ radioUpdate.addEventListener('change', radioChanged);
 
 function radioChanged() {
     var radioValue = getRadioVal(radios);
+    var entityname = document.getElementById("entityname").value;
+    document.getElementById("form1").action = radioValue + capitalizeFirstLetter(entityname);
 
     var inputs = document.getElementsByTagName('input');
 
@@ -41,4 +43,7 @@ function getRadioVal(radios) {
     }
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 radioChanged();

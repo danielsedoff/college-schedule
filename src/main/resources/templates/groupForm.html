@@ -7,19 +7,20 @@
 	media="all" />
 </head>
 <body>
-	<input type="hidden" id="entityname" value="course" />
+	<input type="hidden" id="entityname" value="group" />
 	<div id="form_container">
 		<h1>
 			<span>&nbsp;</span>
 		</h1>
 
-		<form action="#" th:object="${coursedto}" id="form1" method="post">
+		<form action="#" th:object="${groupdto}" id="form1" method="post">
 			<table border="1">
 				<tbody>
 					<tr>
 						<td>
 							<h2></h2>
-							<h2>Edit Courses</h2>
+							<h2>Edit Groups</h2> <input type="hidden" id="entityname"
+							value="group" />
 							<div id="submitterResult"></div>
 						</td>
 					</tr>
@@ -34,8 +35,8 @@
 							<label for="radioUpdate">Update</label></td>
 					</tr>
 					<tr>
-						<td><label class="description" for="idinput">Course
-								ID </label>
+						<td><label class="description" for="idinput">Group ID
+						</label>
 							<div>
 								<input th:value="${upstreamId}" id="idinput" name="idinput"
 									class="element text medium" type="number" th:field="*{id}"
@@ -43,30 +44,12 @@
 							</div></td>
 					</tr>
 					<tr>
-						<td><label class="description" for="name">Course Name
-						</label>
-							<div>
-								<input th:value="${upstreamName}" name="name"
-									class="element  text medium" type="text" th:field="*{name}"
-									maxlength="255" value="" />
-							</div></td>
-					</tr>
-					<tr>
-						<td><label class="description" for="description">Course
+						<td><label class="description" for="description">Group
 								Description </label>
 							<div>
 								<input th:value="${upstreamDescription}" name="description"
 									class="element text medium" type="text"
 									th:field="*{description}" maxlength="255" value="" />
-							</div></td>
-					</tr>
-					<tr>
-						<td><label class="description" for="connectedid1">Professor
-								ID </label>
-							<div>
-								<input th:value="${upstreamConnectedId1}" name="connectedid1"
-									class="element text medium" type="number"
-									th:field="*{connectedId1}" maxlength="255" value="" />
 							</div></td>
 					</tr>
 					<tr>
