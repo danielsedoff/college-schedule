@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.danielsedoff.college.schedule.config.AppConfig;
 
-
 @ContextConfiguration(classes = AppConfig.class)
 public class AutowiredNotNull {
     @Autowired
