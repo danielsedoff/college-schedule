@@ -37,7 +37,7 @@ public class Professor extends Person {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "professor", cascade = CascadeType.MERGE, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
 
     public Professor() {

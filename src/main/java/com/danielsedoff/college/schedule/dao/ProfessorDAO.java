@@ -30,7 +30,7 @@ public class ProfessorDAO implements DAO<Professor> {
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not get Professor Id List", e);
         }
         return result;
@@ -43,7 +43,7 @@ public class ProfessorDAO implements DAO<Professor> {
             result = em.find(Professor.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not get Professor By Id", e);
         }
         return result;
@@ -58,7 +58,7 @@ public class ProfessorDAO implements DAO<Professor> {
             em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not delete Professor", e);
         }
         return result;
@@ -71,10 +71,9 @@ public class ProfessorDAO implements DAO<Professor> {
             oldProfessor.setName(professor.getName());
             oldProfessor.setRanksTitles(professor.getRanksTitles());
             oldProfessor.setSpecialNotes(professor.getSpecialNotes());
-            em.merge(oldProfessor);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not update Professor", e);
         }
         return result;
@@ -87,7 +86,7 @@ public class ProfessorDAO implements DAO<Professor> {
             em.clear();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not create Professor", e);
         }
         return result;
@@ -100,7 +99,7 @@ public class ProfessorDAO implements DAO<Professor> {
             professors = em.createQuery("from Professor", Professor.class).getResultList();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            
+            e.printStackTrace();
             throw new DAOException("Could not get Professor List", e);
         }
         return professors;
