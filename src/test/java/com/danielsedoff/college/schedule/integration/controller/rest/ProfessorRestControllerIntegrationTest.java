@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,9 +17,9 @@ import com.danielsedoff.college.schedule.model.Professor;
 @SpringBootTest(classes = {
         ProfessorRestController.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ProfessorRestControllerIntegrationTest {
-    @LocalServerPort
-    private int port;
 
+    int port = 8080;
+    
     @Autowired
     private TestRestTemplate restTemplate;
 
