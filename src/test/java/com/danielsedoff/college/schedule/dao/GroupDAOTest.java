@@ -3,41 +3,21 @@ package com.danielsedoff.college.schedule.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
+@Component
 class GroupDAOTest {
-
-    final String SQL_FILE_NAME = "create_tables.sql";
-
-    @Autowired
-    private GroupDAO groupdao;
-    @Autowired
-    private StudentDAO studentdao;
-    @Autowired
-    private SqlScriptRunner ibatisRead;
-
-    @BeforeEach
-    final void readSQLfile() throws IOException, SQLException {
-        ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
-    }
+    private JdbcTemplate jdbctemplate = new JdbcTemplate();
+    private GroupDAO groupdao = new GroupDAO(this.jdbctemplate);
+    private StudentDAO studentdao = new StudentDAO(this.jdbctemplate);
 
     @Test
     void testGetIdList() {

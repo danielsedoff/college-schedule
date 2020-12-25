@@ -1,43 +1,20 @@
 package com.danielsedoff.college.schedule.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.danielsedoff.college.schedule.config.AppConfig;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
+@Component
 class DayScheduleDAOTest {
 
-    final String SQL_FILE_NAME = "create_tables.sql";
-
-    @Autowired
-    private DayScheduleDAO dsdao;
-    @Autowired
-    private LessonDAO lessondao;
-    @Autowired
-    private SqlScriptRunner ibatisRead;
-
-    @BeforeEach
-    final void readSQLfile() throws IOException, SQLException {
-        ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
-    }
+    private JdbcTemplate jdbctemplate = new JdbcTemplate();
+    private DayScheduleDAO dsdao = new DayScheduleDAO(this.jdbctemplate);
+    private LessonDAO lessondao = new LessonDAO(this.jdbctemplate);
     
     @Test
     void testGetIdList() {
