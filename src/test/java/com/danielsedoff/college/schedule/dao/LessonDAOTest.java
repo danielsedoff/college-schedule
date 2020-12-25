@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.model.Professor;
 
 class LessonDAOTest extends DAOTest {
 
@@ -47,7 +45,7 @@ class LessonDAOTest extends DAOTest {
         lesson.setStartTime(now.format(formatter));
         lesson.setEndTime(now.format(formatter));
         lesson.setStartTime(now.format(formatter));
-        lesson.setProfessors(new ArrayList<Professor>());
+        lesson.setProfessorId(2);
         lessondao.update(id, lesson);
         assertEquals(now.format(formatter),
                 lessondao.getById(id).getStartTime());
@@ -70,7 +68,7 @@ class LessonDAOTest extends DAOTest {
         LocalDateTime now = LocalDateTime.now();
         lesson.setStartTime(now.format(formatter));
         lesson.setEndTime(now.format(formatter));
-        lesson.setProfessors(new ArrayList<Professor>());
+        lesson.setProfessorId(2);
         lessondao.create(lesson);
         assertEquals(expectedSize, lessondao.getIdList().size());
         assertEquals(now.format(formatter),

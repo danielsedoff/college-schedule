@@ -18,17 +18,9 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
-
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<DaySchedule> daySchedules = em.createQuery("from DaySchedule")
-                    .getResultList();
-            em.getTransaction().commit();
-
-            for (DaySchedule daySchedule : daySchedules) {
+            for (DaySchedule daySchedule : getList()) {
                 result.add(daySchedule.getId());
             }
         } catch (Exception e) {

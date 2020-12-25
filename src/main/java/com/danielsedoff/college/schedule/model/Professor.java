@@ -7,16 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "professors")
-@ToString
-@EqualsAndHashCode(callSuper = false)
-public class Professor extends Person {
+public class Professor extends Person{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "department_id")
     private int departmentId;
@@ -26,8 +21,6 @@ public class Professor extends Person {
     private String specialNotes;
     @Column(name = "professor_ranks")
     private String ranksTitles;
-    @Column(name = "lesson")
-    private Lesson lesson;
 
     public Professor() {
     }
@@ -72,11 +65,11 @@ public class Professor extends Person {
         this.ranksTitles = ranksTitles;
     }
 
-    public Lesson getLesson() {
-        return lesson;
+    @Override
+    public String toString() {
+        return "Professor [id=" + id + ", departmentId=" + departmentId
+                + ", name=" + name + ", specialNotes=" + specialNotes
+                + ", ranksTitles=" + ranksTitles + "]";
     }
 
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
 }

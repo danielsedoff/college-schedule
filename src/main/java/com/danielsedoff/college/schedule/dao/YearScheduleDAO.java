@@ -18,17 +18,9 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
-
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<YearSchedule> yearSchedules = em
-                    .createQuery("from YearSchedule").getResultList();
-            em.getTransaction().commit();
-
-            for (YearSchedule yearSchedule : yearSchedules) {
+            for (YearSchedule yearSchedule : getList()) {
                 result.add(yearSchedule.getId());
             }
         } catch (Exception e) {
@@ -55,8 +47,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
-            YearSchedule targetYearSchedule = em.find(YearSchedule.class,
-                    yearSchedule.getId());
+            YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
             em.getTransaction().begin();
             em.remove(targetYearSchedule);
             em.getTransaction().commit();
@@ -67,14 +58,13 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         return result;
     }
 
-    public boolean update(Integer id, YearSchedule yearSchedule)
-            throws DAOException {
+    public boolean update(Integer id, YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
+
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            YearSchedule oldYearSchedule = (YearSchedule) em
-                    .find(YearSchedule.class, id);
+            YearSchedule oldYearSchedule = (YearSchedule) em.find(YearSchedule.class, id);
             oldYearSchedule.setYear(yearSchedule.getYear());
             em.getTransaction().commit();
             em.close();
@@ -104,8 +94,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         try {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
-            yearSchedules = em
-                    .createQuery("from YearSchedule", YearSchedule.class)
+            yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class)
                     .getResultList();
             em.getTransaction().commit();
             em.close();

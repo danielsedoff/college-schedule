@@ -18,17 +18,9 @@ public class StudentDAO implements DAO<Student> {
     EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
-
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<Student> students = em.createQuery("from Student")
-                    .getResultList();
-            em.getTransaction().commit();
-
-            for (Student student : students) {
+            for (Student student : getList()) {
                 result.add(student.getId());
             }
         } catch (Exception e) {
@@ -72,6 +64,7 @@ public class StudentDAO implements DAO<Student> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Student oldStudent = (Student) em.find(Student.class, id);
+            oldStudent.setGroupId(student.getGroupId());
             oldStudent.setName(student.getName());
             oldStudent.setSchoolYear(student.getSchoolYear());
             em.getTransaction().commit();
@@ -88,7 +81,10 @@ public class StudentDAO implements DAO<Student> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(student);
+            
+            em.persist(student);
             em.getTransaction().commit();
+            
             em.close();
         } catch (Exception e) {
             throw new DAOException("Could not create Student", e);

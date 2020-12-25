@@ -44,6 +44,7 @@ public class StudentWebController {
         Student student = ss.getStudentById(id);
         studentdto.setId(id);
         studentdto.setMode("update");
+        studentdto.setGroupId(student.getGroupId());
         studentdto.setName(student.getName());
         studentdto.setSchoolYear(student.getSchoolYear());
         model.addAttribute("testvalue", "passed");
@@ -60,6 +61,7 @@ public class StudentWebController {
     @PostMapping("/createStudent")
     public String createStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         Student student = new Student();
+        student.setGroupId(studentdto.getGroupId());
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
         ss.createStudent(student);
@@ -71,6 +73,7 @@ public class StudentWebController {
     public String updateStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         Student student = new Student();
         student.setId(studentdto.getId());
+        student.setGroupId(studentdto.getGroupId());
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
         ss.updateStudent(student.getId(), student);

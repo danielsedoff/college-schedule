@@ -16,19 +16,11 @@ public class LessonDAO implements DAO<Lesson> {
 
     @Autowired
     EntityManagerConfig emf;
-    
-    public List<Integer> getIdList() throws DAOException {
 
+    public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<Lesson> lessons = em.createQuery("from Lesson")
-                    .getResultList();
-            em.getTransaction().commit();
-
-            for (Lesson lesson : lessons) {
+            for (Lesson lesson : getList()) {
                 result.add(lesson.getId());
             }
         } catch (Exception e) {
@@ -74,8 +66,8 @@ public class LessonDAO implements DAO<Lesson> {
             Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
             oldLesson.setEndTime(lesson.getEndTime());
             oldLesson.setStartTime(lesson.getStartTime());
-            oldLesson.setProfessors(lesson.getProfessors());
-            oldLesson.setGroups(lesson.getGroups());
+            oldLesson.setProfessorId(lesson.getProfessorId());
+            oldLesson.setGroupId(lesson.getGroupId());
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {

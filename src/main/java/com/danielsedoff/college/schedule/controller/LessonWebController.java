@@ -50,8 +50,9 @@ public class LessonWebController {
         lessondto.setMode("update");
         lessondto.setStartTime((lesson.getStartTime()));
         lessondto.setEndTime((lesson.getEndTime()));
-        lessondto.setGroups(lesson.getGroups());
-        lessondto.setProfessors(lesson.getProfessors());
+        lessondto.setGroupId(lesson.getGroupId());
+        int professorId = lesson.getProfessorId();
+        lessondto.setProfessorId(professorId);
         return "lessonForm";
     }
 
@@ -67,8 +68,8 @@ public class LessonWebController {
         Lesson lesson = new Lesson();
         lesson.setEndTime((lessondto.getEndTime()));
         lesson.setStartTime((lessondto.getStartTime()));
-        lesson.setGroups(lessondto.getGroups());
-        lesson.setProfessors(lessondto.getProfessors());
+        lesson.setGroupId(lessondto.getGroupId());
+        lesson.setProfessorId(lessondto.getProfessorId());
 
         ls.createLesson(lesson);
         model.addAttribute("result", "Your CREATE request has been accepted by the server.");
@@ -82,12 +83,12 @@ public class LessonWebController {
         lesson.setId(lessondto.getId());
         lesson.setEndTime((lessondto.getEndTime()));
         lesson.setStartTime((lessondto.getStartTime()));
-        lesson.setGroups(lessondto.getGroups());
-        if (ps.getProfessorById(lessondto.getProfessors().get(0).getId()) == null) {
-            model.addAttribute("result", "Error: there is no professor with ID " + lessondto.getProfessors().get(0).getId());
+        lesson.setGroupId(lessondto.getGroupId());
+        if (ps.getProfessorById(lessondto.getProfessorId()) == null) {
+            model.addAttribute("result", "Error: there is no professor with ID " + lessondto.getProfessorId());
             return "resultPage";
         }
-        lesson.setProfessors(lessondto.getProfessors());
+        lesson.setProfessorId(lessondto.getProfessorId());
         ls.updateLesson(lessondto.getId(), lesson);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";

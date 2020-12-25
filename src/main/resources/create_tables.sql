@@ -55,7 +55,7 @@ CREATE TABLE professors
 
 CREATE TABLE students
 (
-    id SERIAL PRIMARY KEY,
+    student_id SERIAL PRIMARY KEY,
     group_id INTEGER,
     student_year INTEGER,
     student_name CHARACTER VARYING(30)

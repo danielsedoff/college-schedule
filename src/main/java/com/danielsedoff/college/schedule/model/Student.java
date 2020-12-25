@@ -7,23 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 @Entity
 @Table(name = "students")
-@ToString
-@EqualsAndHashCode(callSuper = false)
-public class Student extends Person {
+public class Student extends Person{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "student_id")
     private int id;
     @Column(name = "student_name")
     private String name;
     @Column(name = "student_year")
     private int schoolYear;
-    @Column(name = "group")
-    private Group group;
+    @Column(name = "group_id")
+    private int groupId;
 
     public Student() {
 
@@ -35,6 +31,12 @@ public class Student extends Person {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Student [id=" + id + ", name=" + name + ", schoolYear="
+                + schoolYear + ", groupId=" + groupId + "]";
     }
 
     public String getName() {
@@ -53,12 +55,12 @@ public class Student extends Person {
         this.schoolYear = schoolYear;
     }
 
-    public Group getGroup() {
-        return group;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
 }

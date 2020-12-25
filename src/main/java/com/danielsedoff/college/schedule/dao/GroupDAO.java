@@ -16,18 +16,11 @@ public class GroupDAO implements DAO<Group> {
 
     @Autowired
     EntityManagerConfig emf;
-    
-    public List<Integer> getIdList() throws DAOException {
 
+    public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<Group> groups = em.createQuery("from Group")
-                    .getResultList();
-            em.getTransaction().commit();
-            for (Group group : groups) {
+            for (Group group : getList()) {
                 result.add(group.getId());
             }
         } catch (Exception e) {
@@ -68,7 +61,6 @@ public class GroupDAO implements DAO<Group> {
     public boolean update(Integer id, Group group) throws DAOException {
         boolean result = false;
         try {
-
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Group oldGroup = (Group) em.find(Group.class, id);

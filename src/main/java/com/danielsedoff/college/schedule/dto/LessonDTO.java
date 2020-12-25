@@ -1,11 +1,7 @@
 package com.danielsedoff.college.schedule.dto;
 
-import java.util.List;
-
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import com.danielsedoff.college.schedule.model.Group;
-import com.danielsedoff.college.schedule.model.Professor;
 
 @ToString
 @EqualsAndHashCode
@@ -14,8 +10,8 @@ public class LessonDTO {
     int id;
     String startTime;
     String endTime;
-    List<Professor> professors;
-    List<Group> groups;
+    int professorId;
+    int groupId;
 
     public String getMode() {
         return mode;
@@ -49,20 +45,20 @@ public class LessonDTO {
         this.endTime = endTime;
     }
 
-    public List<Professor> getProfessors() {
-        return professors;
+    public int getProfessorId() {
+        return professorId;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public void setProfessorId(int professorId) {
+        this.professorId = professorId;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
 }

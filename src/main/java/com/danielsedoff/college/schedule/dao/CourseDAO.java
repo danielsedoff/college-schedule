@@ -16,26 +16,19 @@ import com.danielsedoff.college.schedule.model.Course;
 @Component
 public class CourseDAO implements DAO<Course> {
 
+    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
+    
     @Autowired
     EntityManagerConfig emf;
 
-    private static Logger logger = LoggerFactory.getLogger(CourseDAO.class);
-    
     public List<Integer> getIdList() throws DAOException {
-
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<Course> courses = em.createQuery("from Course")
-                    .getResultList();
-            em.getTransaction().commit();
-
-            for (Course course : courses) {
+            for (Course course : getList()) {
                 result.add(course.getId());
             }
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not get Course Id List", e);
         }
         return result;
@@ -47,6 +40,7 @@ public class CourseDAO implements DAO<Course> {
             EntityManager em = emf.getFactory().createEntityManager();
             result = em.find(Course.class, id);
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not get Course By Id", e);
         }
         return result;
@@ -56,7 +50,6 @@ public class CourseDAO implements DAO<Course> {
 
         boolean result = false;
         try {
-            // DEBUG System.out.println(emf.getProperties());
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
@@ -66,6 +59,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not delete Course", e);
         }
         return result;
@@ -74,7 +68,6 @@ public class CourseDAO implements DAO<Course> {
     public boolean update(Integer id, Course course) throws DAOException {
         boolean result = false;
         try {
-
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Course oldCourse = (Course) em.find(Course.class, id);
@@ -84,6 +77,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not update Course", e);
         }
         return result;
@@ -95,8 +89,9 @@ public class CourseDAO implements DAO<Course> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(course);
-            em.flush();
             em.getTransaction().commit();
+            em.flush();
+            em.close();
         } catch (Exception e) {
             logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not create Course", e);
@@ -115,6 +110,7 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not get Course List", e);
         }
         return courses;

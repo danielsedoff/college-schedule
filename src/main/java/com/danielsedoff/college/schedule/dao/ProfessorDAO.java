@@ -18,17 +18,9 @@ public class ProfessorDAO implements DAO<Professor> {
     EntityManagerConfig emf;
 
     public List<Integer> getIdList() throws DAOException {
-
         List<Integer> result = new ArrayList<>();
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
-            em.getTransaction().begin();
-            @SuppressWarnings("unchecked")
-            List<Professor> professors = em.createQuery("from Professor")
-                    .getResultList();
-            em.getTransaction().commit();
-
-            for (Professor professor : professors) {
+            for (Professor professor : getList()) {
                 result.add(professor.getId());
             }
         } catch (Exception e) {
@@ -55,8 +47,7 @@ public class ProfessorDAO implements DAO<Professor> {
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             em.getTransaction().commit();
-            Professor targetProfessor = em.find(Professor.class,
-                    professor.getId());
+            Professor targetProfessor = em.find(Professor.class, professor.getId());
             em.getTransaction().begin();
             em.remove(targetProfessor);
             em.getTransaction().commit();
@@ -70,7 +61,6 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean update(Integer id, Professor professor) throws DAOException {
         boolean result = false;
         try {
-
             EntityManager em = emf.getFactory().createEntityManager();
             em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
