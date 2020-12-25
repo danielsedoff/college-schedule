@@ -26,14 +26,13 @@ import com.danielsedoff.college.schedule.model.Professor;
 class CourseDAOTest {
 
     final String SQL_FILE_NAME = "create_tables.sql";
+    SqlScriptRunner ibatisRead = new SqlScriptRunner();
 
     @Autowired
     private CourseDAO courseDAO;
     @Autowired
     private ProfessorDAO professordao;
-    @Autowired
-    private SqlScriptRunner ibatisRead;
-    
+
     @BeforeEach
     final void readSQLfile() throws IOException, SQLException {
         ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
