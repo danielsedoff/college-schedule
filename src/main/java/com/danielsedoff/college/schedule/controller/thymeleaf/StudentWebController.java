@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,14 +59,18 @@ public class StudentWebController {
     }
 
     @PostMapping("/deleteStudent")
-    public String deleteStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
+    public String deleteStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         ss.deleteStudentById(studentdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createStudent")
-    public String createStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
+    public String createStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            return "studentForm";
+        }
         Student student = new Student();
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
@@ -76,7 +81,11 @@ public class StudentWebController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
+    public String updateStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            return "studentForm";
+        }
         Student student = new Student();
         student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());

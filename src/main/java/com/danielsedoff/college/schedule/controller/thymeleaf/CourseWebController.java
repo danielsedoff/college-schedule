@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,14 +60,20 @@ public class CourseWebController {
     }
 
     @PostMapping("/deleteCourse")
-    public String deleteCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+    public String deleteCourse(@ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+
         cs.deleteCourseById(coursedto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createCourse")
-    public String createCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+    public String createCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "courseForm";
+        }
+
         Course course = new Course();
         List<Professor> professor = new ArrayList<>();
         professor.add(ps.getProfessorById(coursedto.getProfessorId()));
@@ -79,7 +86,12 @@ public class CourseWebController {
     }
 
     @PostMapping("/updateCourse")
-    public String updateCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, Model model) {
+    public String updateCourse(@Valid @ModelAttribute("coursedto") CourseDTO coursedto, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "courseForm";
+        }
+
         Course course = new Course();
         course.setCourseDescription(coursedto.getDescription());
         course.setName(coursedto.getName());

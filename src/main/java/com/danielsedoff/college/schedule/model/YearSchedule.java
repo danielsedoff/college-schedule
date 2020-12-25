@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "yearschedules")
@@ -24,14 +23,12 @@ public class YearSchedule {
         this.dayschedules = dayschedules;
     }
 
-    @NotNull
     @Min(-1)
     @Id
     @Column(name = "yearschedule_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int yearscheduleId;
 
-    @NotNull
     @Min(1917)
     @Column(name = "year")
     private int year;

@@ -31,7 +31,7 @@ CREATE TABLE groupz
 CREATE TABLE students
 (
     person_id SERIAL PRIMARY KEY,
-    group_id INTEGER,
+    group_id INTEGER REFERENCES groupz (group_id),
     student_year INTEGER,
     person_name CHARACTER VARYING(30)
 );
@@ -39,9 +39,9 @@ CREATE TABLE students
 CREATE TABLE dayschedules
 (
     dayschedule_id SERIAL PRIMARY KEY,
-    yearschedule_id INTEGER,
+    yearschedule_id INTEGER REFERENCES yearschedules(yearschedule_id),
     the_day CHARACTER VARYING(30),
-    hasoverlaps BOOLEAN
+    hasOverlaps BOOLEAN
 );
 
 CREATE TABLE lessons
@@ -49,9 +49,9 @@ CREATE TABLE lessons
     lesson_id SERIAL PRIMARY KEY,
     start_time CHARACTER VARYING(30),
     end_time CHARACTER VARYING(30),
-    professor_id INTEGER,
-    group_id INTEGER,
-    dayschedule_id INTEGER
+    professor_id INTEGER REFERENCES professors(person_id),
+    group_id INTEGER REFERENCES groupz (group_id),
+    dayschedule_id INTEGER REFERENCES dayschedules(dayschedule_id)
 );
 
 CREATE TABLE courses
@@ -59,7 +59,7 @@ CREATE TABLE courses
     course_id SERIAL PRIMARY KEY,
     course_name CHARACTER VARYING(30),
     course_description CHARACTER VARYING(300),
-    professor_id INTEGER
+    professor_id INTEGER REFERENCES professors(person_id)
 );
 
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
@@ -70,6 +70,9 @@ INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id)
     values ('Aram Khachaturian', 'Lenin Prize|Stalin Prize', 'Creator of Gayane Ballet', 3);
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
     values ('Prabhat Ranjan Sarkar', 'Anandamurti', 'Founder of Ananda Marga', 4);
+INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
+    values ('Alfred Hitchcock', 'Lemon Juice', 'Author of Horror Films', 5);
+    
     
 INSERT INTO yearschedules(year) VALUES (2019);
 INSERT INTO yearschedules(year) VALUES (1971);
@@ -96,7 +99,9 @@ INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-03-01 00:01', '2019-03-01 01:01', 3, 2, 1);
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-04-01 00:01', '2019-04-01 01:01', 4, 2, 1);
 
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Maths', 'Mathematics', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Maths', 'Mathematics', 1);
 INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Bio', 'Biology', 2);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Eng', 'English', 2);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Hist', 'History', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Eng', 'English', 3);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Hist', 'History', 4);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Films', 'Cinema', 5);
+

@@ -1,9 +1,9 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.danielsedoff.college.schedule.controller.thymeleaf.ControllerTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,8 +34,7 @@ class GroupRestControllerTest extends ControllerTest {
 
     @Test
     void restGetGroupsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "[{'mode':'update','id':1,'name':'So-so group','description':'So-so group'},{'mode':'update','id':2,'name':'Worst Group','description':'Worst Group'},{'mode':'update','id':3,'name':'Best Group','description':'Best Group'},{'mode':'update','id':4,'name':'Nonsense Group','description':'Nonsense Group'}]"));
+        mockMvc.perform(get("/groups")).andDo(print()).andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test

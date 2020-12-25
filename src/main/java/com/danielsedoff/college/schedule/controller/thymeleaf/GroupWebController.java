@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class GroupWebController {
     }
 
     @RequestMapping(value = "/groupForm", params = { "id" }, method = RequestMethod.GET)
-    public String gedItParam(@RequestParam("id") int id, @ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
+    public String gedItParam(@RequestParam("id") int id, @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
         if (id == -1) {
             groupdto.setMode("create");
             return "groupForm";
@@ -48,14 +49,17 @@ public class GroupWebController {
     }
 
     @PostMapping("/deleteGroup")
-    public String deleteGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
+    public String deleteGroup(@ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
         gs.deleteGroupById(groupdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createGroup")
-    public String createGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
+    public String createGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "groupForm";
+        }
         Group group = new Group();
         group.setSpecialNotes(groupdto.getDescription());
         gs.createGroup(group);
@@ -64,7 +68,10 @@ public class GroupWebController {
     }
 
     @PostMapping("/updateGroup")
-    public String updateGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
+    public String updateGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "groupForm";
+        }
         Group group = gs.getGroupById(groupdto.getId());
         group.setSpecialNotes(groupdto.getDescription());
         gs.updateGroup(groupdto.getId(), group);

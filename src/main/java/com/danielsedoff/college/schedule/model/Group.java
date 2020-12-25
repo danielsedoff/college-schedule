@@ -11,20 +11,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "groupz")
 public class Group {
-    @NotNull
     @Min(-1)
     @Id
     @Column(name = "group_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int groupId;
 
-    @NotNull
     @Size(min = 2, max = 30)
     @Column(name = "group_note")
     private String specialNotes;

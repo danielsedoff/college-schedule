@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CourseWebControllerTest extends ControllerTest {
+class CourseWebControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -44,6 +44,11 @@ class CourseWebControllerTest extends ControllerTest {
     }
 
     @Test
+    void mockMvcShouldReturnViewName() throws Exception {
+        mockMvc.perform(get("/courseList")).andDo(print()).andExpect(view().name("courseList"));
+    }
+
+    @Test
     void responseShouldContainAttribute() throws Exception {
         mockMvc.perform(get("/courseList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
@@ -60,17 +65,21 @@ class CourseWebControllerTest extends ControllerTest {
 
     @Test
     void postDeleteCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteCourse").param("id", "3")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/deleteCourse").param("id",  "3")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postCreateCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createCourse")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/createCourse").param("name", "ShortName").param("description", "Some longer description")
+                .param("professorId", "1"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateCourseShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateCourse")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/updateCourse").param("id", "3").param("name", "ShortName").param("description",
+                "Some longer description").param("professorId", "1")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

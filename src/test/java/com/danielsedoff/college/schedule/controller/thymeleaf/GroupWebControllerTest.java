@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GroupWebControllerTest extends ControllerTest {
+class GroupWebControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -38,7 +38,6 @@ class GroupWebControllerTest extends ControllerTest {
     @Test
     void mainPageControllerMustNotBeNull() {
         ServletContext servletContext = wac.getServletContext();
-
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(wac.getBean("groupWebController"));
@@ -71,12 +70,20 @@ class GroupWebControllerTest extends ControllerTest {
 
     @Test
     void postCreateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createGroup")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/createGroup").param("id", "3")
+                .param("description", "Penguin Group")
+                .param("name", "PG"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateGroupShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateGroup")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/updateGroup").param("id", "1")
+                .param("description", "Penguin Group")
+                .param("name", "PG"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

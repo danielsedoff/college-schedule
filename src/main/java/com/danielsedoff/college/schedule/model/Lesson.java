@@ -10,14 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import com.danielsedoff.college.schedule.model.validation.LessonDateConstraint;
 
 @Entity
 @Table(name = "lessons")
 public class Lesson {
-    @NotNull
+    
     @Min(-1)
     @Id
     @Column(name = "lesson_id")

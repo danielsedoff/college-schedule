@@ -11,26 +11,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "courses")
 public class Course {
 
-    @NotNull
     @Min(-1)
     @Id
     @Column(name = "course_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseId;
 
-    @NotNull
     @Size(min = 2, max = 30)
     @Column(name = "course_name")
     private String name;
 
-    @NotNull
     @Size(min = 2, max = 30)
     @Column(name = "course_description")
     private String courseDescription;

@@ -1,22 +1,18 @@
 package com.danielsedoff.college.schedule.dto;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class GroupDTO {
 
     String mode;
     
-    @NotNull
     @Min(-1)
     int id;
     
-    @NotNull
     @Size(min = 2, max = 30)
     String name;
     
-    @NotNull
     @Size(min = 2, max = 30)
     String description;
 

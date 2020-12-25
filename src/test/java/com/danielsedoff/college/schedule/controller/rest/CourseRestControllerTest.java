@@ -1,9 +1,9 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,12 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.controller.thymeleaf.ControllerTest;
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class CourseRestControllerTest extends ControllerTest {
-
+class CourseRestControllerTest { 
     @Autowired
     private WebApplicationContext wac;
 
@@ -36,8 +33,7 @@ class CourseRestControllerTest extends ControllerTest {
 
     @Test
     void restGetCoursesShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/courses")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "[{'mode':'update','id':1,'name':'Maths','description':'Mathematics','professorId':1},{'mode':'update','id':2,'name':'Bio','description':'Biology','professorId':2},{'mode':'update','id':3,'name':'Eng','description':'English','professorId':3},{'mode':'update','id':4,'name':'Hist','description':'History','professorId':4}]"));
+        mockMvc.perform(get("/courses")).andDo(print()).andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test

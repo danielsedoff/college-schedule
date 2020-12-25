@@ -42,11 +42,12 @@
 									class="element text medium" type="number" th:field="*{id}"
 									maxlength="255" value="" disabled />
 							</div></td>
-						<tr>
-					<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
+					</tr>
+					<tr>
+						<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
 							ID</td>
 					</tr>
-					</tr><tr>
+					<tr>
 						<td><label class="description" for="description">Student
 								Name </label>
 							<div>
@@ -54,11 +55,12 @@
 									class="element text medium" type="text" th:field="*{name}"
 									maxlength="255" value="" />
 							</div></td>
-						<tr>
-					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
+					</tr>
+					<tr>
+						<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
 							name</td>
 					</tr>
-					</tr><tr>
+					<tr>
 						<td><label class="description" for="description">Group
 								ID</label>
 							<div>
@@ -66,11 +68,12 @@
 									class="element text medium" type="number" th:field="*{groupId}"
 									maxlength="255" value="" />
 							</div></td>
-						<tr>
-					<td th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}">Illegal
+					</tr>
+					<tr>
+						<td th:if="${#fields.hasErrors('groupId')}" th:errors="*{groupId}">Illegal
 							group ID</td>
 					</tr>
-					</tr><tr>
+					<tr>
 						<td><label class="description" for="description">School
 								Year</label>
 							<div>
@@ -78,11 +81,12 @@
 									class="element text medium" type="text"
 									th:field="*{schoolYear}" maxlength="255" value="" />
 							</div></td>
-						<tr>
-					<td th:if="${#fields.hasErrors('schoolYear')}"
+					</tr>
+					<tr>
+						<td th:if="${#fields.hasErrors('schoolYear')}"
 							th:errors="*{schoolYear}">Illegal school year</td>
 					</tr>
-					</tr><tr>
+					<tr>
 						<td class="buttons"><input class="button_text" type="submit"
 							name="submit" value="Done"></td>
 					</tr>

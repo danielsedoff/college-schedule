@@ -1,9 +1,9 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.danielsedoff.college.schedule.controller.thymeleaf.ControllerTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,8 +34,7 @@ class LessonRestControllerTest extends ControllerTest {
 
     @Test
     void restGetLessonsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/lessons")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "[{\"mode\":\"update\",\"id\":1,\"startTime\":\"2019-01-01 00:01\",\"endTime\":\"2019-01-01 01:01\",\"professorId\":1,\"groupId\":2},{\"mode\":\"update\",\"id\":2,\"startTime\":\"2019-02-01 00:01\",\"endTime\":\"2019-02-01 01:01\",\"professorId\":2,\"groupId\":2},{\"mode\":\"update\",\"id\":3,\"startTime\":\"2019-03-01 00:01\",\"endTime\":\"2019-03-01 01:01\",\"professorId\":3,\"groupId\":2},{\"mode\":\"update\",\"id\":4,\"startTime\":\"2019-04-01 00:01\",\"endTime\":\"2019-04-01 01:01\",\"professorId\":4,\"groupId\":2}]"));
+        mockMvc.perform(get("/lessons")).andDo(print()).andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test

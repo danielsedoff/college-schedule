@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class StudentWebControllerTest extends ControllerTest {
+class StudentWebControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -70,23 +70,20 @@ class StudentWebControllerTest extends ControllerTest {
 
     @Test
     void postCreateStudentShouldReturnResultPage() throws Exception {
-        mockMvc
-         .perform(post("/createStudent")
-          .param("name", "New Student")
-          .param("groupId", "1") 
-          .param("schoolYear", "3")) 
-          .andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/createStudent").param("id", "3").param("name", "John Deere")
+                .param("groupId", "2")
+                .param("schoolYear", "2"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateStudentShouldReturnResultPage() throws Exception {
-        mockMvc
-        .perform(post("/updateStudent")
-         .param("id", "2")
-         .param("name", "New Student")
-         .param("groupId", "1") 
-         .param("schoolYear", "3")) 
-         .andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/updateStudent").param("id", "3").param("name", "John Deere")
+                .param("groupId", "2")
+                .param("schoolYear", "2"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

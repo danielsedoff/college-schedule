@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import javax.servlet.ServletContext;
@@ -21,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.danielsedoff.college.schedule.controller.rest.ControllerTest;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class ProfessorWebControllerTest extends ControllerTest {
@@ -33,26 +33,15 @@ class ProfessorWebControllerTest extends ControllerTest {
     @BeforeEach
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
     }
 
     @Test
     void mainPageControllerMustNotBeNull() {
         ServletContext servletContext = wac.getServletContext();
-
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
         assertNotNull(wac.getBean("professorWebController"));
-    }
-
-    @Test
-    void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/professorList")).andDo(print()).andExpect(view().name("professorList"));
-    }
-
-    @Test
-    void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/professorList")).andExpect(status().isOk())
-                .andExpect(model().attributeExists("testvalue"));
     }
 
     @Test
@@ -67,17 +56,24 @@ class ProfessorWebControllerTest extends ControllerTest {
 
     @Test
     void postDeleteProfessorShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteProfessor").param("id", "3")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(post("/deleteProfessor").param("id", "4")).andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postCreateProfessorShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/createProfessor")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/createProfessor").param("name", "Penguin").param("ranks", "Queen Penguin")
+                .param("id", "-1").param("notes", "Big Bird")
+                .param("courseId", "1"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
     @Test
     void postUpdateProfessorShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/updateProfessor")).andDo(print()).andExpect(view().name("resultPage"));
+        mockMvc.perform(
+                post("/updateProfessor").param("name", "Penguin").param("ranks", "Queen Penguin")
+                .param("id", "-1").param("notes", "Big Bird"))
+                .andDo(print()).andExpect(view().name("resultPage"));
     }
 
 }

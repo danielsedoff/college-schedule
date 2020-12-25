@@ -29,7 +29,7 @@ class CourseRestController {
 
     @Autowired
     private CourseService service;
-    
+
     @Autowired
     private ProfessorService ps;
 
@@ -43,7 +43,7 @@ class CourseRestController {
             dto.setId(course.getId());
             dto.setMode("update");
             dto.setName(course.getName());
-            dto.setProfessorId(course.getProfessors().get(0).getId());
+            dto.setProfessorId((course.getProfessors().size() > 0) ? course.getProfessors().get(0).getId() : 1);
             result.add(dto);
         }
         return result;

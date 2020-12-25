@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class MainPageControllerTest extends ControllerTest {
+class MainPageControllerTest {
 
     @Autowired
     private WebApplicationContext wac;

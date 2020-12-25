@@ -42,9 +42,9 @@
 									class="element text medium" type="number" th:field="*{id}"
 									maxlength="255" value="" disabled />
 							</div></td>
+					</tr>
 						<tr><td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Illegal
 							ID</td>
-					</tr>
 					</tr>
 					<tr>
 						<td><label class="description" for="description">Professor
@@ -54,9 +54,9 @@
 									class="element text medium" type="text" th:field="*{name}"
 									maxlength="255" value="" />
 							</div></td>
+					</tr>
 						<tr><td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Illegal
 							name</td>
-					</tr>
 					</tr>
 					<tr>
 						<td><label class="description" for="description">Professor
@@ -66,9 +66,9 @@
 									class="element text medium" type="text" th:field="*{ranks}"
 									maxlength="255" value="" />
 							</div></td>
+					</tr>
 						<tr><td th:if="${#fields.hasErrors('ranks')}" th:errors="*{ranks}">Illegal
 							ranks and titles</td>
-					</tr>
 					</tr>
 					<tr>
 						<td><label class="description" for="description">Professor
@@ -78,9 +78,9 @@
 									class="element text medium" type="text" th:field="*{notes}"
 									maxlength="255" value="" />
 							</div></td>
+					</tr>
 						<tr><td th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Illegal
 							notes</td>
-					</tr>
 					</tr>
 					<tr>
 						<td class="buttons"><input class="button_text" type="submit"

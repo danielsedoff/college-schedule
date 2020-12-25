@@ -23,7 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LessonWebControllerTest extends ControllerTest {
+class LessonWebControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -44,6 +44,11 @@ class LessonWebControllerTest extends ControllerTest {
     }
 
     @Test
+    void mockMvcShouldReturnViewName() throws Exception {
+        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
+    }
+
+    @Test
     void responseShouldContainAttribute() throws Exception {
         mockMvc.perform(get("/lessonList")).andExpect(status().isOk()).andExpect(model().attributeExists("testvalue"));
     }
@@ -60,18 +65,8 @@ class LessonWebControllerTest extends ControllerTest {
 
     @Test
     void postDeleteLessonShouldReturnResultPage() throws Exception {
-        mockMvc.perform(post("/deleteLesson").param("id", "3")).andDo(print()).andExpect(status().isOk());
+        mockMvc.perform(post("/deleteLesson")).andDo(print()).andExpect(view().name("resultPage"));
     }
-
-    
-    @Test
-    void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/lessonList")).andDo(print()).andExpect(view().name("lessonList"));
-    }
-
-
-
-
 
     @Test
     void postCreateLessonShouldReturnResultPage() throws Exception {

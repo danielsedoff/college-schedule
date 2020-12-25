@@ -1,9 +1,9 @@
 package com.danielsedoff.college.schedule.controller.rest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,11 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.danielsedoff.college.schedule.controller.thymeleaf.ControllerTest;
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class StudentRestControllerTest extends ControllerTest {
+class StudentRestControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -36,8 +34,7 @@ class StudentRestControllerTest extends ControllerTest {
 
     @Test
     void restGetStudentsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/students")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "[{\"id\":1,\"mode\":\"update\",\"name\":\"Li Hongzhi\",\"groupId\":1,\"schoolYear\":1},{\"id\":2,\"mode\":\"update\",\"name\":\"Jimmy Carter\",\"groupId\":2,\"schoolYear\":1},{\"id\":3,\"mode\":\"update\",\"name\":\"Goodluck Jonathan\",\"groupId\":1,\"schoolYear\":1},{\"id\":4,\"mode\":\"update\",\"name\":\"Buka S. Dimka\",\"groupId\":1,\"schoolYear\":1}]"));
+        mockMvc.perform(get("/students")).andDo(print()).andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
