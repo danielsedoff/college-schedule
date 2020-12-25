@@ -34,6 +34,6 @@ class MainPageControllerTest extends ControllerTest {
 
     @Test
     void getCourseListShouldReturnCourseListTemplate() throws Exception {
-        mockMvc.perform(get("/")).andDo(print()).andExpect(view().name("index"));
+        mockMvc.perform(get("/")).andDo(print()).andExpect(view().name("index.html"));
     }
 }

@@ -7,8 +7,8 @@
 
 <title>Group List</title>
 
-<link th:href="@{/css/list.css}" rel="stylesheet"></link>
-
+<link rel="stylesheet" type="text/css" href="static/list.css"
+	media="all" />
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 		</div>
 		<div class="sticky">
 			<h2>
-				<a href="groupForm?id=-1">Create, edit or update Groups</a>
+				<a href="groupForm.html?id=-1">Create, edit or update Groups</a>
 			</h2>
 		</div>
 
@@ -31,7 +31,7 @@
 			</tr>
 			<tr th:each="group: ${groups}">
 				<td><a
-					th:href="@{/groupForm?id={id}(id=${group.getId()})}"><span
+					th:href="@{/groupForm.html?id={id}(id=${group.getId()})}"><span
 						th:text="${group.getId()}"></span></a></td>
 				<td th:text="${group.getSpecialNotes()}" />
 			</tr>

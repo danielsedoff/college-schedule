@@ -7,8 +7,8 @@
 
 <title>Lesson List</title>
 
-<link th:href="@{/css/list.css}" rel="stylesheet"></link>
-
+<link rel="stylesheet" type="text/css" href="static/list.css"
+	media="all" />
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 		</div>
 		<div class="sticky">
 			<h2>
-				<a href="lessonForm?id=-1">Create, edit or update Lessons</a>
+				<a href="lessonForm.html?id=-1">Create, edit or update Lessons</a>
 			</h2>
 		</div>
 		<table>
@@ -32,7 +32,7 @@
 			</tr>
 			<tr th:each="lesson: ${lessons}">
 				<td><a
-					th:href="@{/lessonForm?id={id}(id=${lesson.getId()})}"><span
+					th:href="@{/lessonForm.html?id={id}(id=${lesson.getId()})}"><span
 						th:text="${lesson.getId()}"></span></a></td>
 				<td th:text="${lesson.getStartTime()}" />
 				<td th:text="${lesson.getEndTime()}" />

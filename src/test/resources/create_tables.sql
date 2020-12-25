@@ -41,7 +41,7 @@ CREATE TABLE dayschedules
     dayschedule_id SERIAL PRIMARY KEY,
     yearschedule_id INTEGER,
     the_day CHARACTER VARYING(30),
-    hasoverlaps BOOLEAN
+    hasOverlaps BOOLEAN
 );
 
 CREATE TABLE lessons
@@ -86,10 +86,10 @@ INSERT INTO students(group_id, student_year, person_name) VALUES (2, 1, 'Jimmy C
 INSERT INTO students(group_id, student_year, person_name) VALUES (1, 1, 'Goodluck Jonathan');
 INSERT INTO students(group_id, student_year, person_name) VALUES (1, 1, 'Buka S. Dimka');
 
-INSERT INTO dayschedules(the_day, hasoverlaps) VALUES ('2019-01-01 00:01', FALSE);
-INSERT INTO dayschedules(the_day, hasoverlaps) VALUES ('2019-02-01 00:01', TRUE);
-INSERT INTO dayschedules(the_day, hasoverlaps) VALUES ('2019-03-01 00:01', FALSE);
-INSERT INTO dayschedules(the_day, hasoverlaps) VALUES ('2019-04-01 00:01', TRUE);
+INSERT INTO dayschedules(the_day, hasOverlaps) VALUES ('2019-01-01 00:01', FALSE);
+INSERT INTO dayschedules(the_day, hasOverlaps) VALUES ('2019-02-01 00:01', TRUE);
+INSERT INTO dayschedules(the_day, hasOverlaps) VALUES ('2019-03-01 00:01', FALSE);
+INSERT INTO dayschedules(the_day, hasOverlaps) VALUES ('2019-04-01 00:01', TRUE);
 
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-01-01 00:01', '2019-01-01 01:01', 1, 2, 1);
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-02-01 00:01', '2019-02-01 01:01', 2, 2, 1);

@@ -6,8 +6,8 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>Course List</title>
-<link th:href="@{/css/list.css}" rel="stylesheet"></link>
-
+<link rel="stylesheet" type="text/css" href="static/list.css"
+	media="all" />
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 		</div>
 		<div class="sticky">
 			<h2>
-				<a href="courseForm?id=-1">Create, edit or update Courses</a>
+				<a href="courseForm.html?id=-1">Create, edit or update Courses</a>
 			</h2>
 		</div>
 		<table>
@@ -28,7 +28,7 @@
 			</tr>
 			<tr th:each="course: ${courses}">
 				<td><a
-					th:href="@{/courseForm?id={id}(id=${course.getId()})}"><span
+					th:href="@{/courseForm.html?id={id}(id=${course.getId()})}"><span
 						th:text="${course.getId()}"></span></a>
 				<td th:text="${course.getName()}" />
 				<td th:text="${course.getCourseDescription()}" />
