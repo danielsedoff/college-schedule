@@ -13,4 +13,5 @@ public class Professor extends Person {
     public void setRanksTitles(String ranksTitles) {
         this.ranksTitles = ranksTitles;
     }
+
 }

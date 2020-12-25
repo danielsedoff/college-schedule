@@ -14,4 +14,4 @@ cmd /c mvn install %skip%
 if exist %tompub%\%warfile% del %tompub%\%warfile%
 copy %projectpath%\target\%warfile% %tompub%
 
-timeout 3
+pause

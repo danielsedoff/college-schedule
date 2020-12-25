@@ -85,6 +85,14 @@ class GroupDAOTest extends DAOTest {
         int lastIndex = requestedStudents.size() - 1;
         assertEquals(1, requestedStudents.get(lastIndex).getId());
     }
+    
+    @Test
+    void testDeleteGroupStudent() throws DAOException {
+        Group group = groupdao.getById(1);
+        groupdao.deleteGroupStudent(group);
+        List<Student> emptyList = new ArrayList<>(); 
+        assertEquals(emptyList, groupdao.getStudentsByGroup(group));
+    }
 
     @Test
     void testGetStudentsByGroup() throws DAOException {
