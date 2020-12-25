@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.model;
+package com.danielsedoff.college.schedule.security.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

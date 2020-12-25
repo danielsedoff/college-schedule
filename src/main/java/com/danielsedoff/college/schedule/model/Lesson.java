@@ -38,10 +38,6 @@ public class Lesson {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne // (cascade = CascadeType.MERGE)
-    @JoinColumn(name = "dayschedule_id")
-    private DaySchedule dayschedule;
-
     public Lesson() {
     }
 
@@ -85,11 +81,4 @@ public class Lesson {
         this.group = group;
     }
 
-    public DaySchedule getDayschedule() {
-        return dayschedule;
-    }
-
-    public void setDayschedule(DaySchedule dayschedule) {
-        this.dayschedule = dayschedule;
-    }
 }

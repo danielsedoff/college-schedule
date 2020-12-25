@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class CourseRestController {
     private ProfessorService ps;
 
     @GetMapping
+    
     public List<CourseDTO> findAll() {
         List<Course> courses = service.getCourseList();
         List<CourseDTO> result = new ArrayList<>();
@@ -50,6 +52,7 @@ public class CourseRestController {
     }
 
     @GetMapping(value = "/{id}")
+    
     public CourseDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
         Course course = RestPreconditions.checkFound(service.getCourseById(id));
         CourseDTO dto = new CourseDTO();
@@ -62,6 +65,7 @@ public class CourseRestController {
     }
 
     @PostMapping
+    
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @RequestBody CourseDTO resource) {
         Course course = new Course();
@@ -74,6 +78,7 @@ public class CourseRestController {
     }
 
     @PutMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id, @Valid @RequestBody CourseDTO resource)
             throws MyResourceNotFoundException {
@@ -87,6 +92,7 @@ public class CourseRestController {
     }
 
     @DeleteMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") int id) {
         service.deleteCourseById(id);

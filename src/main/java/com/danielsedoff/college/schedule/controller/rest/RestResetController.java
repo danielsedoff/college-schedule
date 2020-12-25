@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.repositories.SqlScriptRunner;
 
 @Controller
-public class RestResetController implements WebMvcConfigurer {
+public class RestResetController {
     private static Logger logger = LoggerFactory.getLogger(RestResetController.class);
 
     private static final String SQL_FILE_NAME = "create_tables.sql";
@@ -26,6 +26,7 @@ public class RestResetController implements WebMvcConfigurer {
     String result = null;
 
     @GetMapping("/resetProjectApi")
+    
     public String reset() {
 
         try {

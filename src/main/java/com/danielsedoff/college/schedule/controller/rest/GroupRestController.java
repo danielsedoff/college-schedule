@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class GroupRestController {
     private GroupService service;
 
     @GetMapping
+    
     public List<GroupDTO> findAll() {
         List<Group> groups = service.getGroupList();
         List<GroupDTO> result = new ArrayList<>();
@@ -45,6 +47,7 @@ public class GroupRestController {
     }
 
     @GetMapping(value = "/{id}")
+    
     public GroupDTO findById(@PathVariable("id") int id)
             throws MyResourceNotFoundException {
         Group group = RestPreconditions.checkFound(service.getGroupById(id));
@@ -57,6 +60,7 @@ public class GroupRestController {
     }
 
     @PostMapping
+    
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @RequestBody GroupDTO resource) {
         Group group = new Group();
@@ -67,6 +71,7 @@ public class GroupRestController {
     }
 
     @PutMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id,
             @Valid @RequestBody GroupDTO resource) throws MyResourceNotFoundException {
@@ -78,6 +83,7 @@ public class GroupRestController {
     }
 
     @DeleteMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") int id) {
         service.deleteGroupById(id);

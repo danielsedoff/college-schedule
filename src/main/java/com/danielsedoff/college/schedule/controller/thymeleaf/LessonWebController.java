@@ -1,11 +1,13 @@
 package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.service.CourseService;
 import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
@@ -35,16 +38,34 @@ public class LessonWebController {
 
     @Autowired
     GroupService gs;
+    
+    @Autowired
+    CourseService cs;
+    
 
     @GetMapping("/lessonList")
+    
     public String getLessons(Model model) {
         List<Lesson> lessons = ls.getLessonList();
-        model.addAttribute("lessons", lessons);
+        List<LessonDTO> lessonDtoList = new ArrayList<>();
+        
+        for(Lesson lesson : lessons) {
+            LessonDTO lessondto = new LessonDTO();
+            lessondto.setId(lesson.getId());
+            lessondto.setStartTime(lesson.getStartTime());
+            lessondto.setEndTime(lesson.getEndTime());
+            lessondto.setGroupId(lesson.getGroup().getId());
+            lessondto.setProfessorName(lesson.getProfessor().getName());
+            lessonDtoList.add(lessondto);
+        }
+        
+        model.addAttribute("lessonDtoList", lessonDtoList);
         model.addAttribute("testvalue", "passed");
         return "lessonList";
     }
 
     @RequestMapping(value = "/lessonForm", params = { "id" }, method = RequestMethod.GET)
+    
     public String getIdParam(@RequestParam("id") int id, @ModelAttribute("lessondto") LessonDTO lessondto,
             Model model) {
         if (id == -1) {
@@ -64,6 +85,7 @@ public class LessonWebController {
     }
 
     @PostMapping("/deleteLesson")
+    
     public String deleteLesson(@ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         ls.deleteLessonById(lessondto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -71,6 +93,7 @@ public class LessonWebController {
     }
 
     @PostMapping("/createLesson")
+    
     public String createLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "lessonForm";
@@ -86,6 +109,7 @@ public class LessonWebController {
     }
 
     @PostMapping("/updateLesson")
+    
     public String updateLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "lessonForm";

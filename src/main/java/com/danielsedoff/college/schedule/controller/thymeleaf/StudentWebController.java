@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,7 @@ public class StudentWebController {
     GroupService gs;
 
     @GetMapping("/studentList")
+    
     public String getStudents(Model model) {
         List<Student> students = ss.getStudentList();
         if (null == students) {
@@ -42,6 +44,7 @@ public class StudentWebController {
     }
 
     @RequestMapping(value = "/studentForm", params = { "id" }, method = RequestMethod.GET)
+    
     public String getIdParam(@RequestParam("id") int id, @ModelAttribute("studentdto") StudentDTO studentdto,
             Model model) {
         if (id == -1) {
@@ -59,6 +62,7 @@ public class StudentWebController {
     }
 
     @PostMapping("/deleteStudent")
+    
     public String deleteStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         ss.deleteStudentById(studentdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -66,6 +70,7 @@ public class StudentWebController {
     }
 
     @PostMapping("/createStudent")
+    
     public String createStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
@@ -81,6 +86,7 @@ public class StudentWebController {
     }
 
     @PostMapping("/updateStudent")
+    
     public String updateStudent(@Valid @ModelAttribute("studentdto") StudentDTO studentdto, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {

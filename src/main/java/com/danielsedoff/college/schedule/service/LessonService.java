@@ -47,7 +47,6 @@ public class LessonService {
     public boolean updateLesson(int lessonId, Lesson lesson) {
         try {
             Lesson managedLesson = lessonRepo.findById(lessonId).get();
-            managedLesson.setDayschedule(lesson.getDayschedule());
             managedLesson.setEndTime(lesson.getEndTime());
             managedLesson.setStartTime(lesson.getStartTime());
             managedLesson.setGroup(lesson.getGroup());

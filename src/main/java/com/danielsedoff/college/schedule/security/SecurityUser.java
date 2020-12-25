@@ -7,28 +7,25 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.danielsedoff.college.schedule.model.Status;
-import com.danielsedoff.college.schedule.model.User;
+import lombok.Data;
+import com.danielsedoff.college.schedule.security.model.Status;
+import com.danielsedoff.college.schedule.security.model.User;
 
-public class SecurityUser implements UserDetails{
+@Data
+public class SecurityUser implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
-    
     private final String username;
-    public SecurityUser(String username, String password,
-            List<SimpleGrantedAuthority> authorities, boolean isActive) {
-        super();
+    private final String password;
+    private final List<SimpleGrantedAuthority> authorities;
+    private final boolean isActive;
+
+    public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.isActive = isActive;
     }
 
-    private final String password;
-    private final List<SimpleGrantedAuthority> authorities;
-    private final boolean isActive;
-    
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -66,8 +63,7 @@ public class SecurityUser implements UserDetails{
 
     public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), 
-                user.getPassword(), 
+                user.getEmail(), user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
@@ -75,5 +71,4 @@ public class SecurityUser implements UserDetails{
                 user.getRole().getAuthorities()
         );
     }
-    
 }

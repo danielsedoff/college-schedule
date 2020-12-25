@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ProfessorRestController {
     private static Logger logger = LoggerFactory.getLogger(ProfessorRestController.class);
 
     @GetMapping
+    
     public List<ProfessorDTO> findAll() {
         List<Professor> professors = service.getProfessorList();
         List<ProfessorDTO> result = new ArrayList<>();
@@ -56,6 +58,7 @@ public class ProfessorRestController {
     }
 
     @GetMapping(value = "/{id}")
+    
     public ProfessorDTO findById(@PathVariable("id") int id)
             throws MyResourceNotFoundException {
         Professor professor = RestPreconditions.checkFound(service.getProfessorById(id));
@@ -69,6 +72,7 @@ public class ProfessorRestController {
     }
 
     @PostMapping
+    
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@Valid @RequestBody ProfessorDTO resource) {
         Professor professor = new Professor();
@@ -80,6 +84,7 @@ public class ProfessorRestController {
     }
 
     @PutMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public String update(@PathVariable("id") int id,
             @Valid @RequestBody ProfessorDTO resource, BindingResult bindingResult)
@@ -93,6 +98,7 @@ public class ProfessorRestController {
     }
 
     @DeleteMapping(value = "/{id}")
+    
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") int id) {
         service.deleteProfessorById(id);

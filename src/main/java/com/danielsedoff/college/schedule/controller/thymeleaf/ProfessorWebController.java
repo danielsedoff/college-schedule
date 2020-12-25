@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class ProfessorWebController {
     ProfessorService ps;
 
     @GetMapping("/professorList")
+    
     public String getProfessors(Model model) {
         List<Professor> professors = ps.getProfessorList();
         if (null == professors) {
@@ -38,6 +40,7 @@ public class ProfessorWebController {
     }
 
     @RequestMapping(value = "/professorForm", params = { "id" }, method = RequestMethod.GET)
+    
     public String getIdParam(@RequestParam("id") int id, @ModelAttribute("professordto") ProfessorDTO professordto,
             Model model) {
         if (id == -1) {
@@ -55,6 +58,7 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/deleteProfessor")
+    
     public String deleteProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         ps.deleteProfessorById(professordto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -62,6 +66,7 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/createProfessor")
+    
     public String createProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "professorForm";
@@ -76,6 +81,7 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/updateProfessor")
+    
     public String updateProfessor(@Valid @ModelAttribute("professordto") ProfessorDTO professordto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "professorForm";

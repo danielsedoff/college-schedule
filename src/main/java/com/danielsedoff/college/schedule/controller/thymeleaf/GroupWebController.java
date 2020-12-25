@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class GroupWebController {
     private GroupService gs;
 
     @GetMapping("/groupList")
+    
     public String getGroups(Model model) {
         List<Group> groups = gs.getGroupList();
         model.addAttribute("groups", groups);
@@ -34,6 +36,7 @@ public class GroupWebController {
     }
 
     @RequestMapping(value = "/groupForm", params = { "id" }, method = RequestMethod.GET)
+    
     public String gedItParam(@RequestParam("id") int id, @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
         if (id == -1) {
             groupdto.setMode("create");
@@ -49,6 +52,7 @@ public class GroupWebController {
     }
 
     @PostMapping("/deleteGroup")
+    
     public String deleteGroup(@ModelAttribute("groupdto") GroupDTO groupdto, Model model) {
         gs.deleteGroupById(groupdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -56,6 +60,7 @@ public class GroupWebController {
     }
 
     @PostMapping("/createGroup")
+    
     public String createGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "groupForm";
@@ -68,6 +73,7 @@ public class GroupWebController {
     }
 
     @PostMapping("/updateGroup")
+    
     public String updateGroup(@Valid @ModelAttribute("groupdto") GroupDTO groupdto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "groupForm";
