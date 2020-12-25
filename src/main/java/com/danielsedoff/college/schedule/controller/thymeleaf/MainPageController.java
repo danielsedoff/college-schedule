@@ -17,12 +17,12 @@ public class MainPageController implements WebMvcConfigurer {
     public String main(Model model) {
 
         List<PageLink> links = new ArrayList<>();
-        links.add(new PageLink("Lesson Schedule", "lessonList", "/images/lesson.png"));
         links.add(new PageLink("Student List", "studentList", "/images/student.png"));
         links.add(new PageLink("Professor List", "professorList", "/images/professor.png"));
         links.add(new PageLink("Course List", "courseList", "/images/course.png"));
         links.add(new PageLink("Group List", "groupList", "/images/group.png"));
-        links.add(new PageLink("Reset All Data", "resetProject", "/images/reset.png"));
+        links.add(new PageLink("Lesson List", "lessonList", "/images/lesson.png"));
+        links.add(new PageLink("Reset Project", "resetProject", "/images/reset.png"));
 
         model.addAttribute("links", links);
 

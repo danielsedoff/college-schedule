@@ -6,6 +6,8 @@
 <link th:href="@{/css/list.css}" rel="stylesheet"></link>
 
 <link th:href="@{/css/picker.css}" rel="stylesheet"></link>
+
+<script th:src="@{/js/timeformatter.js}" type="text/javascript"></script>
 </head>
 <body>
 	<input type="hidden" id="entityname" value="lesson" />
@@ -51,7 +53,7 @@
 								Start Time </label>
 							<div>
 								<input th:value="${upstreamName}" name="startTime"
-									id="startTime" onclick="pickerForLessonDate('startTime')"
+									id="startTime" onclick="pickerRunner('startTime')"
 									class="element  text medium" disabled type="text"
 									th:field="*{startTime}" maxlength="255" value="" />
 							</div></td>
@@ -64,7 +66,7 @@
 								Time </label>
 							<div>
 								<input th:value="${upstreamName}" name="endTime" id="endTime"
-									onclick="pickerForLessonDate('endTime')" class="element  text medium"
+									onclick="pickerRunner('endTime')" class="element  text medium"
 									disabled type="text" th:field="*{endTime}" maxlength="255"
 									value="" />
 							</div></td>
@@ -111,7 +113,7 @@
 	</div>
 
 	<script th:src="@{/js/radios.js}" type="text/javascript"></script>
-	<script th:src="@{/js/pickerForLessonDate.js}" type="text/javascript"></script>
+	<script th:src="@{/js/pickerRunner.js}" type="text/javascript"></script>
 	<script th:src="@{/js/picker.js}" type="text/javascript"></script>
 
 </body>

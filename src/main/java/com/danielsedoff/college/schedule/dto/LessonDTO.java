@@ -23,16 +23,6 @@ public class LessonDTO {
     @Min(1)
     int groupId;
 
-    private String professorName;
-    
-    public String getProfessorName() {
-        return professorName;
-    }
-
-    public void setProfessorName(String professorName) {
-        this.professorName = professorName;
-    }
-
     public String getMode() {
         return mode;
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
+import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.LessonService;
@@ -84,6 +85,7 @@ public class LessonRestController {
     public String update(@PathVariable("id") int id, @Valid @RequestBody LessonDTO resource,
             BindingResult bindingResult) throws MyResourceNotFoundException {
         Lesson lesson = new Lesson();
+        lesson.setDayschedule(new DaySchedule());
         lesson.setEndTime(resource.getEndTime());
         lesson.setStartTime(resource.getStartTime());
         lesson.setGroup(gservice.getGroupById(resource.getGroupId()));

@@ -81,38 +81,14 @@ INSERT INTO users(user_id, email, name, password, role, status)
 	values(2, 'user@mail.com', 'A Normal User', '$2y$12$LaT3Er7jiOIf1OhMKHvEx.Muh0a9gl1yKyES4j2kdB6CIHgjfn4t.', 
 	'USER', 'BANNED');
 
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id)
-values('Maëline', 'Cucurbita mixta Pang.', 'Uniform',16);
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Lucrèce', 'Pilea richardii Urb.', 'X-ray',14);
+    values ('John Lennon', 'Most Excellent Order of the British Empire ', 'Husband of Yoko Ono', 1);
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Mén', 'Acidanthera Hochst.', 'Hotel',10);
+    values ('Graham Greene', 'Order of the Companions of Honour', 'He wrote The Journey Without Maps', 2);
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Maïté', 'Poa arctica R. Br. ssp. arctica', 'Hotel',8);
+    values ('Aram Khachaturian', 'Lenin Prize|Stalin Prize', 'Creator of Gayane Ballet', 3);
 INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Gérald', 'Pseudognaphalium canescens', 'Lima',4);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Lài', 'Cheilanthes leucopoda Link', 'Charlie',6);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Loïca', 'Pyrus calleryana Decne.', 'Quebec',9);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Amélie', 'Leptochloa P. Beauv.', 'Hotel',2);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Esbjörn', 'Trifolium subterraneum L', 'Kilo',3);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Håkan', 'Exothea paniculata', 'Uniform',10);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Sòng', 'Cyrtandra ×pubens H. ', 'Echo',12);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Eliès', 'Lotus scoparius (Nutt.)', 'Delta',6);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Renée', 'Festuca earlei Rydb', 'Juliett',5);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Anaé', 'Calyptranthes zuzygiu', 'Hotel',16);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Athéna', 'Asclepias connivens Baldw', 'Sierra',16);
-INSERT INTO professors(person_name, professor_ranks, professor_notes, course_id) 
-values('Séverine', 'Smelowskia ovalis', 'Foxtrot',4);
+    values ('Prabhat Ranjan Sarkar', 'Anandamurti', 'Founder of Ananda Marga', 4);
     
 INSERT INTO yearschedules(year) VALUES (2019);
 INSERT INTO yearschedules(year) VALUES (1971);
@@ -139,19 +115,7 @@ INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-03-01 00:01', '2019-03-01 01:01', 3, 2, 1);
 INSERT INTO lessons(start_time, end_time, professor_id, group_id, dayschedule_id) VALUES ('2019-04-01 00:01', '2019-04-01 01:01', 4, 2, 1);
 
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Maths', 'Ylfghglogy', 2);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Abc', 'Vlgogjlogy', 5);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Enc', 'Wfdflogy', 6);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Wgs', 'Hlkjhbdsdlogy', 3);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Pjioaf', 'Bkgjdfslogy', 7);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('LBG', 'Lvhgflogy', 9);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Flkha', 'Oghdsflogy', 11);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('hfas', 'Ahgfglogy', 10);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('GG3a', 'Lghdfgslogy', 14);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('agse', 'Cjhdsvgklogy', 13);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('ehbs', 'Pkhgsdfhjlogy', 5);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('BKMMAF', 'Qfdkhdflogy', 4);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('svafrgg', 'Nfdjkklsdjlogy', 8);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('sg4', 'Bgsjkfsjllogy', 9);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('sgr4w', 'Tfkjsjlogy', 2);
-INSERT INTO courses(course_name, course_description, professor_id) VALUES ('WBK', 'Xlfgjhlogy', 1);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Maths', 'Mathematics', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Bio', 'Biology', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Eng', 'English', 2);
+INSERT INTO courses(course_name, course_description, professor_id) VALUES ('Hist', 'History', 2);

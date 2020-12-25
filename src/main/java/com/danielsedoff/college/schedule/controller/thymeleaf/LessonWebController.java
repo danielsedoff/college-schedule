@@ -1,7 +1,6 @@
 package com.danielsedoff.college.schedule.controller.thymeleaf;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
 import com.danielsedoff.college.schedule.model.Lesson;
-import com.danielsedoff.college.schedule.service.CourseService;
 import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
@@ -37,27 +35,11 @@ public class LessonWebController {
 
     @Autowired
     GroupService gs;
-    
-    @Autowired
-    CourseService cs;
-    
 
     @GetMapping("/lessonList")
     public String getLessons(Model model) {
         List<Lesson> lessons = ls.getLessonList();
-        List<LessonDTO> lessonDtoList = new ArrayList<>();
-        
-        for(Lesson lesson : lessons) {
-            LessonDTO lessondto = new LessonDTO();
-            lessondto.setId(lesson.getId());
-            lessondto.setStartTime(lesson.getStartTime());
-            lessondto.setEndTime(lesson.getEndTime());
-            lessondto.setGroupId(lesson.getGroup().getId());
-            lessondto.setProfessorName(lesson.getProfessor().getName());
-            lessonDtoList.add(lessondto);
-        }
-        
-        model.addAttribute("lessonDtoList", lessonDtoList);
+        model.addAttribute("lessons", lessons);
         model.addAttribute("testvalue", "passed");
         return "lessonList";
     }

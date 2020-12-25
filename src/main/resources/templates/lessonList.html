@@ -5,49 +5,36 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Lesson Schedule</title>
+<title>Lesson List</title>
+
 <link th:href="@{/css/list.css}" rel="stylesheet"></link>
 
 </head>
+
 <body>
 
 	<main role="main" class="container">
 
 		<div class="starter-template">
-			<h1>Lesson Schedule</h1>
+			<h1>Lesson List</h1>
 		</div>
 		<div class="sticky">
 			<h2>
 				<a href="lessonForm?id=-1">Create, edit or update Lessons</a>
 			</h2>
-
-			<label for="inputYear">Filter: year</label><input type="text"
-				id="inputYear" value="2019"> <label for="inputMonth">Filter:
-				Month</label><input type="text" id="inputMonth" value="1"> <input
-				type="button" value="Apply filter" onclick="runLessonFilter();">
-			<input type="button" value="Clear filter"
-				onclick="clearLessonFilter();"> <br />
-
 		</div>
 		<table>
 			<tr>
 				<th>ID</th>
 				<th>Start time</th>
 				<th>End time</th>
-				<th>Group ID</th>
-				<th>Professor Name</th>
+
 			</tr>
-			<tr th:each="lessondto: ${lessonDtoList}">
-				<td><a
-					th:href="@{/lessonForm?id={id}(id=${lessondto.getId()})}"><span
-						th:text="${lessondto.getId()}"></span></a></td>
-				<td th:text="${lessondto.getStartTime()}" />
-				<td th:text="${lessondto.getEndTime()}" />
-				<td><a
-					th:href="@{/groupForm?id={id}(id=${lessondto.getGroupId()})}">
-						<span th:text="${lessondto.getGroupId()}"></span>
-				</a></td>
-				<td th:text="${lessondto.getProfessorName()}" />
+			<tr th:each="lesson: ${lessons}">
+				<td><a th:href="@{/lessonForm?id={id}(id=${lesson.getId()})}"><span
+						th:text="${lesson.getId()}"></span></a></td>
+				<td th:text="${lesson.getStartTime()}" />
+				<td th:text="${lesson.getEndTime()}" />
 			</tr>
 		</table>
 
@@ -55,6 +42,7 @@
 			<a href="javascript:window.history.back()">&lt;&lt;&lt; go back</a>
 		</div>
 	</main>
-	<script th:src="@{/js/lessonFilter.js}" type="text/javascript"></script>
+	<!-- /.container -->
+
 </body>
 </html>
