@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS yearschedules CASCADE;
 
 CREATE TABLE professors
 (
-    professor_id SERIAL PRIMARY KEY,
-    professor_name CHARACTER VARYING(30),
+    person_id SERIAL PRIMARY KEY,
+    person_name CHARACTER VARYING(30),
     professor_ranks CHARACTER VARYING(512),
     professor_notes CHARACTER VARYING(512),
     department_id INTEGER    
@@ -30,10 +30,10 @@ CREATE TABLE groupz
 
 CREATE TABLE students
 (
-    student_id SERIAL PRIMARY KEY,
+    person_id SERIAL PRIMARY KEY,
     group_id INTEGER REFERENCES groupz (group_id),
     student_year INTEGER,
-    student_name CHARACTER VARYING(30)
+    person_name CHARACTER VARYING(30)
 );
 
 CREATE TABLE dayschedules
@@ -49,7 +49,7 @@ CREATE TABLE lessons
     lesson_id SERIAL PRIMARY KEY,
     start_time CHARACTER VARYING(30),
     end_time CHARACTER VARYING(30),
-    professor_id INTEGER REFERENCES professors(professor_id),
+    professor_id INTEGER REFERENCES professors(person_id),
     group_id INTEGER REFERENCES groupz (group_id)
 );
 
@@ -58,16 +58,16 @@ CREATE TABLE courses
     course_id SERIAL PRIMARY KEY,
     course_name CHARACTER VARYING(30),
     course_description CHARACTER VARYING(300),
-    professor_id INTEGER REFERENCES professors(professor_id)
+    professor_id INTEGER REFERENCES professors(person_id)
 );
 
-INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
+INSERT INTO professors(person_name, professor_ranks, professor_notes, department_id) 
     values ('John Lennon', 'Most Excellent Order of the British Empire ', 'Husband of Yoko Ono', 1);
-INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
+INSERT INTO professors(person_name, professor_ranks, professor_notes, department_id) 
     values ('Graham Greene', 'Order of the Companions of Honour', 'He wrote The Journey Without Maps', 1);
-INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
+INSERT INTO professors(person_name, professor_ranks, professor_notes, department_id) 
     values ('Aram Khachaturian', 'Lenin Prize|Stalin Prize', 'Creator of Gayane Ballet', 1);
-INSERT INTO professors(professor_name, professor_ranks, professor_notes, department_id) 
+INSERT INTO professors(person_name, professor_ranks, professor_notes, department_id) 
     values ('Prabhat Ranjan Sarkar', 'Anandamurti', 'Founder of Ananda Marga', 1);
 
 INSERT INTO yearschedules(year) VALUES (2019);
@@ -80,10 +80,10 @@ INSERT INTO groupz(group_note, department_id) VALUES ('Worst Group', 1);
 INSERT INTO groupz(group_note, department_id) VALUES ('Best Group', 1);
 INSERT INTO groupz(group_note, department_id) VALUES ('Nonsense Group', 1);
 
-INSERT INTO students(group_id, student_year, student_name) VALUES (1, 1, 'Li Hongzhi');
-INSERT INTO students(group_id, student_year, student_name) VALUES (2, 1, 'Jimmy Carter');
-INSERT INTO students(group_id, student_year, student_name) VALUES (1, 1, 'Goodluck Jonathan');
-INSERT INTO students(group_id, student_year, student_name) VALUES (1, 1, 'Buka S. Dimka');
+INSERT INTO students(group_id, student_year, person_name) VALUES (1, 1, 'Li Hongzhi');
+INSERT INTO students(group_id, student_year, person_name) VALUES (2, 1, 'Jimmy Carter');
+INSERT INTO students(group_id, student_year, person_name) VALUES (1, 1, 'Goodluck Jonathan');
+INSERT INTO students(group_id, student_year, person_name) VALUES (1, 1, 'Buka S. Dimka');
 
 INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-01-01 00:01', FALSE);
 INSERT INTO dayschedules(date, hasOverlaps) VALUES ('2019-02-01 00:01', TRUE);

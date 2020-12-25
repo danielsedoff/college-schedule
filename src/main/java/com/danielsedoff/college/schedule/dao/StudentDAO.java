@@ -18,9 +18,8 @@ public class StudentDAO implements DAO<Student> {
 
     @Autowired
     EntityManagerConfig emf;
-    
-    private static Logger logger = LoggerFactory.getLogger(StudentDAO.class);
 
+    private static Logger logger = LoggerFactory.getLogger(StudentDAO.class);
 
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -89,7 +88,7 @@ public class StudentDAO implements DAO<Student> {
             em.close();
         } catch (Exception e) {
             e.printStackTrace();// DEBUG if logger failed
-            logger.error(e.getStackTrace().toString());
+            logger.error(e.toString());
             throw new DAOException("Could not create Student", e);
         }
         return result;
@@ -106,6 +105,7 @@ public class StudentDAO implements DAO<Student> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.getStackTrace().toString());
             throw new DAOException("Could not get Student List", e);
         }
         return students;

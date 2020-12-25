@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ public class ProfessorDAO implements DAO<Professor> {
 
     @Autowired
     EntityManagerConfig emf;
+    private static Logger logger = LoggerFactory.getLogger(ProfessorDAO.class);
 
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -101,6 +104,7 @@ public class ProfessorDAO implements DAO<Professor> {
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {
+            logger.error(e.toString());
             throw new DAOException("Could not get Professor List", e);
         }
         return professors;
