@@ -3,32 +3,5 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="PU">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
-         <class>com.danielsedoff.college.schedule.model.Course</class>
-         <class>com.danielsedoff.college.schedule.model.DaySchedule</class>
-         <class>com.danielsedoff.college.schedule.model.Group</class>
-         <class>com.danielsedoff.college.schedule.model.Lesson</class>
-         <class>com.danielsedoff.college.schedule.model.Professor</class>
-         <class>com.danielsedoff.college.schedule.model.Student</class>
-         <class>com.danielsedoff.college.schedule.model.YearSchedule</class>
-         <!--  class>com.danielsedoff.college.schedule.model.Person</class -->
-         
-        <properties>
-            <property name="hibernate.dialect"
-                value="org.hibernate.dialect.PostgreSQL9Dialect" />
-            <property name="hibernate.connection.url"
-                value="jdbc:postgresql://localhost:5432/school" />
-            <property name="hibernate.connection.driver_class"
-                value="org.postgresql.Driver" />
-            <property name="hibernate.connection.username"
-                value="postgres" />
-            <property name="hibernate.connection.password"
-                value="mallocError" />
-
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="true" />
-
-           
-        </properties>
     </persistence-unit>
 </persistence>

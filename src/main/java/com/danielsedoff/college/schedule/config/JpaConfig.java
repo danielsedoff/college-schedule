@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -28,13 +27,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Import({ DataSourceConfig.class })
 public class JpaConfig {
 
-    private final Environment environment;
-
-    @Autowired
-    public JpaConfig(Environment environment) {
-        this.environment = environment;
-    }
-
     @Autowired
     DataSource dataSource;
 
@@ -42,10 +34,10 @@ public class JpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.danielsedoff.college.schedule");
+        em.setPackagesToScan(new String[] {"com.danielsedoff.college.schedule.model"});
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
+        em.setJpaProperties(getProperties());
         return em;
     }
 
@@ -61,10 +53,15 @@ public class JpaConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    Properties additionalProperties() {
+    Properties getProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-        properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/school");
+        properties.put("hibernate.connection.driver_class", "org.postgresql.Driver");
+        properties.put("hibernate.connection.username", "postgres");
+        properties.put("hibernate.connection.password", "mallocError");
+        properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.format_sql", "true");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         return properties;
     }
 

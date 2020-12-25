@@ -53,8 +53,7 @@ public class DayScheduleService {
         return result;
     }
 
-    public boolean updateDaySchedule(int dayschedId, LocalDateTime date,
-            boolean hasOverlaps) {
+    public boolean updateDaySchedule(int dayschedId, LocalDateTime date, boolean hasOverlaps) {
         DaySchedule daysched = new DaySchedule();
         daysched.setDay(date.format(formatter));
         daysched.setHasOverlaps(hasOverlaps);
@@ -86,6 +85,5 @@ public class DayScheduleService {
         }
         return result;
     }
-
 
 }

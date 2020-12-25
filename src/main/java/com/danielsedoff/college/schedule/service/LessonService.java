@@ -20,8 +20,7 @@ public class LessonService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public LessonService(ProfessorDAO professordao, LessonDAO lessondao,
-            GroupDAO groupdao) {
+    public LessonService(ProfessorDAO professordao, LessonDAO lessondao, GroupDAO groupdao) {
         this.lessondao = lessondao;
     }
 
@@ -36,7 +35,7 @@ public class LessonService {
         }
         return result;
     }
-    
+
     public Lesson getLessonById(int lessonId) {
         Lesson result = null;
         try {

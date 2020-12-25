@@ -19,8 +19,7 @@ public class StudentService {
     private StudentDAO studentdao;
 
     @Autowired
-    public StudentService(ProfessorDAO professordao, StudentDAO studentdao,
-            GroupDAO groupdao) {
+    public StudentService(ProfessorDAO professordao, StudentDAO studentdao, GroupDAO groupdao) {
         this.studentdao = studentdao;
     }
 
@@ -35,8 +34,7 @@ public class StudentService {
         }
         return result;
     }
-    
-    
+
     public List<Integer> getStudentIdList() {
         List<Integer> result = null;
         try {
