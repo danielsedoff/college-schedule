@@ -13,10 +13,9 @@ import com.danielsedoff.college.schedule.model.Course;
 
 @Service
 public class CourseService {
-    
-    @Autowired
     private DAO<Course> coursedao;
 
+    @Autowired
     public CourseService(DAO<Course> coursedao) {
         this.coursedao = coursedao;
     }

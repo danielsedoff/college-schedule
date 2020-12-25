@@ -16,12 +16,10 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class LessonService {
-
-    @Autowired
     private DAO<Lesson> lessondao;
-
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    @Autowired
     public LessonService(DAO<Professor> profdao, DAO<Lesson> lessondao, DAO<Group> groupdao) {
         this.lessondao = lessondao;
     }

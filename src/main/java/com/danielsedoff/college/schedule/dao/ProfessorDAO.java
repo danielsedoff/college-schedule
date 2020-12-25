@@ -53,6 +53,7 @@ public class ProfessorDAO implements DAO<Professor> {
         boolean result = false;
         try {
             Professor targetProfessor = em.find(Professor.class, professor.getId());
+            em.getTransaction().begin();
             em.remove(targetProfessor);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

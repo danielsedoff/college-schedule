@@ -13,10 +13,9 @@ import com.danielsedoff.college.schedule.model.Group;
 
 @Service
 public class GroupService {
-
-    @Autowired
     private DAO<Group> groupdao;
 
+    @Autowired
     public GroupService(DAO<Group> groupdao) {
         this.groupdao = groupdao;
     }

@@ -3,14 +3,10 @@ package com.danielsedoff.college.schedule.config;
 import javax.sql.DataSource;
 
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.danielsedoff.college.schedule.service.CourseService;
 import com.danielsedoff.college.schedule.service.GroupService;
@@ -20,13 +16,7 @@ import com.danielsedoff.college.schedule.service.StudentService;
 
 @Profile("test")
 @Configuration
-@ContextConfiguration
-@ComponentScan(basePackages = { "com.danielsedoff.college.schedule" })
 public class TestWebConfig extends WebConfig {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     @Bean
     public CourseService courseService() {
         return Mockito.mock(CourseService.class);
@@ -51,7 +41,7 @@ public class TestWebConfig extends WebConfig {
     public StudentService studentService() {
         return Mockito.mock(StudentService.class);
     }
-
+    
     @Bean
     @Profile("test")
     public DataSource dataSource() {

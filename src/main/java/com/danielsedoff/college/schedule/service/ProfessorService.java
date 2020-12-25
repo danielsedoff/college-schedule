@@ -13,10 +13,9 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class ProfessorService {
-
-    @Autowired
     private DAO<Professor> profdao;
 
+    @Autowired
     public ProfessorService(DAO<Professor> profdao) {
         this.profdao = profdao;
     }
