@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.danielsedoff.college.schedule.dto.LessonDTO;
 import com.danielsedoff.college.schedule.model.Lesson;
@@ -24,7 +23,7 @@ import com.danielsedoff.college.schedule.service.LessonService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @Controller
-public class LessonWebController implements WebMvcConfigurer {
+public class LessonWebController {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -65,11 +64,9 @@ public class LessonWebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/deleteLesson")
-    public String deleteLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model,
-            BindingResult bindingResult) {
+    public String deleteLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("result", "Your input is invalid.");
-            return "resultPage";
+            return "lessonForm";
         }
         ls.deleteLessonById(lessondto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
@@ -77,11 +74,9 @@ public class LessonWebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/createLesson")
-    public String createLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model,
-            BindingResult bindingResult) {
+    public String createLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("result", "Your input is invalid.");
-            return "resultPage";
+            return "lessonForm";
         }
         Lesson lesson = new Lesson();
         lesson.setEndTime(lessondto.getEndTime());
@@ -94,11 +89,9 @@ public class LessonWebController implements WebMvcConfigurer {
     }
 
     @PostMapping("/updateLesson")
-    public String updateLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, Model model,
-            BindingResult bindingResult) {
+    public String updateLesson(@Valid @ModelAttribute("lessondto") LessonDTO lessondto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("result", "Your input is invalid.");
-            return "resultPage";
+            return "lessonForm";
         }
         Lesson lesson = new Lesson();
         lesson.setEndTime(lessondto.getEndTime());
