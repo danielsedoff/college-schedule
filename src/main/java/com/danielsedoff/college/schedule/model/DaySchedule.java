@@ -33,7 +33,7 @@ public class DaySchedule {
     @Column(name = "hasOverlaps")
     private boolean hasOverlaps;
 
-    @OneToMany(mappedBy = "dayschedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "dayschedule", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
     
     @ManyToOne(cascade = CascadeType.MERGE)

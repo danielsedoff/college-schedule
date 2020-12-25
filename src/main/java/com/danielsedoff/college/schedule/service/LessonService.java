@@ -8,20 +8,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.LessonDAO;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
+import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class LessonService {
-    private LessonDAO lessondao;
+    private DAO<Lesson> lessondao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public LessonService(ProfessorDAO professordao, LessonDAO lessondao,
-            GroupDAO groupdao) {
+    public LessonService(DAO<Professor> professordao, DAO<Lesson> lessondao, DAO<Group> groupdao) {
         this.lessondao = lessondao;
     }
 
@@ -36,7 +35,7 @@ public class LessonService {
         }
         return result;
     }
-    
+
     public Lesson getLessonById(int lessonId) {
         Lesson result = null;
         try {

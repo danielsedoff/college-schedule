@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.model.Group;
 
 @Service
 public class GroupService {
-    private GroupDAO groupdao;
+    private DAO<Group> groupdao;
 
     @Autowired
-    public GroupService(GroupDAO groupdao) {
+    public GroupService(DAO<Group> groupdao) {
         this.groupdao = groupdao;
     }
 
@@ -31,7 +31,7 @@ public class GroupService {
         }
         return result;
     }
-    
+
     public List<Integer> getGroupIdList() {
         List<Integer> result = null;
         try {
@@ -81,7 +81,5 @@ public class GroupService {
         }
         return result;
     }
-
-
 
 }

@@ -28,7 +28,7 @@ public class Group {
     @Column(name = "group_note")
     private String specialNotes;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Student> students = new ArrayList<Student>();
 
     public Group() {

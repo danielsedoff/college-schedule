@@ -6,13 +6,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-@Aspect
 @Transactional
 @Component
 public class YearScheduleDAO implements DAO<YearSchedule> {

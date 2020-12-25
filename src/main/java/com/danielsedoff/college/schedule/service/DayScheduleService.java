@@ -9,19 +9,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
-import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.model.DaySchedule;
+import com.danielsedoff.college.schedule.model.Lesson;
 
 @Service
 public class DayScheduleService {
 
-    private DayScheduleDAO dayscheduledao;
+    private DAO<DaySchedule> dayscheduledao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public DayScheduleService(DayScheduleDAO dayscheduledao, LessonDAO lessondao) {
+    public DayScheduleService(DAO<DaySchedule> dayscheduledao, DAO<Lesson> lessondao) {
         this.dayscheduledao = dayscheduledao;
     }
 
@@ -53,8 +53,7 @@ public class DayScheduleService {
         return result;
     }
 
-    public boolean updateDaySchedule(int dayschedId, LocalDateTime date,
-            boolean hasOverlaps) {
+    public boolean updateDaySchedule(int dayschedId, LocalDateTime date, boolean hasOverlaps) {
         DaySchedule daysched = new DaySchedule();
         daysched.setDay(date.format(formatter));
         daysched.setHasOverlaps(hasOverlaps);
@@ -86,6 +85,5 @@ public class DayScheduleService {
         }
         return result;
     }
-
 
 }

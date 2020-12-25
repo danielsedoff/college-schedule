@@ -7,20 +7,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
+import com.danielsedoff.college.schedule.model.Group;
+import com.danielsedoff.college.schedule.model.Professor;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Service
 public class StudentService {
 
-    private StudentDAO studentdao;
+    private DAO<Student> studentdao;
 
     @Autowired
-    public StudentService(ProfessorDAO professordao, StudentDAO studentdao,
-            GroupDAO groupdao) {
+    public StudentService(DAO<Professor> professordao, DAO<Student> studentdao, DAO<Group> groupdao) {
         this.studentdao = studentdao;
     }
 
@@ -35,8 +34,7 @@ public class StudentService {
         }
         return result;
     }
-    
-    
+
     public List<Integer> getStudentIdList() {
         List<Integer> result = null;
         try {

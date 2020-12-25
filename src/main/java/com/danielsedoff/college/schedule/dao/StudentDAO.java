@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Student;
 
-@Aspect
 @Transactional
 @Component
 public class StudentDAO implements DAO<Student> {
@@ -84,7 +82,6 @@ public class StudentDAO implements DAO<Student> {
         try {
             System.out.println("StudentDAO RECEIVES: " + student.toString());
             em.persist(student);
-            em.flush();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();

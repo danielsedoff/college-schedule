@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
 import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class ProfessorService {
-    private ProfessorDAO professordao;
+    private DAO<Professor> professordao;
 
     @Autowired
-    public ProfessorService(ProfessorDAO professordao) {
+    public ProfessorService(DAO<Professor> professordao) {
         this.professordao = professordao;
     }
 
@@ -79,6 +79,7 @@ public class ProfessorService {
         } catch (DAOException e) {
             logger.error("Could not get a Professor List", e);
         }
-        return result;    }
+        return result;
+    }
 
 }

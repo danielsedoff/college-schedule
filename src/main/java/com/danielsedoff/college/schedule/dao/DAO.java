@@ -12,4 +12,6 @@ public interface DAO<T> {
     boolean update(Integer id, T item) throws DAOException;
 
     boolean create(T item) throws DAOException;
+
+    List<T> getList() throws DAOException;
 }

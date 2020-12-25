@@ -7,18 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielsedoff.college.schedule.dao.DAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
-import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
+import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
 @Service
 public class YearScheduleService {
-    
-    private YearScheduleDAO yearscheduledao;
+
+    private DAO<YearSchedule> yearscheduledao;
 
     @Autowired
-    public YearScheduleService(YearScheduleDAO yearscheduledao, DayScheduleDAO dayscheduledao) {
+    public YearScheduleService(DAO<YearSchedule> yearscheduledao, DAO<DaySchedule> dayscheduledao) {
         this.yearscheduledao = yearscheduledao;
     }
 
