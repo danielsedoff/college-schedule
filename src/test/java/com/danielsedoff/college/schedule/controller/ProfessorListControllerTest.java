@@ -13,7 +13,6 @@ import javax.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockServletContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,19 +24,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.danielsedoff.college.schedule.config.TestWebConfig;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
-import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
 class ProfessorListControllerTest {
-    @Mock
-    ProfessorService professorService;
-
-    @Autowired
-    ProfessorDAO professordao;
 
     @Autowired
     private WebApplicationContext wac;
