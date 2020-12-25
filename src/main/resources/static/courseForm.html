@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="form.css" media="all" />
+
+</head>
+<body>
+	<div id="form_container">
+		<h1>
+			<span>&nbsp;</span>
+		</h1>
+		<form id="collegeform" class="appnitro" method="post"
+			action="/college-schedule/courseEdit">
+			<table>
+				<tr>
+					<td>
+						<h2></h2>
+						<h2>Edit Courses</h2>
+					</td>
+				</tr>
+				<tr>
+					<td><input type="radio" id="radioCreate" name="mode"
+						value="create" checked /> <label for="mode">Create </label> <input
+						type="radio" id="radioDelete" name="mode" value="delete" /> <label
+						for="mode">Delete </label> <input type="radio" id="radioUpdate"
+						name="mode" value="update" /> <label for="mode">Update </label></td>
+				</tr>
+				<tbody>
+					<tr>
+						<td id="li_1"><label class="description" for="courseid">Course
+								ID </label>
+							<div>
+								<input id="element_1" name="courseid"
+									class="element text medium" type="text" maxlength="255"
+									value="" disabled />
+							</div></td>
+					</tr>
+					<tr>
+						<td id="li_2"><label class="description" for="coursename">Course
+								Name </label>
+							<div>
+								<input id="element_2" name="coursename"
+									class="element text medium" type="text" maxlength="255"
+									value="" />
+							</div></td>
+					</tr>
+					<tr>
+						<td id="li_3"><label class="description"
+							for="coursedescription]">Course Description </label>
+							<div>
+								<input id="element_3" name="coursedescription"
+									class="element text medium" type="text" maxlength="255"
+									value="" />
+							</div></td>
+					</tr>
+					<tr>
+						<td id="li_4"><label class="description" for="professorid">Professor
+								ID </label>
+							<div>
+								<input id="element_4" name="professorid"
+									class="element text medium" type="text" maxlength="255"
+									value="" />
+							</div></td>
+					</tr>
+					<tr>
+						<td class="buttons"><input type="hidden" name="form_id"
+							value="3757" /> <input id="saveForm" class="button_text"
+							type="submit" name="submit" value="Done"></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+	<script src="radios.js"></script>
+</body>
+</html>

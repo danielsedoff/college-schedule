@@ -8,6 +8,12 @@
 <title>Course List</title>
 
 <style>
+.sticky {
+	position: sticky;
+	top: 2em;
+	min-height: 2em;
+}
+
 table {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
@@ -41,8 +47,14 @@ table th {
 
 	<main role="main" class="container">
 
+
 		<div class="starter-template">
 			<h1>Course List</h1>
+		</div>
+		<div class="sticky">
+			<h2>
+				<a href="static/courseForm.html">Create, edit or update Courses</a>
+			</h2>
 		</div>
 		<table>
 			<tr>
@@ -53,10 +65,11 @@ table th {
 			<tr th:each="course: ${courses}">
 				<td th:text="${course.getId()}" />
 				<td th:text="${course.getName()}" />
-                <td th:text="${course.getCourseDescription()}" />
-                
+				<td th:text="${course.getCourseDescription()}" />
+
 			</tr>
 		</table>
+
 	</main>
 	<!-- /.container -->
 
