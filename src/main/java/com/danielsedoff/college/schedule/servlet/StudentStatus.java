@@ -32,17 +32,9 @@ public class StudentStatus extends HttpServlet {
         ServletOutputStream out = resp.getOutputStream();
 
         String userMessageString;
-        try {
-            userMessageString = studentListingController.getStudentIds();
-            out.write(userMessageString.getBytes());
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            out.flush();
-            out.close();
-        }
+        userMessageString = studentListingController.getStudentIds();
+        out.write(userMessageString.getBytes());
+        out.flush();
+        out.close();
     }
-
 }
