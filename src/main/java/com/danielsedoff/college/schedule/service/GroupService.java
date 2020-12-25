@@ -50,7 +50,7 @@ public class GroupService {
         try {
             result = groupdao.update(groupId, group);
         } catch (DAOException e) {
-            logger.error("Could not Update a Group", e);
+            logger.error("Could not Update a Group, groupId: {}", groupId);
         }
         return result;
     }
@@ -60,7 +60,7 @@ public class GroupService {
         try {
             result = groupdao.delete(groupdao.getById(groupId));
         } catch (DAOException e) {
-            logger.error("Could not Delete a Group by ID", e);
+            logger.error("Could not Delete a Group, groupId: {}", groupId);
         }
         return result;
     }
@@ -70,7 +70,7 @@ public class GroupService {
         try {
             result = groupdao.getById(groupId);
         } catch (DAOException e) {
-            logger.error("Could not Get a Group by ID", e);
+            logger.error("Could not Get a Group, groupId: {}", groupId);
         }
         return result;
     }
@@ -80,7 +80,7 @@ public class GroupService {
         try {
             result = groupdao.setGroupStudent(groupdao.getById(groupId), students);
         } catch (DAOException e) {
-            logger.error("Could not Set a Group-Student Relation", e);
+            logger.error("Could not Set a Group-Student Relation, groupId: {}", groupId);
         }
         return result;
     }
@@ -91,7 +91,7 @@ public class GroupService {
             Group group = groupdao.getById(groupId);
             result = groupdao.getStudentsByGroup(group);
         } catch (DAOException e) {
-            logger.error("Could not Get a Group by ID", e);
+            logger.error("Could not Get a Group by ID, groupId: {}", groupId);
         }
         return result;
     }

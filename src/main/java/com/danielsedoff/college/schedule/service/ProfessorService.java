@@ -27,7 +27,7 @@ public class ProfessorService {
         try {
             result = professordao.update(professorId, professor);
         } catch (DAOException e) {
-            logger.error("Could not Update a Professor", e);
+            logger.error("Could not Update a Professor, id: {}", professorId);
         }
         return result;
     }
@@ -47,7 +47,7 @@ public class ProfessorService {
         try {
             result = professordao.delete(professordao.getById(profId));
         } catch (DAOException e) {
-            logger.error("Could not delete a Professor", e);
+            logger.error("Could not delete a Professor, id: {}", profId);
         }
         return result;
     }
@@ -57,7 +57,7 @@ public class ProfessorService {
         try {
             result = professordao.getById(professorId);
         } catch (DAOException e) {
-            logger.error("Could not get a Professor By Id", e);
+            logger.error("Could not get a Professor By id: {}", professorId);
         }
         return result;
     }

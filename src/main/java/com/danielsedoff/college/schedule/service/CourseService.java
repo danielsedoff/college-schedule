@@ -29,7 +29,7 @@ public class CourseService {
         try {
             idlist = coursedao.getIdList();
         } catch (DAOException e) {
-            logger.error("Could not get course ID list", e);
+            logger.error("Could not get course ID list");
         }
         return idlist;
     }
@@ -39,7 +39,7 @@ public class CourseService {
         try {
             result = coursedao.create(course);
         } catch (DAOException e) {
-            logger.error("Could not create Course", e);
+            logger.error("Could not create Course, id: {}", course.getId());
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class CourseService {
         try {
             result = coursedao.getById(courseId);
         } catch (DAOException e) {
-            logger.error("Could not get Course by ID", e);
+            logger.error("Could not get Course by id: {}", courseId);
         }
         return result;
     }
@@ -59,7 +59,7 @@ public class CourseService {
         try {
             result = coursedao.delete(coursedao.getById(courseId));
         } catch (DAOException e) {
-            logger.error("Could not delete Course by ID", e);
+            logger.error("Could not delete Course by id: {}", courseId);
         }
         return result;
     }
@@ -69,7 +69,7 @@ public class CourseService {
         try {
             result = coursedao.update(courseId, course);
         } catch (DAOException e) {
-            logger.error("Could not update Course", e);
+            logger.error("Could not update Course, id: {}", courseId);
         }
         return result;
     }
@@ -79,7 +79,7 @@ public class CourseService {
         try {
             result = coursedao.setCourseProfessor(coursedao.getById(courseId), profs);
         } catch (DAOException e) {
-            logger.error("Could not set Professor-Course Relations", e);
+            logger.error("Could not set Professor-Course Relations, courseId: {}", courseId);
         }
         return result;
     }
@@ -90,7 +90,7 @@ public class CourseService {
             Course course = coursedao.getById(courseId);
             result = coursedao.getProfessorByCourse(course);
         } catch (DAOException e) {
-            logger.error("Could not get Professor-Course Relation", e);
+            logger.error("Could not get Professor-Course Relation, id: {}", courseId);
         }
         return result;
     }

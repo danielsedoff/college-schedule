@@ -37,7 +37,7 @@ public class LessonService {
             Lesson lesson = lessondao.getById(lessonId);
             result = lessondao.getGroupsByLesson(lesson);
         } catch (DAOException e) {
-            logger.error("Could not Get Groups by Lesson ID", e);
+            logger.error("Could not Get Groups by Lesson ID, lessonId: {}", lessonId);
         }
         return result;
     }
@@ -48,7 +48,7 @@ public class LessonService {
             result = lessondao.setLessonGroup(lessondao.getById(lessonId),
                     groupdao.getById(groupId));
         } catch (DAOException e) {
-            logger.error("Could not Set Lesson-Group Relation", e);
+            logger.error("Could not Set Lesson-Group Relation, lessonId: {}", lessonId);
         }
         return result;
     }
@@ -58,7 +58,7 @@ public class LessonService {
         try {
             result = lessondao.getById(lessonId);
         } catch (DAOException e) {
-            logger.error("Could not Get a Lesson by ID", e);
+            logger.error("Could not Get a Lesson by ID, lessonId: {}", lessonId);
         }
         return result;
     }
@@ -78,7 +78,7 @@ public class LessonService {
         try {
             result = lessondao.delete(lessondao.getById(lessonId));
         } catch (DAOException e) {
-            logger.error("Could not Delete a Lesson by ID", e);
+            logger.error("Could not Delete a Lesson by ID, lessonId: {}", lessonId);
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class LessonService {
         try {
             result = lessondao.update(lessonId, lesson);
         } catch (DAOException e) {
-            logger.error("Could not Update a Lesson", e);
+            logger.error("Could not Update a Lesson, lessonId: {}", lessonId);
         }
         return result;
     }

@@ -54,7 +54,7 @@ public class StudentService {
         try {
             result = studentdao.update(studId, student);
         } catch (DAOException e) {
-            logger.error("Could not update a Student", e);
+            logger.error("Could not update a Student, id: {}", studId);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class StudentService {
             Student st = studentdao.getById(studId);
             result = studentdao.delete(st);
         } catch (DAOException e) {
-            logger.error("Could not delete a Student", e);
+            logger.error("Could not delete a Student, id: {}", studId);
         }
         return result;
     }
@@ -75,7 +75,7 @@ public class StudentService {
         try {
             result = studentdao.getById(studentId);
         } catch (DAOException e) {
-            logger.error("Could not get a Student By Id", e);
+            logger.error("Could not get a Student By id: {}", studentId);
         }
         return result;
     }

@@ -4,6 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,8 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     @Autowired
     private LessonDAO lessondao;
 
+    private static Logger logger = LoggerFactory.getLogger(DayScheduleDAO.class);
+    
     JdbcTemplate jdbcTemplate;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private static final String SQL_SELECT_ID_FROM_DAYSCHEDULES = "SELECT dayschedule_id FROM dayschedules;";
@@ -36,6 +40,8 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = null;
         try {
+            // DEBUG
+            logger.info("DS DAO entered");
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_DAYSCHEDULES,
                     Integer.class);
         } catch (Exception e) {
