@@ -3,34 +3,34 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.HibernateSessionFactoryUtil;
 import com.danielsedoff.college.schedule.model.Student;
 
 @Component
 public class StudentDAO implements DAO<Student> {
 
-    public List<Student> getList() throws DAOException {
-        List<Student> students = null;
-        try {
-            SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
-            students = session.createQuery("From Student").list();
-        } catch (Exception e) {
-            throw new DAOException("Could not get Student Id List", e);
-        }
-        return students;
-    }
+    @Autowired
+    public StudentDAO studentdao;
 
     public List<Integer> getIdList() throws DAOException {
+
         List<Integer> result = new ArrayList<>();
         try {
-            List<Student> students = (List<Student>) HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                    .createQuery("From Student").list();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            @SuppressWarnings("unchecked")
+            List<Student> students = em.createQuery("from Student")
+                    .getResultList();
+            em.getTransaction().commit();
+
             for (Student student : students) {
                 result.add(student.getId());
             }
@@ -43,7 +43,10 @@ public class StudentDAO implements DAO<Student> {
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
-            result = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Student.class, id);
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            result = em.find(Student.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Student By Id", e);
         }
@@ -54,11 +57,17 @@ public class StudentDAO implements DAO<Student> {
 
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.delete(student);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.getTransaction().commit();
+            Student targetStudent = em.find(Student.class, student.getId());
+            em.getTransaction().begin();
+            em.remove(targetStudent);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not delete Student", e);
         }
@@ -68,12 +77,18 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            student.setId(id);
-            session.update(student);
-            tx1.commit();
-            session.close();
+
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            Student oldStudent = (Student) em.find(Student.class, id);
+            oldStudent.setGroupId(student.getGroupId());
+            oldStudent.setName(student.getName());
+            oldStudent.setSchoolYear(student.getSchoolYear());
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not update Student", e);
         }
@@ -83,15 +98,37 @@ public class StudentDAO implements DAO<Student> {
     public boolean create(Student student) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.save(student);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(student);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not create Student", e);
         }
         return result;
 
     }
+
+    public List<Student> getList() throws DAOException {
+        List<Student> students = null;
+        try {
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            students = em.createQuery("from Student", Student.class)
+                    .getResultList();
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            throw new DAOException("Could not get Student List", e);
+        }
+        return students;
+    }
+
 }

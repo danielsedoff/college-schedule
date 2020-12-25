@@ -73,4 +73,13 @@ public class ProfessorService {
         return result;
     }
 
+    public List<Professor> getProfessorList() {
+        List<Professor> result = null;
+        try {
+            result = professordao.getList();
+        } catch (DAOException e) {
+            logger.error("Could not get a Professor List", e);
+        }
+        return result;    }
+
 }

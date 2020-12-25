@@ -3,36 +3,34 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.HibernateSessionFactoryUtil;
 import com.danielsedoff.college.schedule.model.Lesson;
 
 @Component
 public class LessonDAO implements DAO<Lesson> {
-    public List<Lesson> getList() throws DAOException {
-        List<Lesson> lessons = null;
-        try {
-            SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
-            lessons = session.createQuery("From Lesson").list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new DAOException("Could not get Lesson Id List", e);
-            
-        }
-        return lessons;
-    }
+
+    @Autowired
+    public LessonDAO lessondao;
 
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            List<Lesson> lessons = (List<Lesson>) HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                    .createQuery("From Lesson").list();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            @SuppressWarnings("unchecked")
+            List<Lesson> lessons = em.createQuery("from Lesson")
+                    .getResultList();
+            em.getTransaction().commit();
+
             for (Lesson lesson : lessons) {
                 result.add(lesson.getId());
             }
@@ -45,7 +43,10 @@ public class LessonDAO implements DAO<Lesson> {
     public Lesson getById(Integer id) throws DAOException {
         Lesson result = null;
         try {
-            result = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Lesson.class, id);
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            result = em.find(Lesson.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Lesson By Id", e);
         }
@@ -56,11 +57,17 @@ public class LessonDAO implements DAO<Lesson> {
 
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.delete(lesson);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.getTransaction().commit();
+            Lesson targetLesson = em.find(Lesson.class, lesson.getId());
+            em.getTransaction().begin();
+            em.remove(targetLesson);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not delete Lesson", e);
         }
@@ -70,12 +77,19 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            lesson.setId(id);
-            session.update(lesson);
-            tx1.commit();
-            session.close();
+
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
+            oldLesson.setEndTime(lesson.getEndTime());
+            oldLesson.setStartTime(lesson.getStartTime());
+            oldLesson.setProfessorId(lesson.getProfessorId());
+            oldLesson.setGroupId(lesson.getGroupId());
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not update Lesson", e);
         }
@@ -85,16 +99,37 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.save(lesson);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(lesson);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not create Lesson", e);
         }
         return result;
 
+    }
+
+    public List<Lesson> getList() throws DAOException {
+        List<Lesson> lessons = null;
+        try {
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            lessons = em.createQuery("from Lesson", Lesson.class)
+                    .getResultList();
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            throw new DAOException("Could not get Lesson List", e);
+        }
+        return lessons;
     }
 
 }

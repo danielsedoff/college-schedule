@@ -18,15 +18,12 @@ import com.danielsedoff.college.schedule.model.Lesson;
 public class LessonService {
     @Autowired
     private LessonDAO lessondao;
-    @Autowired
-    private GroupDAO groupdao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
     public LessonService(ProfessorDAO professordao, LessonDAO lessondao,
             GroupDAO groupdao) {
         this.lessondao = lessondao;
-        this.groupdao = groupdao;
     }
 
     private static Logger logger = LoggerFactory.getLogger(LessonService.class);

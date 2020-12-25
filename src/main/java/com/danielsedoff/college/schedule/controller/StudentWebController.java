@@ -25,6 +25,10 @@ public class StudentWebController {
     @GetMapping("/studentList")
     public String getStudents(Model model) {
         List<Student> students = ss.getStudentList();
+        if(null == students) {
+            model.addAttribute("result", "ERROR: the expected LIST is NULL.");
+            return "resultPage";
+        }
         model.addAttribute("students", students);
         model.addAttribute("testvalue", "passed");
         return "studentList";

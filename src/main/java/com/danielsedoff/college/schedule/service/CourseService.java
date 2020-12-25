@@ -73,4 +73,14 @@ public class CourseService {
         return result;
     }
 
+    public List<Course> getCourseList() {
+        List<Course> result = null;
+        try {
+            result = coursedao.getList();
+        } catch (DAOException e) {
+            logger.error("Could not get a Course List", e);
+        }
+        return result;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,21 +24,19 @@ public class ProfessorWebController {
 
     @GetMapping("/professorList")
     public String getProfessors(Model model) {
-        List<Integer> ids = ps.getProfessorIdList();
-        List<Professor> professors = new ArrayList<>();
-
-        for (int id : ids) {
-            professors.add(ps.getProfessorById(id));
+        List<Professor> professors = ps.getProfessorList();
+        if (null == professors) {
+            model.addAttribute("result", "ERROR: the expected LIST is NULL.");
+            return "resultPage";
         }
         model.addAttribute("professors", professors);
         model.addAttribute("testvalue", "passed");
-
         return "professorList";
     }
 
     @RequestMapping(value = "/professorForm", params = { "id" }, method = RequestMethod.GET)
-    public String getIdParam(@RequestParam("id") int id,
-            @ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
+    public String getIdParam(@RequestParam("id") int id, @ModelAttribute("professordto") ProfessorDTO professordto,
+            Model model) {
         if (id == -1) {
             professordto.setMode("create");
             return "professorForm";
@@ -56,16 +53,14 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/deleteProfessor")
-    public String deleteProfessor(@ModelAttribute("professordto") ProfessorDTO professordto,
-            Model model) {
+    public String deleteProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         ps.deleteProfessor(professordto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }
 
     @PostMapping("/createProfessor")
-    public String createProfessor(@ModelAttribute("professordto") ProfessorDTO professordto,
-            Model model) {
+    public String createProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         Professor professor = new Professor();
         professor.setDepartmentId(professordto.getDepartmentId());
         professor.setName(professordto.getName());
@@ -77,8 +72,7 @@ public class ProfessorWebController {
     }
 
     @PostMapping("/updateProfessor")
-    public String updateProfessor(@ModelAttribute("professordto") ProfessorDTO professordto,
-            Model model) {
+    public String updateProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
         Professor professor = new Professor();
         professor.setId(professordto.getId());
         professor.setDepartmentId(professordto.getDepartmentId());

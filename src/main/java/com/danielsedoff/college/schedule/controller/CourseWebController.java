@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.service.CourseService;
@@ -22,12 +22,11 @@ public class CourseWebController {
     private CourseService cs;
 
     @GetMapping("/courseList")
-    public String getCourses(Model model) {
-        List<Integer> ids = cs.getCourseIdList();
-        List<Course> courses = new ArrayList<>();
-
-        for (int id : ids) {
-            courses.add(cs.getCourseById(id));
+    public String getCourses(Model model) throws DAOException {
+        List<Course> courses = cs.getCourseList();
+        if (null == courses) {
+            model.addAttribute("result", "ERROR: the expected LIST is NULL.");
+            return "resultPage";
         }
         model.addAttribute("courses", courses);
         model.addAttribute("testvalue", "passed");
