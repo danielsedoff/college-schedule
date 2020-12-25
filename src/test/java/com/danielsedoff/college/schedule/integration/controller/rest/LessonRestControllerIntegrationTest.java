@@ -7,20 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
-import com.danielsedoff.college.schedule.controller.rest.LessonRestController;
+import com.danielsedoff.college.schedule.Application;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.ProfessorService;
 
-@SpringBootTest(classes = { LessonRestController.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LessonRestControllerIntegrationTest {
-    @LocalServerPort
-    private int port;
+
+    int port = 8080;
     
     @Autowired
     private GroupService gservice;
@@ -31,7 +31,7 @@ public class LessonRestControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Sql({ "create_tables.sql" })
+    @Sql({ "classpath:/create_tables.sql" })
     @Test
     public void testOneLesson() {
         assertEquals(this.restTemplate
@@ -52,4 +52,13 @@ public class LessonRestControllerIntegrationTest {
                 "http://localhost:" + port + "/lessons", lesson, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
+    
+    @Test
+    public void testGetLessonListAvailability() {
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<String> response = testRestTemplate.
+          getForEntity("http://localhost:" + port + "/lessons", String.class);
+        assertEquals(response.getStatusCode(), (HttpStatus.OK));
+    }
+
 }

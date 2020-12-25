@@ -10,28 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.jdbc.Sql;
 
-import com.danielsedoff.college.schedule.controller.rest.GroupRestController;
+import com.danielsedoff.college.schedule.Application;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 import com.danielsedoff.college.schedule.service.StudentService;
 
-@SpringBootTest(classes = { GroupRestController.class }, 
+@SpringBootTest(classes = { Application.class }, 
                 webEnvironment = WebEnvironment.RANDOM_PORT)
 public class GroupRestControllerIntegrationTest {
-    @LocalServerPort
-    private int port;
 
+    int port = 8080;
+    
     @Autowired
     StudentService ss;
     
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Sql({ "create_tables.sql" })
+    @Sql({ "classpath:/create_tables.sql" })
     @Test
     public void testOneGroup() {
         assertEquals(this.restTemplate
@@ -53,4 +53,13 @@ public class GroupRestControllerIntegrationTest {
                 "http://localhost:" + port + "/groups", group, String.class);
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
+    
+    @Test
+    public void testGetGroupListAvailability() {
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<String> response = testRestTemplate.
+          getForEntity("http://localhost:" + port + "/groups", String.class);
+        assertEquals(response.getStatusCode(), (HttpStatus.OK));
+    }
+
 }
