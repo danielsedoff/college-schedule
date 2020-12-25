@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Component;
 import com.danielsedoff.college.schedule.dao.mappers.CourseMapper;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@Service
+@Component
 public class CourseDAO implements DAO<Course> {
 
     JdbcTemplate jdbcTemplate;

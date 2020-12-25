@@ -3,36 +3,26 @@ package com.danielsedoff.college.schedule.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.danielsedoff.college.schedule.dao.CourseDAO;
-import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.LessonDAO;
 import com.danielsedoff.college.schedule.dao.ProfessorDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
-import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
+import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class LessonCommandExecutor {
 
-    private static final String FAILURE = "failure";
-    private static final String SUCCESS = "success";
-    private static final String WRONG_GROUP_ID = "Wrong Group ID.";
-    private static final String WRONG_LESSON_ID = "Wrong Lesson ID.";
     private LessonDAO lessondao;
     private ProfessorDAO professordao;
     private GroupDAO groupdao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public LessonCommandExecutor(CourseDAO coursedao, StudentDAO studentdao,
-            ProfessorDAO professordao, LessonDAO lessondao, DayScheduleDAO dayscheduledao,
-            YearScheduleDAO yearscheduledao, GroupDAO groupdao) {
+    public LessonCommandExecutor(ProfessorDAO professordao, LessonDAO lessondao,
+            GroupDAO groupdao) {
         this.lessondao = lessondao;
         this.professordao = professordao;
         this.groupdao = groupdao;

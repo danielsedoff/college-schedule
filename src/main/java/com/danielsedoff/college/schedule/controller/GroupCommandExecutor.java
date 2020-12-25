@@ -8,16 +8,11 @@ import com.danielsedoff.college.schedule.dao.GroupDAO;
 import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
+import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
 public class GroupCommandExecutor {
 
-    private static final String COULD_NOT_FIND_GROUP = "Could not find group.";
-    private static final String WRONG_STUDENT_ID = "Wrong Student ID.";
-    private static final String WRONG_DEPARTMENT_ID = "Wrong Department ID.";
-    private static final String FAILURE = "failure";
-    private static final String SUCCESS = "success";
-    private static final String WRONG_GROUP_ID = "Wrong Group ID.";
     private GroupDAO groupdao;
     private StudentDAO studentdao;
     private static final String ARGUMENT_DELIMITER = "|";

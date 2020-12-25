@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.dao.mappers.GroupMapper;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
-@Service 
+@Component 
 public class GroupDAO implements DAO<Group> {
 
     JdbcTemplate jdbcTemplate;

@@ -1,7 +1,9 @@
 package com.danielsedoff.college.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CollegeScheduleCommandRouter {
     private static final String ARGUMENT_DELIMITER = "|";
     private static final String[] AVAILABLE_COMMANDS = { "getCourseIdList",
@@ -53,95 +55,97 @@ public class CollegeScheduleCommandRouter {
         if (null != argumentsCombined) {
             arguments = argumentsCombined.split(ARGUMENT_DELIMITER);
         }
-               if ("getLessonIdList".equals(command)) {
+
+        switch (command) {
+        case "getLessonIdList":
             return lessonCommandExecutor.getLessonIdList();
-        } else if ("updateLesson".equals(command)) {
+        case "updateLesson":
             return lessonCommandExecutor.updateLesson(arguments);
-        } else if ("deleteLesson".equals(command)) {
+        case "deleteLesson":
             return lessonCommandExecutor.deleteLesson(arguments);
-        } else if ("createLesson".equals(command)) {
+        case "createLesson":
             return lessonCommandExecutor.createLesson(arguments);
-        } else if ("getLessonById".equals(command)) {
+        case "getLessonById":
             return lessonCommandExecutor.getLessonById(arguments);
-        } else if ("setLessonGroup".equals(command)) {
+        case "setLessonGroup":
             return lessonCommandExecutor.setLessonGroup(arguments);
-        } else if ("getGroupsByLesson".equals(command)) {
+        case "getGroupsByLesson":
             return lessonCommandExecutor.getGroupsByLesson(arguments);
-        } else if ("getProfessorIdList".equals(command)) {
+        case "getProfessorIdList":
             return professorCommandExecutor.getProfessorIdList();
-        } else if ("getProfessorById".equals(command)) {
+        case "getProfessorById":
             return professorCommandExecutor.getProfessorById(arguments);
-        } else if ("deleteProfessor".equals(command)) {
+        case "deleteProfessor":
             return professorCommandExecutor.deleteProfessor(arguments);
-        } else if ("createProfessor".equals(command)) {
+        case "createProfessor":
             return professorCommandExecutor.createProfessor(arguments);
-        } else if ("updateProfessor".equals(command)) {
+        case "updateProfessor":
             return professorCommandExecutor.updateProfessor(arguments);
-        } else if ("getCourseIdList".equals(command)) {
+        case "getCourseIdList":
             return courseCommandExecutor.getCourseIdList();
-        } else if ("createCourse".equals(command)) {
+        case "createCourse":
             return courseCommandExecutor.createCourse(arguments);
-        } else if ("getCourseById".equals(command)) {
+        case "getCourseById":
             return courseCommandExecutor.getCourseById(arguments);
-        } else if ("removeCourse".equals(command)) {
+        case "removeCourse":
             return courseCommandExecutor.deleteCourse(arguments);
-        } else if ("updateCourse".equals(command)) {
+        case "updateCourse":
             return courseCommandExecutor.updateCourse(arguments);
-        } else if ("setCourseProfessors".equals(command)) {
+        case "setCourseProfessors":
             return courseCommandExecutor.setCourseProfessors(arguments);
-        } else if ("getProfessorsByCourse".equals(command)) {
+        case "getProfessorsByCourse":
             return courseCommandExecutor.getProfessorsByCourse(arguments);
-        } else if ("getDayscheduleIdList".equals(command)) {
+        case "getDayscheduleIdList":
             return dayScheduleCommandExecutor.getDayscheduleIdList();
-        } else if ("createDaySchedule".equals(command)) {
+        case "createDaySchedule":
             return dayScheduleCommandExecutor.createDaySchedule(arguments);
-        } else if ("updateDaySchedule".equals(command)) {
+        case "updateDaySchedule":
             return dayScheduleCommandExecutor.updateDaySchedule(arguments);
-        } else if ("deleteDaySchedule".equals(command)) {
+        case "deleteDaySchedule":
             return dayScheduleCommandExecutor.deleteDaySchedule(arguments);
-        } else if ("getDayScheduleById".equals(command)) {
+        case "getDayScheduleById":
             return dayScheduleCommandExecutor.getDayScheduleById(arguments);
-        } else if ("setLessonDaySchedule".equals(command)) {
+        case "setLessonDaySchedule":
             return dayScheduleCommandExecutor.setLessonDaySchedule(arguments);
-        } else if ("getLessonsByDaySchedule".equals(command)) {
+        case "getLessonsByDaySchedule":
             return dayScheduleCommandExecutor.getLessonsByDaySchedule(arguments);
-        } else if ("getGroupIdList".equals(command)) {
+        case "getGroupIdList":
             return groupCommandExecutor.getGroupIdList();
-        } else if ("createGroup".equals(command)) {
+        case "createGroup":
             return groupCommandExecutor.createGroup(arguments);
-        } else if ("updateGroup".equals(command)) {
+        case "updateGroup":
             return groupCommandExecutor.updateGroup(arguments);
-        } else if ("deleteGroup".equals(command)) {
+        case "deleteGroup":
             return groupCommandExecutor.deleteGroup(arguments);
-        } else if ("getGroupById".equals(command)) {
+        case "getGroupById":
             return groupCommandExecutor.getGroupById(arguments);
-        } else if ("setGroupStudent".equals(command)) {
+        case "setGroupStudent":
             return groupCommandExecutor.setGroupStudent(arguments);
-        } else if ("getStudentsByGroup".equals(command)) {
+        case "getStudentsByGroup":
             return groupCommandExecutor.getStudentsByGroup(arguments);
-        } else if ("getStudentIdList".equals(command)) {
+        case "getStudentIdList":
             return studentCommandExecutor.getStudentIdList();
-        } else if ("createStudent".equals(command)) {
+        case "createStudent":
             return studentCommandExecutor.createStudent(arguments);
-        } else if ("updateStudent".equals(command)) {
+        case "updateStudent":
             return studentCommandExecutor.updateStudent(arguments);
-        } else if ("deleteStudent".equals(command)) {
+        case "deleteStudent":
             return studentCommandExecutor.deleteStudent(arguments);
-        } else if ("getStudentById".equals(command)) {
+        case "getStudentById":
             return studentCommandExecutor.getStudentById(arguments);
-        } else if ("getYearScheduleIdList".equals(command)) {
+        case "getYearScheduleIdList":
             return yearScheduleCommandExecutor.getYearScheduleIdList();
-        } else if ("getYearScheduleById".equals(command)) {
+        case "getYearScheduleById":
             return yearScheduleCommandExecutor.getYearScheduleById(arguments);
-        } else if ("createYearSchedule".equals(command)) {
+        case "createYearSchedule":
             return yearScheduleCommandExecutor.createYearSchedule(arguments);
-        } else if ("deleteYearSchedule".equals(command)) {
+        case "deleteYearSchedule":
             return yearScheduleCommandExecutor.deleteYearSchedule(arguments);
-        } else if ("updateYearSchedule".equals(command)) {
+        case "updateYearSchedule":
             return yearScheduleCommandExecutor.updateYearSchedule(arguments);
-        } else if ("setDayScheduleYearSchedule".equals(command)) {
+        case "setDayScheduleYearSchedule":
             return yearScheduleCommandExecutor.setDayScheduleYearSchedule(arguments);
-        } else if ("getDayScheduleByYearSchedule".equals(command)) {
+        case "getDayScheduleByYearSchedule":
             return yearScheduleCommandExecutor.getDayScheduleByYearSchedule(arguments);
         }
 
