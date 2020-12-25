@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-@Component
-public class YearScheduleDAO implements DAO<YearSchedule> {
-
-    @Autowired
-    EntityManagerConfig emf;
+@Transactional @Component 
+public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedule> {
 
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -32,7 +28,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             result = em.find(YearSchedule.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get YearSchedule By Id", e);
@@ -44,7 +40,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
 
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.getTransaction().commit();
             YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
@@ -62,7 +58,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         boolean result = false;
         try {
 
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             YearSchedule oldYearSchedule = (YearSchedule) em.find(YearSchedule.class, id);
             oldYearSchedule.setYear(yearSchedule.getYear());
@@ -77,7 +73,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public boolean create(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.persist(yearSchedule);
             em.getTransaction().commit();
@@ -86,13 +82,12 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             throw new DAOException("Could not create YearSchedule", e);
         }
         return result;
-
     }
 
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class)
                     .getResultList();
@@ -103,5 +98,4 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         }
         return yearSchedules;
     }
-
 }

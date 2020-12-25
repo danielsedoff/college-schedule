@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Lesson;
 
-@Component
-public class LessonDAO implements DAO<Lesson> {
+@Transactional @Component 
+public class LessonDAO extends EntityManagedDAO implements DAO<Lesson> {
 
-    @Autowired
-    EntityManagerConfig emf;
     private static Logger logger = LoggerFactory.getLogger(LessonDAO.class);
 
     public List<Integer> getIdList() throws DAOException {
@@ -36,7 +33,7 @@ public class LessonDAO implements DAO<Lesson> {
     public Lesson getById(Integer id) throws DAOException {
         Lesson result = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -49,7 +46,7 @@ public class LessonDAO implements DAO<Lesson> {
 
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
@@ -67,7 +64,7 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
             oldLesson.setEndTime(lesson.getEndTime());
@@ -86,7 +83,7 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.persist(lesson);
             em.getTransaction().commit();
@@ -102,7 +99,7 @@ public class LessonDAO implements DAO<Lesson> {
     public List<Lesson> getList() throws DAOException {
         List<Lesson> lessons = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             lessons = em.createQuery("from Lesson", Lesson.class).getResultList();
             em.getTransaction().commit();

@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@Component
-public class ProfessorDAO implements DAO<Professor> {
+@Transactional @Component 
+public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
 
-    @Autowired
-    EntityManagerConfig emf;
     private static Logger logger = LoggerFactory.getLogger(ProfessorDAO.class);
 
     public List<Integer> getIdList() throws DAOException {
@@ -36,7 +33,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             result = em.find(Professor.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -49,7 +46,7 @@ public class ProfessorDAO implements DAO<Professor> {
 
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Professor targetProfessor = em.find(Professor.class, professor.getId());
@@ -67,7 +64,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean update(Integer id, Professor professor) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
             oldProfessor.setName(professor.getName());
@@ -85,7 +82,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean create(Professor professor) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.persist(professor);
             em.getTransaction().commit();
@@ -101,7 +98,7 @@ public class ProfessorDAO implements DAO<Professor> {
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             professors = em.createQuery("from Professor", Professor.class).getResultList();
             em.getTransaction().commit();

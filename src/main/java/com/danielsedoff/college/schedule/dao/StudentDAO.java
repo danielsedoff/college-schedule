@@ -5,20 +5,16 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.EntityManagerConfig;
 import com.danielsedoff.college.schedule.model.Student;
 
-@Component
-public class StudentDAO implements DAO<Student> {
-
-    @Autowired
-    EntityManagerConfig emf;
+@Transactional @Component 
+public class StudentDAO extends EntityManagedDAO implements DAO<Student> {
 
     private static Logger logger = LoggerFactory.getLogger(StudentDAO.class);
 
@@ -38,7 +34,7 @@ public class StudentDAO implements DAO<Student> {
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             result = em.find(Student.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -51,7 +47,7 @@ public class StudentDAO implements DAO<Student> {
 
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             em.getTransaction().commit();
             Student targetStudent = em.find(Student.class, student.getId());
@@ -69,7 +65,7 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             Student oldStudent = (Student) em.find(Student.class, id);
             oldStudent.setGroup(student.getGroup());
@@ -86,7 +82,7 @@ public class StudentDAO implements DAO<Student> {
 
     public boolean create(Student student) throws DAOException {
         boolean result = false;
-        EntityManager em = emf.getFactory().createEntityManager();
+        EntityManager em = getEntityManagerBean();
         EntityTransaction trn = em.getTransaction();
         try {
             trn.begin();
@@ -107,7 +103,7 @@ public class StudentDAO implements DAO<Student> {
     public List<Student> getList() throws DAOException {
         List<Student> students = null;
         try {
-            EntityManager em = emf.getFactory().createEntityManager();
+            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             students = em.createQuery("from Student", Student.class).getResultList();
             em.getTransaction().commit();
