@@ -14,7 +14,7 @@ import com.danielsedoff.college.schedule.model.Student;
 
 @Service
 public class GroupService {
-    @Autowired
+
     private GroupDAO groupdao;
 
     @Autowired

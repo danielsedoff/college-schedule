@@ -24,12 +24,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.danielsedoff.college.schedule.config.TestWebConfig;
+import com.danielsedoff.college.schedule.dao.CourseDAO;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
 class CourseListControllerTest {
+
+    @Autowired
+    CourseDAO coursedao;
 
     @Autowired
     private WebApplicationContext wac;
