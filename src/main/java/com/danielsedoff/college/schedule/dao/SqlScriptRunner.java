@@ -3,7 +3,6 @@ package com.danielsedoff.college.schedule.dao;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -16,9 +15,11 @@ public class SqlScriptRunner {
 
     @Autowired
     DataSource dataSource;
+    
+    @Autowired
+    ScriptRunner runner;
 
-    public void readSQLFileWithIbatis(String fileName) throws IOException, SQLException {
-        ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
+    public void readSQLFileWithIbatis(String fileName) throws IOException {
         File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
         runner.setLogWriter(null);
         runner.setAutoCommit(true);

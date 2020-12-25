@@ -8,40 +8,33 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @ComponentScan("com.danielsedoff.college.schedule")
-@PropertySource(value = "classpath:database.properties")
+@PropertySource("classpath:database.properties")
 public class AppConfig {
 
-    private static final String URL = "url";
-    private static final String USER = "dbuser";
-    private static final String DRIVER = "driver";
-    private static final String PASSWORD = "dbpassword";
+    @Autowired
+    Environment environment;
 
     @Autowired
-    private Environment env;
+    DriverManagerDataSource driverManagerDataSource;
+
+    private final String URL = "url";
+    private final String USER = "dbuser";
+    private final String DRIVER = "driver";
+    private final String PASSWORD = "dbpassword";
+
 
     @Bean
-    public DataSource dataSource() {
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty(DRIVER));
-        dataSource.setUrl(env.getProperty(URL));
-        dataSource.setUsername(env.getProperty(USER));
-        dataSource.setPassword(env.getProperty(PASSWORD));
-
-        return dataSource;
+    DataSource dataSource() {
+        driverManagerDataSource.setUrl(environment.getProperty(URL));
+        driverManagerDataSource.setUsername(environment.getProperty(USER));
+        driverManagerDataSource.setPassword(environment.getProperty(PASSWORD));
+        driverManagerDataSource.setDriverClassName(environment.getProperty(DRIVER));
+        return driverManagerDataSource;
     }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-
-        JdbcTemplate template = new JdbcTemplate();
-        template.setDataSource(dataSource());
-
-        return template;
-    }
+    
+    
 }

@@ -12,23 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.controller.StudentListingController;
-import com.danielsedoff.college.schedule.service.ProfessorService;
 
+@Component
 @WebServlet(name = "StudentStatus", urlPatterns = { "/students" })
 public class StudentStatus extends HttpServlet {
 
     private static final long serialVersionUID = -6196575704508139464L;
-    private static Logger logger = LoggerFactory.getLogger(ProfessorService.class);
+    private static Logger logger = LoggerFactory.getLogger(StudentStatus.class);
 
+    @Autowired
+    StudentListingController studentListingController;
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         ServletOutputStream out = resp.getOutputStream();
 
-        StudentListingController studentListingController = new StudentListingController();
         String userMessageString;
         try {
             userMessageString = studentListingController.getStudentIds();
