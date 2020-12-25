@@ -1,0 +1,12 @@
+if not exist com goto nocom
+cd com
+ren foxminded danielsedoff
+cd ..
+move com ..
+cd ..
+del ua\deua.bat
+rd ua
+
+
+
+:nocom
