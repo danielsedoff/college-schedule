@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
@@ -19,7 +18,7 @@ public class GroupService {
     private GroupDAO groupdao;
 
     @Autowired
-    public GroupService(GroupDAO groupdao, StudentDAO studentdao) {
+    public GroupService(GroupDAO groupdao) {
         this.groupdao = groupdao;
     }
 

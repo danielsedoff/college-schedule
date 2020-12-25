@@ -33,6 +33,8 @@ public class StudentListController {
             students.add(ss.getStudentById(id));
         }
         model.addAttribute("students", students);
+        model.addAttribute("testvalue", "passed");
+
         return "students";
     }
 }

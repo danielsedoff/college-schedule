@@ -25,19 +25,23 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.danielsedoff.college.schedule.config.TestWebConfig;
-import com.danielsedoff.college.schedule.dao.CourseDAO;
-import com.danielsedoff.college.schedule.service.CourseService;
+import com.danielsedoff.college.schedule.dao.GroupDAO;
+import com.danielsedoff.college.schedule.dao.StudentDAO;
+import com.danielsedoff.college.schedule.service.GroupService;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-class CourseListControllerTest {
+class GroupListControllerTest {
     @Mock
-    CourseService courseService;
+    GroupService groupService;
 
     @Autowired
-    CourseDAO coursedao;
+    GroupDAO groupdao;
+    
+    @Autowired
+    StudentDAO studentdao;
 
     @Autowired
     private WebApplicationContext wac;
@@ -55,17 +59,17 @@ class CourseListControllerTest {
 
         assertNotNull(servletContext);
         assertTrue(servletContext instanceof MockServletContext);
-        assertNotNull(wac.getBean("courseListController"));
+        assertNotNull(wac.getBean("groupListController"));
     }
 
     @Test
     void mockMvcShouldReturnViewName() throws Exception {
-        mockMvc.perform(get("/courses")).andDo(print()).andExpect(view().name("courses"));
+        mockMvc.perform(get("/groups")).andDo(print()).andExpect(view().name("groups"));
     }
 
     @Test
     void responseShouldContainAttribute() throws Exception {
-        mockMvc.perform(get("/courses")).andExpect(status().isOk())
+        mockMvc.perform(get("/groups")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("testvalue"));
     }
 }

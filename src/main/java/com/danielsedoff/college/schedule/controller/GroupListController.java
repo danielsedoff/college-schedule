@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.service.GroupService;
 
@@ -17,13 +15,10 @@ import com.danielsedoff.college.schedule.service.GroupService;
 public class GroupListController {
 
     @Autowired
-    private GroupDAO groupdao;
-    @Autowired
-    private StudentDAO studentdao;
+    private GroupService gs;
 
     @GetMapping("/groups")
-    public String main(Model model) {
-        GroupService gs = new GroupService(groupdao, studentdao);
+    public String getGroups(Model model) {
         List<Integer> ids = gs.getGroupIdList();
         List<Group> groups = new ArrayList<>();
 
@@ -31,6 +26,7 @@ public class GroupListController {
             groups.add(gs.getGroupById(id));
         }
         model.addAttribute("groups", groups);
+        model.addAttribute("testvalue", "passed");
         return "groups";
     }
 

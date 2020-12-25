@@ -35,6 +35,8 @@ public class LessonListController {
             lessons.add(gs.getLessonById(id));
         }
         model.addAttribute("lessons", lessons);
+        model.addAttribute("testvalue", "passed");
+        
         return "lessons";
     }
 

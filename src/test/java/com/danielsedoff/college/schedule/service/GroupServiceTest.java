@@ -11,15 +11,13 @@ import org.mockito.Mockito;
 
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
 class GroupServiceTest {
     GroupDAO groupdao = Mockito.mock(GroupDAO.class);
-    StudentDAO stdao = Mockito.mock(StudentDAO.class);
 
-    GroupService gservice = new GroupService(groupdao, stdao);
+    GroupService gservice = new GroupService(groupdao);
 
     @Test
     void testGetGroupIdList() throws DAOException {
