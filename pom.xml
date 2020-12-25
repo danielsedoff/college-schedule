@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.danielsedoff</groupId>
     <artifactId>college-schedule</artifactId>
-    <version>0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>college-schedule</name>
     <description>College Schedule</description>
 
@@ -25,14 +25,14 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
