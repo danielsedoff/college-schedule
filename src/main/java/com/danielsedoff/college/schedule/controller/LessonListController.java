@@ -35,7 +35,7 @@ public class LessonListController {
             lessons.add(gs.getLessonById(id));
         }
         model.addAttribute("lessons", lessons);
-        return "lessons.html";
+        return "lessons";
     }
 
 }

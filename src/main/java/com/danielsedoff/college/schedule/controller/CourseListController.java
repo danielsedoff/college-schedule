@@ -22,7 +22,7 @@ public class CourseListController {
     private CourseDAO coursedao;
 
     @GetMapping("/courses")
-    public String main(Model model) {
+    public String getCourses(Model model) {
         CourseService cs = new CourseService(coursedao, professordao);
         List<Integer> ids = cs.getCourseIdList();
         List<Course> courses = new ArrayList<>();
@@ -31,6 +31,7 @@ public class CourseListController {
             courses.add(cs.getCourseById(id));
         }
         model.addAttribute("courses", courses);
-        return "courses.html";
+        model.addAttribute("testvalue", "passed");
+        return "courses";
     }
 }

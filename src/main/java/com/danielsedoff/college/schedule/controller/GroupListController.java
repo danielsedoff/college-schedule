@@ -31,7 +31,7 @@ public class GroupListController {
             groups.add(gs.getGroupById(id));
         }
         model.addAttribute("groups", groups);
-        return "groups.html";
+        return "groups";
     }
 
 }

@@ -33,6 +33,6 @@ public class StudentListController {
             students.add(ss.getStudentById(id));
         }
         model.addAttribute("students", students);
-        return "students.html";
+        return "students";
     }
 }

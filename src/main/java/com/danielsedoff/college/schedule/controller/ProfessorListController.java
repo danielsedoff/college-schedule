@@ -27,7 +27,7 @@ public class ProfessorListController {
             professors.add(ps.getProfessorById(id));
         }
         model.addAttribute("professors", professors);
-        return "professors.html";
+        return "professors";
     }
 
 }
