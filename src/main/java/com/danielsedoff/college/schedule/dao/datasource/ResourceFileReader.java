@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller.datasource;
+package com.danielsedoff.college.schedule.dao.datasource;
 
 import java.io.BufferedReader;
 import java.io.File;

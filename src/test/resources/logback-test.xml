@@ -3,8 +3,6 @@
 	<appender name="daoLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/dao.log</file>
-		<RegexFilter regex="college.schedule.dao*" onMatch="ACCEPT"
-			onMismatch="DENY" />
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -26,8 +24,6 @@
 	<appender name="serviceLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/service.log</file>
-        <RegexFilter regex="college.schedule.service*" onMatch="ACCEPT"
-            onMismatch="DENY" />
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -50,8 +46,6 @@
 	<appender name="springLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/spring.log</file>
-        <RegexFilter regex="org.springframework" onMatch="ACCEPT"
-            onMismatch="DENY" />
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -74,8 +68,6 @@
 	<appender name="serverLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/server.log</file>
-        <RegexFilter regex="org.apache.tomcat" onMatch="ACCEPT"
-            onMismatch="DENY" />
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -95,11 +87,23 @@
 		</encoder>
 	</appender>
 
-
-	<root level="DEBUG">
-		<appender-ref ref="daoLog" />
-		<appender-ref ref="springLog" />
-		<appender-ref ref="serviceLog" />
+	<root>
 		<appender-ref ref="serverLog" />
 	</root>
+
+	<logger name="com.danielsedoff.college.schedule.dao"
+		level="INFO" additivity="false">
+		<appender-ref ref="daoLog" />
+	</logger>
+
+	<logger name="com.danielsedoff.college.schedule.service"
+		level="INFO" additivity="false">
+		<appender-ref ref="serviceLog" />
+	</logger>
+
+	<logger name="org.springframework" level="INFO"
+		additivity="false">
+		<appender-ref ref="springLog" />
+	</logger>
+
 </configuration>
