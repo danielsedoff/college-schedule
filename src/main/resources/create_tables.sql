@@ -1,10 +1,17 @@
-DROP TABLE IF EXISTS courses CASCADE;
-DROP TABLE IF EXISTS dayschedules CASCADE;
-DROP TABLE IF EXISTS groupz CASCADE;
-DROP TABLE IF EXISTS lessons CASCADE;
-DROP TABLE IF EXISTS professors CASCADE;
-DROP TABLE IF EXISTS students CASCADE;
-DROP TABLE IF EXISTS yearchedules CASCADE;
+DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS dayschedules;
+DROP TABLE IF EXISTS groupz;
+DROP TABLE IF EXISTS lessons;
+DROP TABLE IF EXISTS professors;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS yearschedules;
+DROP TABLE IF EXISTS yearschedule_dayschedule;
+DROP TABLE IF EXISTS lesson_dayschedule;
+DROP TABLE IF EXISTS lesson_group;
+DROP TABLE IF EXISTS group_student;
+DROP TABLE IF EXISTS lesson_professor;
+DROP TABLE IF EXISTS course_professor;
+
 
 CREATE TABLE courses
 (
@@ -49,62 +56,49 @@ CREATE TABLE students
     student_id SERIAL PRIMARY KEY,
     group_id INTEGER,
     student_year INTEGER,
-    student_name CHARACTER VARYING(30),
-    FOREIGN KEY(group_id) REFERENCES groupz(group_id)
+    student_name CHARACTER VARYING(30)
 );
 
 CREATE TABLE yearschedules
 (
-    year_id SERIAL PRIMARY KEY,
+    yearschedule_id SERIAL PRIMARY KEY,
     year INTEGER
 );
 
 CREATE TABLE course_professor
 (
     course_id INTEGER,
-    professor_id INTEGER,
-    FOREIGN KEY(course_id) REFERENCES courses(course_id),
-    FOREIGN KEY(professor_id) REFERENCES professors(professor_id)
+    professor_id INTEGER
 );
 
 CREATE TABLE lesson_professor
 (
     lesson_id INTEGER,
-    professor_id INTEGER,
-    FOREIGN KEY(lesson_id) REFERENCES lessons(lesson_id),
-    FOREIGN KEY(professor_id) REFERENCES professors(professor_id)
+    professor_id INTEGER
 );
 
 CREATE TABLE group_student
 (
     group_id INTEGER,
-    student_id INTEGER,
-    FOREIGN KEY(group_id) REFERENCES groupz(group_id),
-    FOREIGN KEY(student_id) REFERENCES students(student_id)
+    student_id INTEGER
 );
 
 CREATE TABLE lesson_group
 (
     lesson_id INTEGER,
-    group_id INTEGER,
-    FOREIGN KEY(lesson_id) REFERENCES lessons(lesson_id),
-    FOREIGN KEY(group_id) REFERENCES groupz(group_id)
+    group_id INTEGER
 );
 
 CREATE TABLE lesson_dayschedule
 (
     lesson_id INTEGER,
-    dayschedule_id INTEGER,
-    FOREIGN KEY(lesson_id) REFERENCES lessons(lesson_id),
-    FOREIGN KEY(dayschedule_id) REFERENCES dayschedules(dayschedule_id)
+    dayschedule_id INTEGER
 );
 
 CREATE TABLE yearschedule_dayschedule
 (
-    year_id INTEGER,
-    dayschedule_id INTEGER,
-    FOREIGN KEY(year_id) REFERENCES yearschedules(year_id),
-    FOREIGN KEY(dayschedule_id) REFERENCES dayschedules(dayschedule_id)
+    yearschedule_id INTEGER,
+    dayschedule_id INTEGER
 );
 
 INSERT INTO groupz(group_note, department_id) VALUES ('So-so group', 1);
@@ -171,8 +165,8 @@ INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (2, 3);
 INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (3, 4);
 INSERT INTO lesson_dayschedule (lesson_id, dayschedule_id) VALUES (4, 1);
 
-INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 1);
-INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 2);
-INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 3);
-INSERT INTO yearschedule_dayschedule (year_id, dayschedule_id) VALUES (1, 4);
+INSERT INTO yearschedule_dayschedule (yearschedule_id, dayschedule_id) VALUES (1, 1);
+INSERT INTO yearschedule_dayschedule (yearschedule_id, dayschedule_id) VALUES (1, 2);
+INSERT INTO yearschedule_dayschedule (yearschedule_id, dayschedule_id) VALUES (1, 3);
+INSERT INTO yearschedule_dayschedule (yearschedule_id, dayschedule_id) VALUES (1, 4);
 

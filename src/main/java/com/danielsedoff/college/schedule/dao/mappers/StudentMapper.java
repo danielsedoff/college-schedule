@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.danielsedoff.college.schedule.model.Student;
 
-public class StudentMapper implements RowMapper<Student>{
+public class StudentMapper implements RowMapper<Student> {
 
     public Student mapRow(ResultSet resultSet, int i) throws SQLException {
         Student student = new Student();

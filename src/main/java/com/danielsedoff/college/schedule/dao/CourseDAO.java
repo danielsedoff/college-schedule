@@ -22,12 +22,13 @@ public class CourseDAO implements DAO<Course> {
     private static final String SQL_SELECT_COURSE_BY_ID = "SELECT * FROM courses where course_id = ?";
     private static final String SQL_INSERT_COURSE_PROFESSOR = "INSERT INTO course_professor (course_id, professor_id) VALUES(?, ?)";
     private static final String SQL_SELECT_PROFESSOR_BY_COURSE = "SELECT professor_id FROM course_professor WHERE course_id = ?";
+    private static final String SQL_DELETE_COURSE_PROFESSOR = "DELETE FROM course_professor WHERE course_id = ?;";
 
     @Autowired
     public CourseDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
+
     public List<Integer> getIdList() {
         return jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
     }
@@ -38,6 +39,7 @@ public class CourseDAO implements DAO<Course> {
     }
 
     public boolean delete(Course course) {
+        deleteCourseProfessorByCourse(course);
         return jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
     }
 
@@ -56,12 +58,17 @@ public class CourseDAO implements DAO<Course> {
         boolean result = false;
         for (int i = 0; i < professors.size(); i++) {
             jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
-                    professors.get(1).getId());
+                    professors.get(0).getId());
         }
         return result;
     }
 
-    public List<Professor> getProfessorByCourse(ProfessorDAO professordao, Course course) {
+    public boolean deleteCourseProfessorByCourse(Course course) {
+        return 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
+    }
+
+    public List<Professor> getProfessorByCourse(ProfessorDAO professordao,
+            Course course) {
         List<Integer> professorIds = jdbcTemplate.queryForList(
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
         List<Professor> professors = new ArrayList<>();

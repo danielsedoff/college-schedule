@@ -27,14 +27,14 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 class YearScheduleDAOTest {
 
     final String SQL_FILE_NAME = "create_tables.sql";
-    
+
     @Autowired
     private YearScheduleDAO yeardao;
     @Autowired
     private DayScheduleDAO dsdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
-    
+
     @BeforeEach
     final void readSQLfile() throws IOException, SQLException {
         ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);

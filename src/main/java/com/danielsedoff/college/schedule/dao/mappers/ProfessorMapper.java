@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
-public class ProfessorMapper implements RowMapper<Professor>{
+public class ProfessorMapper implements RowMapper<Professor> {
 
     public Professor mapRow(ResultSet resultSet, int i) throws SQLException {
         Professor professor = new Professor();

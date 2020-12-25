@@ -24,7 +24,7 @@ public class YearSchedule {
     public void setLearningDays(List<DaySchedule> learningDays) {
         this.learningDays = learningDays;
     }
-    
+
     public int getId() {
         return id;
     }

@@ -54,9 +54,10 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                 dayschedule.getId()) > 0);
     }
 
-    public List<Lesson> getLessonsByDayschedule(LessonDAO lessondao, DaySchedule dayschedule) {
-        List<Integer> lessonIds = jdbcTemplate.queryForList(SQL_SELECT_LESSONS_BY_DAYSCHEDULE,
-                Integer.class, dayschedule.getId());
+    public List<Lesson> getLessonsByDayschedule(LessonDAO lessondao,
+            DaySchedule dayschedule) {
+        List<Integer> lessonIds = jdbcTemplate.queryForList(
+                SQL_SELECT_LESSONS_BY_DAYSCHEDULE, Integer.class, dayschedule.getId());
         List<Lesson> lessons = new ArrayList<>();
         for (Integer lessonId : lessonIds) {
             lessons.add(lessondao.getById(lessonId));

@@ -72,6 +72,7 @@ class GroupDAOTest {
         int expectedResult = groupdao.getIdList().size() - 1;
         Group group = new Group();
         group.setId(1);
+        studentdao.removeAllStudentsFromGroup(group);
         groupdao.delete(group);
         assertEquals(expectedResult, groupdao.getIdList().size());
     }

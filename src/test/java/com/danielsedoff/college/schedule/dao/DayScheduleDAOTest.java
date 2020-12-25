@@ -38,7 +38,7 @@ class DayScheduleDAOTest {
     final void readSQLfile() throws IOException, SQLException {
         ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
     }
-    
+
     @Test
     void testGetIdList() {
         List<Integer> result = dsdao.getIdList();

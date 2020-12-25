@@ -16,7 +16,7 @@ public class SqlScriptRunner {
 
     @Autowired
     DataSource dataSource;
-    
+
     public void readSQLFileWithIbatis(String fileName) throws IOException, SQLException {
         ScriptRunner runner = new ScriptRunner(dataSource.getConnection());
         File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
