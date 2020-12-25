@@ -7,13 +7,7 @@ radioDelete.addEventListener('change', radioChanged);
 radioUpdate.addEventListener('change', radioChanged);
 
 function radioChanged() {
-    if (document.getElementById("radioCreate").checked) {
-        radioValue = "create";
-    } else if (document.getElementById("radioDelete").checked) {
-        radioValue = "delete";
-    } else if (document.getElementById("radioUpdate").checked) {
-        radioValue = "update";
-    }
+    var radioValue = getRadioVal(document.getElementById('form1'), 'mode');
 
     var inputs = document.getElementsByTagName('input');
 
@@ -35,4 +29,22 @@ function radioChanged() {
             }
         }
     }
+}
+
+function getRadioVal(form, name) {
+    var val;
+    // get list of radio buttons with specified name
+    radioCreate = document.getElementById("radioCreate");
+    radioDelete = document.getElementById("radioDelete");
+    radioUpdate = document.getElementById("radioUpdate");
+    var radios = [radioCreate, radioDelete, radioUpdate];
+
+    // loop through list of radio buttons
+    for (var i = 0, len = radios.length; i < len; i++) {
+        if (radios[i].checked) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return val; // return value of checked radio or undefined if none checked
 }
