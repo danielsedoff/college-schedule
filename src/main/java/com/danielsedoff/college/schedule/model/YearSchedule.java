@@ -17,7 +17,7 @@ import lombok.ToString;
 public class YearSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int yearschedule_id;
     @Column(name = "year")
     private int year;
 
@@ -33,10 +33,10 @@ public class YearSchedule {
     }
 
     public int getId() {
-        return id;
+        return yearschedule_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.yearschedule_id = id;
     }
 }

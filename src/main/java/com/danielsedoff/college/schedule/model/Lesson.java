@@ -17,7 +17,7 @@ import lombok.ToString;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int lesson_id;
     @Column(name = "start_time")
     private String startTime;
     @Column(name = "end_time")
@@ -31,11 +31,11 @@ public class Lesson {
     }
 
     public int getId() {
-        return id;
+        return lesson_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.lesson_id = id;
     }
 
     public String getStartTime() {

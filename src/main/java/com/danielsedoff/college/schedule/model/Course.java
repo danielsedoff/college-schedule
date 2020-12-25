@@ -17,8 +17,7 @@ import lombok.ToString;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    private int course_id;
 
     @Column(name = "course_name")
     private String name;
@@ -33,11 +32,11 @@ public class Course {
     }
 
     public int getId() {
-        return id;
+        return course_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.course_id = id;
     }
 
     public String getName() {

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Professor extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int professor_id;
     @Column(name = "department_id")
     private int departmentId;
     @Column(name = "professor_name")
@@ -26,11 +26,11 @@ public class Professor extends Person{
     }
 
     public int getId() {
-        return id;
+        return professor_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.professor_id = id;
     }
 
     public int getDepartmentId() {
@@ -67,7 +67,7 @@ public class Professor extends Person{
 
     @Override
     public String toString() {
-        return "Professor [id=" + id + ", departmentId=" + departmentId
+        return "Professor [id=" + professor_id + ", departmentId=" + departmentId
                 + ", name=" + name + ", specialNotes=" + specialNotes
                 + ", ranksTitles=" + ranksTitles + "]";
     }

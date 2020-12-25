@@ -19,7 +19,7 @@ import lombok.ToString;
 public class DaySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int dayschedule_id;
     @Column(name = "date")
     private LocalDateTime day;
     @Column(name = "hasOverlaps")
@@ -29,11 +29,11 @@ public class DaySchedule {
     }
 
     public int getId() {
-        return id;
+        return dayschedule_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.dayschedule_id = id;
     }
 
     public LocalDateTime getDay() {

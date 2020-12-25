@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.danielsedoff.college.schedule.dto.StudentDTO;
 import com.danielsedoff.college.schedule.model.Student;
+import com.danielsedoff.college.schedule.service.GroupService;
 import com.danielsedoff.college.schedule.service.StudentService;
 
 @Controller
@@ -21,6 +22,9 @@ public class StudentWebController {
 
     @Autowired
     StudentService ss;
+
+    @Autowired
+    GroupService gs;
 
     @GetMapping("/studentList")
     public String getStudents(Model model) {
@@ -44,7 +48,7 @@ public class StudentWebController {
         Student student = ss.getStudentById(id);
         studentdto.setId(id);
         studentdto.setMode("update");
-        studentdto.setGroupId(student.getGroupId());
+        studentdto.setGroupId(student.getGroup().getId());
         studentdto.setName(student.getName());
         studentdto.setSchoolYear(student.getSchoolYear());
         model.addAttribute("testvalue", "passed");
@@ -61,7 +65,7 @@ public class StudentWebController {
     @PostMapping("/createStudent")
     public String createStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         Student student = new Student();
-        student.setGroupId(studentdto.getGroupId());
+        student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
         ss.createStudent(student);
@@ -73,7 +77,7 @@ public class StudentWebController {
     public String updateStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
         Student student = new Student();
         student.setId(studentdto.getId());
-        student.setGroupId(studentdto.getGroupId());
+        student.setGroup(gs.getGroupById(studentdto.getGroupId()));
         student.setName(studentdto.getName());
         student.setSchoolYear(studentdto.getSchoolYear());
         ss.updateStudent(student.getId(), student);
