@@ -32,7 +32,7 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_LESSONS, Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -44,7 +44,7 @@ public class LessonDAO implements DAO<Lesson> {
                     lesson.getEndTime(), lesson.getProfessor().getId(),
                     lesson.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_LESSONS, lesson.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class LessonDAO implements DAO<Lesson> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_LESSONS, lesson.getStartTime(),
                     lesson.getEndTime(), lesson.getProfessor().getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class LessonDAO implements DAO<Lesson> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_LESSON_BY_ID,
                     new Object[] { lessonId }, new LessonMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class LessonDAO implements DAO<Lesson> {
             result = (jdbcTemplate.update(SQL_INSERT_LESSON_GROUP, lesson.getId(),
                     group.getId()) > 0);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not set Lesson Group", e);
         }
         return result;
     }
@@ -101,7 +101,7 @@ public class LessonDAO implements DAO<Lesson> {
                 groups.add(groupdao.getById(groupId));
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Groups By Lesson", e);
         }
         return groups;
     }

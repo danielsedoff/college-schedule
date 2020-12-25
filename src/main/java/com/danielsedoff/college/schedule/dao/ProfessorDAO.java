@@ -30,7 +30,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     Integer.class);
         } catch (Exception e) {
 
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -42,7 +42,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     new Object[] { professorId }, new ProfessorMapper());
         } catch (Exception e) {
 
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     professor.getId()) > 0;
         } catch (Exception e) {
 
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
     }
@@ -67,7 +67,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     professor.getDepartmentId(), professor.getId()) > 0;
         } catch (Exception e) {
 
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -80,7 +80,7 @@ public class ProfessorDAO implements DAO<Professor> {
                     professor.getDepartmentId()) > 0;
         } catch (Exception e) {
 
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
     }

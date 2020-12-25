@@ -32,7 +32,7 @@ public class YearScheduleService {
         try {
             result = yearscheduledao.getIdList();
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get Year Schedule Id List", e);
         }
         return result;
     }
@@ -42,7 +42,7 @@ public class YearScheduleService {
         try {
             result = yearscheduledao.getById(yearId);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get a Year Schedule By Id", e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class YearScheduleService {
         try {
             result = yearscheduledao.create(yearschedule);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not create a Year Schedule", e);
         }
         return result;
     }
@@ -64,7 +64,7 @@ public class YearScheduleService {
         try {
             result = yearscheduledao.delete(yearscheduledao.getById(yearId));
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not delete a Year Schedule", e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class YearScheduleService {
             ys.setYear(year);
             result = yearscheduledao.update(year, ys);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not update a Year Schedule", e);
         }
         return result;
     }
@@ -89,7 +89,7 @@ public class YearScheduleService {
             result = yearscheduledao.setDayScheduleYearSchedule(dayschedule,
                     yearschedule);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not set a Day Schedule-Year Schedule Relation", e);
         }
         return result;
     }
@@ -100,7 +100,7 @@ public class YearScheduleService {
             YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
             result = yearscheduledao.getDayScheduleYearSchedule(yearschedule);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get Day Schedules List By Year Schedule", e);
         }
         return result;
     }

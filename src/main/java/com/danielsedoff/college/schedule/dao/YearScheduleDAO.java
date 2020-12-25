@@ -36,7 +36,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_YEARS, Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -47,7 +47,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             result = jdbcTemplate.update(SQL_UPDATE_YEARSCHEDULES, yearschedule.getYear(),
                     yearschedule.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -58,7 +58,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             result = jdbcTemplate.update(SQL_DELETE_FROM_YEARSCHEDULES,
                     yearschedule.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
 
@@ -71,7 +71,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
                     yearschedule.getYear()) > 0;
 
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
 
@@ -83,7 +83,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_YEARSCHEDULE_BY_ID,
                     new Object[] { yearId }, new YearScheduleMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
 
@@ -96,7 +96,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
             result = (jdbcTemplate.update(SQL_INSERT_YEARSCHEDULE_DAYSCHEDULE,
                     dayschedule.getId(), yearschedule.getId()) > 0);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not set Day Schedule Year Schedule", e);
         }
         return result;
 
@@ -112,7 +112,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
                 dayschedules.add(dayscheduledao.getById(dayId));
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Day Schedule by Year Schedule", e);
         }
 
         return dayschedules;

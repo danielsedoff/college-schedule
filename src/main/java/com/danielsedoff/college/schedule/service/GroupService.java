@@ -30,7 +30,7 @@ public class GroupService {
         try {
             result = groupdao.getIdList();
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get Group ID List", e);
         }
         return result;
     }
@@ -40,7 +40,7 @@ public class GroupService {
         try {
             result = groupdao.create(group);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Create a Group", e);
         }
         return result;
     }
@@ -50,7 +50,7 @@ public class GroupService {
         try {
             result = groupdao.update(groupId, group);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Update a Group", e);
         }
         return result;
     }
@@ -60,7 +60,7 @@ public class GroupService {
         try {
             result = groupdao.delete(groupdao.getById(groupId));
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Delete a Group by ID", e);
         }
         return result;
     }
@@ -70,7 +70,7 @@ public class GroupService {
         try {
             result = groupdao.getById(groupId);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get a Group by ID", e);
         }
         return result;
     }
@@ -80,7 +80,7 @@ public class GroupService {
         try {
             result = groupdao.setGroupStudent(groupdao.getById(groupId), students);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Set a Group-Student Relation", e);
         }
         return result;
     }
@@ -91,7 +91,7 @@ public class GroupService {
             Group group = groupdao.getById(groupId);
             result = groupdao.getStudentsByGroup(group);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get a Group by ID", e);
         }
         return result;
     }

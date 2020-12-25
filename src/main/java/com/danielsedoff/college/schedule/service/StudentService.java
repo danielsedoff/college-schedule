@@ -28,12 +28,12 @@ public class StudentService {
 
     private static Logger logger = LoggerFactory.getLogger(StudentService.class);
 
-    List<Integer> getStudentIdList() {
+    public List<Integer> getStudentIdList() {
         List<Integer> result = null;
         try {
             result = professordao.getIdList();
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get a Student Id List", e);
         }
         return result;
     }
@@ -44,7 +44,7 @@ public class StudentService {
             result = studentdao.create(student);
 
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not create a Student", e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class StudentService {
         try {
             result = studentdao.update(studId, student);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not update a Student", e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class StudentService {
             Student st = studentdao.getById(studId);
             result = studentdao.delete(st);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not delete a Student", e);
         }
         return result;
     }
@@ -75,7 +75,7 @@ public class StudentService {
         try {
             result = studentdao.getById(studentId);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get a Student By Id", e);
         }
         return result;
     }

@@ -35,7 +35,7 @@ public class DayScheduleService {
         try {
             result = dayscheduledao.getIdList();
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not get Day Schedule ID List", e);
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class DayScheduleService {
         try {
             result = dayscheduledao.create(ds);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not create a Day Schedule", e);
         }
         return result;
     }
@@ -63,7 +63,7 @@ public class DayScheduleService {
         try {
             result = dayscheduledao.update(dayschedId, daysched);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Update a Day Schedule", e);
         }
         return result;
     }
@@ -73,7 +73,7 @@ public class DayScheduleService {
         try {
             result = dayscheduledao.delete(dayscheduledao.getById(dayschedId));
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Delete Day Schedule by ID", e);
         }
         return result;
     }
@@ -83,7 +83,7 @@ public class DayScheduleService {
         try {
             result = dayscheduledao.getById(dayschedId);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get a Day Schedule by ID", e);
         }
         return result;
     }
@@ -95,7 +95,7 @@ public class DayScheduleService {
             DaySchedule daysched = dayscheduledao.getById(dayschedId);
             result = dayscheduledao.setLessonDayschedule(lesson, daysched);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Set Lesson-Day Schedule Relation", e);
         }
         return result;
     }
@@ -106,7 +106,7 @@ public class DayScheduleService {
             DaySchedule daysched = dayscheduledao.getById(dayschedId);
             result = dayscheduledao.getLessonsByDayschedule(daysched);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get Lesson-Day Schedule Relation", e);
         }
         return result;
     }

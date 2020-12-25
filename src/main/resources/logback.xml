@@ -1,26 +1,38 @@
-<configuration>
-	<property name="HOME_LOG" value="logs/app.log" />
-	<appender name="CONSOLE"
-		class="com.danielsedoff.college.schedule.dao.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>
-				%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
-			</Pattern>
-		</layout>
-	</appender>
-	<appender name="FILE" class="com.danielsedoff.college.schedule.dao.FileAppender">
-		<file>${HOME_LOG}</file>
-		<append>true</append>
-		<immediateFlush>true</immediateFlush>
+
+<configuration scan="true">
+	<appender name="consoleAppender"
+		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d %p %c{1.} [%t] %m%n</pattern>
+			<charset>UTF-8</charset>
+			<Pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</Pattern>
 		</encoder>
 	</appender>
-	<logger name="com.danielsedoff.college.schedule" level="debug" additivity="false">
-		<appender-ref ref="CONSOLE" />
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/application.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="consoleAppender" />
 		<appender-ref ref="FILE" />
-	</logger>
-	<root level="error">
-		<appender-ref ref="CONSOLE" />
 	</root>
 </configuration>

@@ -37,7 +37,7 @@ public class LessonService {
             Lesson lesson = lessondao.getById(lessonId);
             result = lessondao.getGroupsByLesson(lesson);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get Groups by Lesson ID", e);
         }
         return result;
     }
@@ -48,7 +48,7 @@ public class LessonService {
             result = lessondao.setLessonGroup(lessondao.getById(lessonId),
                     groupdao.getById(groupId));
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Set Lesson-Group Relation", e);
         }
         return result;
     }
@@ -58,7 +58,7 @@ public class LessonService {
         try {
             result = lessondao.getById(lessonId);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get a Lesson by ID", e);
         }
         return result;
     }
@@ -68,7 +68,7 @@ public class LessonService {
         try {
             result = lessondao.create(lesson);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Create a Lesson", e);
         }
         return result;
     }
@@ -78,7 +78,7 @@ public class LessonService {
         try {
             result = lessondao.delete(lessondao.getById(lessonId));
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Delete a Lesson by ID", e);
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class LessonService {
         try {
             result = lessondao.update(lessonId, lesson);
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Update a Lesson", e);
         }
         return result;
     }
@@ -98,7 +98,7 @@ public class LessonService {
         try {
             result = lessondao.getIdList();
         } catch (DAOException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("Could not Get a Lesson ID List", e);
         }
         return result;
     }

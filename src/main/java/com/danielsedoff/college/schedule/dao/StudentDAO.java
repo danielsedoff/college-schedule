@@ -32,7 +32,7 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_STUDENTS,
                     Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_STUDENT_BY_ID,
                     new Object[] { studentId }, new StudentMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
 
@@ -54,7 +54,7 @@ public class StudentDAO implements DAO<Student> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_STUDENTS, student.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
 
@@ -66,7 +66,7 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_UPDATE_STUDENTS, student.getGroup(),
                     student.getSchoolYear(), student.getName(), student.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -77,7 +77,7 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_STUDENTS, student.getGroup(),
                     student.getSchoolYear(), student.getName()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
     }
@@ -88,7 +88,7 @@ public class StudentDAO implements DAO<Student> {
             result = jdbcTemplate.update(SQL_REMOVE_ALL_STUDENTS_FROM_GROUP,
                     group.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not remove All Students From Group", e);
         }
         return result;
 

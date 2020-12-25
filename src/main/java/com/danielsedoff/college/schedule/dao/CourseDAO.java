@@ -38,7 +38,7 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_COURSES, Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_COURSE_BY_ID,
                     new Object[] { id }, new CourseMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
     }
@@ -61,7 +61,7 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_COURSES, course.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
     }
@@ -72,7 +72,7 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.update(SQL_UPDATE_COURSES, course.getName(),
                     course.getCourseDescription(), course.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -83,7 +83,7 @@ public class CourseDAO implements DAO<Course> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_COURSES, course.getName(),
                     course.getCourseDescription()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
 
@@ -99,7 +99,7 @@ public class CourseDAO implements DAO<Course> {
                         professors.get(i).getId());
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not set Course-Professor Relation", e);
         }
         return result;
 
@@ -110,7 +110,7 @@ public class CourseDAO implements DAO<Course> {
         try {
             result = 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete Course Professor By Course", e);
         }
         return result;
 
@@ -127,7 +127,7 @@ public class CourseDAO implements DAO<Course> {
                 professors.add(professordao.getById(professorId));
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Professor By Course", e);
         }
         return professors;
     }

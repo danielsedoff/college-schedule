@@ -38,7 +38,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_GROUPZ, Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_GROUP_BY_ID,
                     new Object[] { id }, new GroupMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
 
@@ -60,7 +60,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = jdbcTemplate.update(SQL_DELETE_FROM_GROUPZ, group.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
 
@@ -76,7 +76,7 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.update(SQL_UPDATE_GROUPZ, notes.toString(),
                     group.getDepartmentId(), group.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class GroupDAO implements DAO<Group> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_GROUPZ, group.getSpecialNotes(),
                     group.getDepartmentId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
     }
@@ -102,7 +102,7 @@ public class GroupDAO implements DAO<Group> {
                         students.get(0).getId());
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not set Group Student", e);
         }
         return result;
     }
@@ -112,7 +112,7 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = 0 < jdbcTemplate.update(SQL_DELETE_GROUP_STUDENT, group.getId());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete Group Student", e);
         }
         return result;
     }
@@ -126,7 +126,7 @@ public class GroupDAO implements DAO<Group> {
                 students.add(studentdao.getById(studentId));
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Students By Group", e);
         }
 
         return students;

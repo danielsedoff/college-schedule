@@ -39,7 +39,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.queryForList(SQL_SELECT_ID_FROM_DAYSCHEDULES,
                     Integer.class);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Id List", e);
         }
         return result;
     }
@@ -50,7 +50,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_UPDATE_DAYSCHEDULES, daySchedule.getDay(),
                     daySchedule.getHasOverlaps(), daySchedule.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not update", e);
         }
         return result;
     }
@@ -61,7 +61,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_DELETE_FROM_DAYSCHEDULES,
                     daySchedule.getId()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not delete", e);
         }
         return result;
 
@@ -74,7 +74,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.update(SQL_INSERT_INTO_DAYSCHEDULES, dateText,
                     daySchedule.getHasOverlaps()) > 0;
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not create", e);
         }
         return result;
     }
@@ -85,7 +85,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = jdbcTemplate.queryForObject(SQL_SELECT_DAYSCHEDULE_BY_ID,
                     new Object[] { dayScheduleId }, new DayScheduleMapper());
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get By Id", e);
         }
         return result;
     }
@@ -97,7 +97,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
             result = (jdbcTemplate.update(SQL_INSERT_LESSON_DAYSCHEDULE, lesson.getId(),
                     dayschedule.getId()) > 0);
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not set Lesson Dayschedule", e);
         }
         return result;
     }
@@ -113,7 +113,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                 lessons.add(lessondao.getById(lessonId));
             }
         } catch (Exception e) {
-            throw new DAOException(e.getMessage(), e);
+            throw new DAOException("Could not get Lessons By Dayschedule", e);
         }
         return lessons;
     }
