@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ThymeControllerSample {
     @GetMapping("/animal")
     public String main(Model model) {
-        model.addAttribute("field1", "boar");
-        return "animal1";
+        model.addAttribute("message", "Help the Wildlife!");
+        return "animals.html";
     }
 }
