@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-@Transactional @Component 
-public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedule> {
+@Component
+public class YearScheduleDAO implements DAO<YearSchedule> {
+    @PersistenceContext
+    private EntityManager em;
 
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
@@ -25,10 +28,11 @@ public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedul
         return result;
     }
 
+    @Transactional(readOnly = true)
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
-            EntityManager em = getEntityManagerBean();
+
             result = em.find(YearSchedule.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get YearSchedule By Id", e);
@@ -36,11 +40,11 @@ public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedul
         return result;
     }
 
+    @Transactional
     public boolean delete(YearSchedule yearSchedule) throws DAOException {
-
         boolean result = false;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
@@ -54,11 +58,11 @@ public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedul
         return result;
     }
 
+    @Transactional
     public boolean update(Integer id, YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
 
-            EntityManager em = getEntityManagerBean();
             em.getTransaction().begin();
             YearSchedule oldYearSchedule = (YearSchedule) em.find(YearSchedule.class, id);
             oldYearSchedule.setYear(yearSchedule.getYear());
@@ -70,10 +74,11 @@ public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedul
         return result;
     }
 
+    @Transactional
     public boolean create(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             em.persist(yearSchedule);
             em.getTransaction().commit();
@@ -84,13 +89,13 @@ public class YearScheduleDAO extends EntityManagedDAO implements DAO<YearSchedul
         return result;
     }
 
+    @Transactional(readOnly = true)
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
-            yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class)
-                    .getResultList();
+            yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class).getResultList();
             em.getTransaction().commit();
             em.close();
         } catch (Exception e) {

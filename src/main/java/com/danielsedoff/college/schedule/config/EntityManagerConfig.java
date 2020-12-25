@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.config;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -8,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EntityManagerConfig {
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
+
     @Bean
-    public EntityManagerFactory getFactory() {
-        return Persistence.createEntityManagerFactory("PU");
+    EntityManager em() {
+        return emf.createEntityManager();
     }
 }

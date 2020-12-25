@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
-@Transactional @Component 
-public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
+@Component
+public class ProfessorDAO implements DAO<Professor> {
+    @PersistenceContext
+    private EntityManager em;
 
     private static Logger logger = LoggerFactory.getLogger(ProfessorDAO.class);
 
+    @Transactional(readOnly = true)
     public List<Integer> getIdList() throws DAOException {
         List<Integer> result = new ArrayList<>();
         try {
@@ -30,10 +34,11 @@ public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
         return result;
     }
 
+    @Transactional(readOnly = true)
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
-            EntityManager em = getEntityManagerBean();
+
             result = em.find(Professor.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -42,11 +47,11 @@ public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
         return result;
     }
 
+    @Transactional
     public boolean delete(Professor professor) throws DAOException {
-
         boolean result = false;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             em.getTransaction().commit();
             Professor targetProfessor = em.find(Professor.class, professor.getId());
@@ -61,10 +66,11 @@ public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
         return result;
     }
 
+    @Transactional
     public boolean update(Integer id, Professor professor) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
             oldProfessor.setName(professor.getName());
@@ -79,10 +85,11 @@ public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
         return result;
     }
 
+    @Transactional
     public boolean create(Professor professor) throws DAOException {
         boolean result = false;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             em.persist(professor);
             em.getTransaction().commit();
@@ -92,13 +99,13 @@ public class ProfessorDAO extends EntityManagedDAO implements DAO<Professor> {
             throw new DAOException("Could not create Professor", e);
         }
         return result;
-
     }
 
+    @Transactional(readOnly = true)
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {
-            EntityManager em = getEntityManagerBean();
+
             em.getTransaction().begin();
             professors = em.createQuery("from Professor", Professor.class).getResultList();
             em.getTransaction().commit();

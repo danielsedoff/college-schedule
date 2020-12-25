@@ -17,7 +17,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.danielsedoff.college.schedule" })
-@Import({ DataSourceConfig.class, EntityManagerConfig.class })
+@Import({ DataSourceConfig.class, EntityManagerConfig.class, EntityManagerConfig.class })
 public class WebConfig implements WebMvcConfigurer {
     private ApplicationContext applicationContext;
 
