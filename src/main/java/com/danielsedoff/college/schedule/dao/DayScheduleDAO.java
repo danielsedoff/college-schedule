@@ -12,6 +12,9 @@ import com.danielsedoff.college.schedule.model.Lesson;
 @Component
 public class DayScheduleDAO implements DAO<DaySchedule> {
 
+    @Autowired
+    private LessonDAO lessondao;
+
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_DAYSCHEDULES = "SELECT dayschedule_id FROM dayschedules;";
     private static final String SQL_UPDATE_DAYSCHEDULES = "UPDATE dayschedules SET date = ?, hasOverlaps = ? WHERE dayschedule_id = ?;";
@@ -54,8 +57,7 @@ public class DayScheduleDAO implements DAO<DaySchedule> {
                 dayschedule.getId()) > 0);
     }
 
-    public List<Lesson> getLessonsByDayschedule(LessonDAO lessondao,
-            DaySchedule dayschedule) {
+    public List<Lesson> getLessonsByDayschedule(DaySchedule dayschedule) {
         List<Integer> lessonIds = jdbcTemplate.queryForList(
                 SQL_SELECT_LESSONS_BY_DAYSCHEDULE, Integer.class, dayschedule.getId());
         List<Lesson> lessons = new ArrayList<>();

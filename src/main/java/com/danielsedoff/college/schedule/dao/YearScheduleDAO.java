@@ -12,6 +12,9 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 @Component
 public class YearScheduleDAO implements DAO<YearSchedule> {
 
+    @Autowired
+    DayScheduleDAO dayscheduledao;
+    
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_YEARS = "SELECT yearschedule_id FROM yearschedules;";
     private static final String SQL_UPDATE_YEARSCHEDULES = "UPDATE yearschedules SET year = ? WHERE yearschedule_id = ?;";
@@ -56,7 +59,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
                 dayschedule.getId(), yearschedule.getId()) > 0);
     }
 
-    public List<DaySchedule> getDayScheduleYearSchedule(DayScheduleDAO dayscheduledao,
+    public List<DaySchedule> getDayScheduleYearSchedule(
             YearSchedule yearschedule) {
         List<Integer> dayScheduleIds = jdbcTemplate.queryForList(
                 SQL_SELECT_DAYSCHEDULES_BY_YEAR, Integer.class, yearschedule.getId());

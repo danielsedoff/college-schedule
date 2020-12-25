@@ -14,7 +14,6 @@ public class ProfessorMapper implements RowMapper<Professor> {
     public Professor mapRow(ResultSet resultSet, int i) throws SQLException {
         Professor professor = new Professor();
 
-        professor.setDepartmentId(resultSet.getInt("department_id"));
         professor.setId(resultSet.getInt("professor_id"));
         professor.setName(resultSet.getString("professor_name"));
         professor.setRanksTitles(new ArrayList<>(

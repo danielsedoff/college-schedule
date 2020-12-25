@@ -13,6 +13,9 @@ import com.danielsedoff.college.schedule.model.Student;
 @Component
 public class GroupDAO implements DAO<Group> {
 
+    @Autowired
+    StudentDAO studentdao;
+    
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_GROUPZ = "SELECT group_id FROM groupz;";
     private static final String SQL_UPDATE_GROUPZ = "UPDATE groupz SET group_note = ?, department_id = ? WHERE group_id = ?;";
@@ -71,7 +74,7 @@ public class GroupDAO implements DAO<Group> {
         return 0 < jdbcTemplate.update(SQL_DELETE_GROUP_STUDENT, group.getId());
     }
 
-    public List<Student> getStudentsByGroup(StudentDAO studentdao, Group group) {
+    public List<Student> getStudentsByGroup(Group group) {
         List<Integer> studentIds = jdbcTemplate.queryForList(SQL_SELECT_STUDENT_BY_GROUP,
                 Integer.class, group.getId());
         List<Student> students = new ArrayList<>();

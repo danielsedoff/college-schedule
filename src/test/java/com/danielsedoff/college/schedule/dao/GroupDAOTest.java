@@ -10,27 +10,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Student;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
-class GroupDAOTest {
-
-    final String SQL_FILE_NAME = "create_tables.sql";
+class GroupDAOTest extends DAOTest {
 
     @Autowired
     private GroupDAO groupdao;
-    @Autowired
-    private StudentDAO studentdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
 
@@ -72,7 +60,6 @@ class GroupDAOTest {
         int expectedResult = groupdao.getIdList().size() - 1;
         Group group = new Group();
         group.setId(1);
-        studentdao.removeAllStudentsFromGroup(group);
         groupdao.delete(group);
         assertEquals(expectedResult, groupdao.getIdList().size());
     }
@@ -94,16 +81,18 @@ class GroupDAOTest {
     void testSetGroupStudent() {
         Group group = groupdao.getById(1);
         List<Student> students = new ArrayList<>();
-        students.add(studentdao.getById(1));
+        Student student = new Student();
+        student.setName("Daddy Cool");
+        students.add(student);
         groupdao.setGroupStudent(group, students);
-        List<Student> requestedStudents = groupdao.getStudentsByGroup(studentdao, group);
+        List<Student> requestedStudents = groupdao.getStudentsByGroup(group);
         assertEquals(requestedStudents, students);
     }
 
     @Test
     void testGetStudentsByGroup() {
         Group group = groupdao.getById(3);
-        assertNotNull(groupdao.getStudentsByGroup(studentdao, group));
+        assertNotNull(groupdao.getStudentsByGroup(group));
     }
 
 }

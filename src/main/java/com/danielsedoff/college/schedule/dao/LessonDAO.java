@@ -12,6 +12,9 @@ import com.danielsedoff.college.schedule.model.Lesson;
 @Component
 public class LessonDAO implements DAO<Lesson> {
 
+    @Autowired
+    private GroupDAO groupdao;
+
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_LESSONS = "SELECT lesson_id FROM lessons;";
     private static final String SQL_UPDATE_LESSONS = "UPDATE lessons SET start_time = ?, end_time = ?, professor_id = ? WHERE lesson_id = ?;";
@@ -54,7 +57,7 @@ public class LessonDAO implements DAO<Lesson> {
                 group.getId()) > 0);
     }
 
-    public List<Group> getGroupsByLesson(GroupDAO groupdao, Lesson lesson) {
+    public List<Group> getGroupsByLesson(Lesson lesson) {
         List<Integer> groupIds = jdbcTemplate.queryForList(SQL_SELECT_GROUP_BY_LESSON,
                 Integer.class, lesson.getId());
         List<Group> groups = new ArrayList<>();

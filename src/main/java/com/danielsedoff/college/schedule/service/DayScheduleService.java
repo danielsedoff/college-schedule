@@ -59,7 +59,7 @@ public class DayScheduleService {
 
     public List<Lesson> getLessonsByDayScheduleById(int dayschedId) {
         DaySchedule daysched = dayscheduledao.getById(dayschedId);
-        return dayscheduledao.getLessonsByDayschedule(lessondao, daysched);
+        return dayscheduledao.getLessonsByDayschedule(daysched);
     }
 
 }

@@ -16,7 +16,7 @@ public class ProfessorDAO implements DAO<Professor> {
     private static final String SQL_UPDATE_PROFESSORS = "UPDATE professors SET professor_name = ?, professor_ranks = ?, professor_notes = ?, department_id = ? WHERE professor_id = ?;";
     private static final String SQL_DELETE_FROM_PROFESSORS = "DELETE FROM students WHERE student_id = ?;";
     private static final String SQL_INSERT_INTO_PROFESSORS = "INSERT INTO professors (professor_name, professor_ranks, professor_notes, department_id) VALUES (?, ?, ?,?);";
-    private static final String SQL_SELECT_PROFESSOR_BY_ID = "SELECT * FROM students where student_id = ?";
+    private static final String SQL_SELECT_PROFESSOR_BY_ID = "SELECT * FROM professors where professor_id = ?";
 
     @Autowired
     public ProfessorDAO(JdbcTemplate jdbcTemplate) {

@@ -11,27 +11,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
-class YearScheduleDAOTest {
-
-    final String SQL_FILE_NAME = "create_tables.sql";
+class YearScheduleDAOTest extends DAOTest {
 
     @Autowired
     private YearScheduleDAO yeardao;
-    @Autowired
-    private DayScheduleDAO dsdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
 
@@ -93,14 +81,14 @@ class YearScheduleDAOTest {
         List<DaySchedule> pushed = new ArrayList<>();
         pushed.add(ds);
         yeardao.setDayScheduleYearSchedule(ds, ys);
-        List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(dsdao, ys);
+        List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
         assertEquals(requested, pushed);
     }
 
     @Test
     void testGetDayScheduleYearSchedule() {
         YearSchedule ys = yeardao.getById(1);
-        List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(dsdao, ys);
+        List<DaySchedule> requested = yeardao.getDayScheduleYearSchedule(ys);
         assertNotNull(requested);
     }
 

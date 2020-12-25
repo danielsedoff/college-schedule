@@ -9,21 +9,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
-class ProfessorDAOTest {
-
-    final String SQL_FILE_NAME = "create_tables.sql";
+class ProfessorDAOTest extends DAOTest {
 
     @Autowired
     private ProfessorDAO profdao;

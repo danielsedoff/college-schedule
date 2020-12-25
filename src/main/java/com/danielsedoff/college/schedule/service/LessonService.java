@@ -26,7 +26,7 @@ public class LessonService {
 
     List<Group> getGroupsByLessonId(int lessonId) {
         Lesson lesson = lessondao.getById(lessonId);
-        return lessondao.getGroupsByLesson(groupdao, lesson);
+        return lessondao.getGroupsByLesson(lesson);
     }
 
     boolean setLessonGroup(int lessonId, int groupId) {

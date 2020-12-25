@@ -11,27 +11,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Group;
 import com.danielsedoff.college.schedule.model.Lesson;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
-@Service
-class LessonDAOTest {
-
-    final String SQL_FILE_NAME = "create_tables.sql";
+class LessonDAOTest extends DAOTest {
 
     @Autowired
     private LessonDAO lessondao;
-    @Autowired
-    private GroupDAO groupdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
 
@@ -93,13 +81,13 @@ class LessonDAOTest {
         noteList.add(note);
         group.setSpecialNotes(noteList);
         lessondao.setLessonGroup(lesson, group);
-        assertEquals(noteList, lessondao.getGroupsByLesson(groupdao, lesson));
+        assertEquals(noteList, lessondao.getGroupsByLesson(lesson));
     }
 
     @Test
     void testGetGroupsByLesson() {
         Lesson lesson = lessondao.getById(3);
-        assertNotNull(lessondao.getGroupsByLesson(groupdao, lesson));
+        assertNotNull(lessondao.getGroupsByLesson(lesson));
     }
 
 }

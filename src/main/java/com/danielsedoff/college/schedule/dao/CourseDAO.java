@@ -14,6 +14,9 @@ import com.danielsedoff.college.schedule.model.Professor;
 @Component
 public class CourseDAO implements DAO<Course> {
 
+    @Autowired
+    private ProfessorDAO professordao;
+
     JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_ID_FROM_COURSES = "SELECT course_id FROM courses;";
     private static final String SQL_UPDATE_COURSES = "UPDATE courses SET course_name = ?, course_description = ? WHERE course_id = ?;";
@@ -67,7 +70,7 @@ public class CourseDAO implements DAO<Course> {
         return 0 < jdbcTemplate.update(SQL_DELETE_COURSE_PROFESSOR, course.getId());
     }
 
-    public List<Professor> getProfessorByCourse(ProfessorDAO professordao,
+    public List<Professor> getProfessorByCourse(
             Course course) {
         List<Integer> professorIds = jdbcTemplate.queryForList(
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());

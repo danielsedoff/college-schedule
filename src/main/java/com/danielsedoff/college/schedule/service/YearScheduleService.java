@@ -52,7 +52,7 @@ public class YearScheduleService {
 
     List<DaySchedule> getDayScheduleByYearSchedule(int yearSchedId) {
         YearSchedule yearschedule = yearscheduledao.getById(yearSchedId);
-        return yearscheduledao.getDayScheduleYearSchedule(dayscheduledao, yearschedule);
+        return yearscheduledao.getDayScheduleYearSchedule(yearschedule);
     }
 
 }

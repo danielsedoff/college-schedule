@@ -12,23 +12,17 @@ import com.danielsedoff.college.schedule.model.Student;
 public class GroupService {
 
     private GroupDAO groupdao;
-    private StudentDAO studentdao;
-    private static final String ARGUMENT_DELIMITER = "|";
 
     @Autowired
     public GroupService(GroupDAO groupdao, StudentDAO studentdao) {
         this.groupdao = groupdao;
-        this.studentdao = studentdao;
     }
 
     public List<Integer> getGroupIdList() {
         return groupdao.getIdList();
     }
 
-    public boolean createGroup(int deptId, String specialNotes) {
-        Group group = new Group();
-        group.setDepartmentId(deptId);
-        group.setSpecialNotes(List.of(specialNotes.split(ARGUMENT_DELIMITER)));
+    public boolean createGroup(Group group) {
         return groupdao.create(group);
     }
 
@@ -50,7 +44,7 @@ public class GroupService {
 
     public List<Student> getStudentsByGroupId(int groupId) {
         Group group = groupdao.getById(groupId);
-        return groupdao.getStudentsByGroup(studentdao, group);
+        return groupdao.getStudentsByGroup(group);
     }
 
 }
