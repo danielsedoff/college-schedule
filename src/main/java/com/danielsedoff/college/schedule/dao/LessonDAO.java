@@ -31,8 +31,6 @@ public class LessonDAO implements DAO<Lesson> {
                 result.add(lesson.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson Id List", e);
         }
         return result;
@@ -44,8 +42,6 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson By Id", e);
         }
         return result;
@@ -59,8 +55,6 @@ public class LessonDAO implements DAO<Lesson> {
             em.flush();
             em.clear();
             } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not delete Lesson", e);
         }
         return result;
@@ -75,8 +69,6 @@ public class LessonDAO implements DAO<Lesson> {
             oldLesson.setProfessor(lesson.getProfessor());
             oldLesson.setGroup(lesson.getGroup());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not update Lesson", e);
         }
         return result;
@@ -88,8 +80,6 @@ public class LessonDAO implements DAO<Lesson> {
             em.persist(lesson);
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not create Lesson", e);
         }
         return result;
@@ -101,8 +91,6 @@ public class LessonDAO implements DAO<Lesson> {
         try {
             lessons = em.createQuery("from Lesson", Lesson.class).getResultList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Lesson List", e);
         }
         return lessons;

@@ -31,8 +31,6 @@ public class GroupDAO implements DAO<Group> {
                 result.add(group.getId());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group Id List", e);
         }
         return result;
@@ -44,8 +42,6 @@ public class GroupDAO implements DAO<Group> {
         try {
             result = em.find(Group.class, id);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group By Id", e);
         }
         return result;
@@ -59,8 +55,6 @@ public class GroupDAO implements DAO<Group> {
             em.flush();
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not delete Group", e);
         }
         return result;
@@ -72,8 +66,6 @@ public class GroupDAO implements DAO<Group> {
             Group oldGroup = (Group) em.find(Group.class, id);
             oldGroup.setSpecialNotes(group.getSpecialNotes());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not update Group", e);
         }
         return result;
@@ -85,8 +77,6 @@ public class GroupDAO implements DAO<Group> {
             em.persist(group);
             em.clear();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not create Group", e);
         }
         return result;
@@ -99,8 +89,6 @@ public class GroupDAO implements DAO<Group> {
         try {
             groups = em.createQuery("from Group", Group.class).getResultList();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
             throw new DAOException("Could not get Group List", e);
         }
         return groups;
