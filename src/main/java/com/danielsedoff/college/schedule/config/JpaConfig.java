@@ -35,23 +35,20 @@ public class JpaConfig {
         this.environment = environment;
     }
 
-    @Autowired
-    DataSource dataSource;
-    
-//    @Bean
-//    public DataSource dataSource() throws NamingException {
-//        return (DataSource) new JndiTemplate().lookup(Objects.requireNonNull(environment.getProperty("url")));
-//    }
+    @Bean
+    public DataSource dataSource() throws NamingException {
+        return (DataSource) new JndiTemplate().lookup(Objects.requireNonNull(environment.getProperty("url")));
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
+        em.setDataSource(dataSource());
         em.setPackagesToScan("com.danielsedoff.college.schedule");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-//        em.setJpaProperties(additionalProperties());
+        em.setJpaProperties(additionalProperties());
 
         return em;
     }
@@ -68,12 +65,12 @@ public class JpaConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-//    Properties additionalProperties() {
-//        Properties properties = new Properties();
-//        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-//        properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
-//        return properties;
-//    }
+    Properties additionalProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        return properties;
+    }
 
 }
 
