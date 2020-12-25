@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,6 @@ class DayScheduleDAOTest extends DAOTest {
     private DayScheduleDAO dsdao;
     @Autowired
     private SqlScriptRunner ibatisRead;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @BeforeEach
     final void readSQLfile() throws IOException, SQLException {
@@ -64,7 +62,7 @@ class DayScheduleDAOTest extends DAOTest {
         ds.setDay(now);
         dsdao.create(ds);
         assertEquals(expectedSize, dsdao.getIdList().size());
-        assertEquals(now.format(formatter), dsdao.getById(5).getDay().format(formatter));
+        assertEquals(now, dsdao.getById(5).getDay());
     }
 
     @Test

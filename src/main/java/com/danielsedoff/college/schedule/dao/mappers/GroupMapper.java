@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 import com.danielsedoff.college.schedule.model.Group;
 
 public class GroupMapper implements RowMapper<Group> {
-    private static final String SEPARATOR = "\\|";
 
     public Group mapRow(ResultSet resultSet, int i) throws SQLException {
         Group group = new Group();
@@ -17,7 +16,7 @@ public class GroupMapper implements RowMapper<Group> {
         group.setId(resultSet.getInt("group_id"));
         group.setDepartmentId((resultSet.getInt("department_id")));
         group.setSpecialNotes(new ArrayList<>(
-                Arrays.asList(resultSet.getString("group_note").split(SEPARATOR))));
+                Arrays.asList(resultSet.getString("group_note").split("\n"))));
         return group;
     }
 

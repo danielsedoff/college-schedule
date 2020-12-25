@@ -68,13 +68,13 @@ class GroupDAOTest extends DAOTest {
     void testCreate() {
         int expectedSize = groupdao.getIdList().size() + 1;
         Group group = new Group();
-        group.setDepartmentId(65535);
-        List<String> specialNotes = new ArrayList<>();
-        specialNotes.add("Info");
-        group.setSpecialNotes(specialNotes);
+        List<String> noteList = new ArrayList<>();
+        String note = "Large group";
+        noteList.add(note);
+        group.setSpecialNotes(noteList);
         groupdao.create(group);
         assertEquals(expectedSize, groupdao.getIdList().size());
-        assertEquals(65535, groupdao.getById(expectedSize).getDepartmentId());
+        assertEquals(note, groupdao.getById(5).getSpecialNotes().get(0));
     }
 
     @Test
@@ -82,12 +82,11 @@ class GroupDAOTest extends DAOTest {
         Group group = groupdao.getById(1);
         List<Student> students = new ArrayList<>();
         Student student = new Student();
-        student.setId(1);
+        student.setName("Daddy Cool");
         students.add(student);
         groupdao.setGroupStudent(group, students);
         List<Student> requestedStudents = groupdao.getStudentsByGroup(group);
-        int lastIndex = requestedStudents.size() - 1;
-        assertEquals(1, requestedStudents.get(lastIndex).getId());
+        assertEquals(requestedStudents, students);
     }
 
     @Test

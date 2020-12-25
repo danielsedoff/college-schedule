@@ -15,7 +15,7 @@ public class LessonMapper implements RowMapper<Lesson> {
     public Lesson mapRow(ResultSet resultSet, int i) throws SQLException {
         Lesson lesson = new Lesson();
 
-        lesson.setId(resultSet.getInt("lesson_id"));
+        lesson.setId(resultSet.getInt("group_id"));
         lesson.setStartTime(
                 LocalDateTime.parse(resultSet.getString("start_time"), formatter));
         lesson.setEndTime(

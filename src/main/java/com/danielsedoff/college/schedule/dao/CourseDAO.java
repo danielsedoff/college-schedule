@@ -61,7 +61,7 @@ public class CourseDAO implements DAO<Course> {
         boolean result = false;
         for (int i = 0; i < professors.size(); i++) {
             jdbcTemplate.update(SQL_INSERT_COURSE_PROFESSOR, course.getId(),
-                    professors.get(i).getId());
+                    professors.get(0).getId());
         }
         return result;
     }
@@ -76,7 +76,6 @@ public class CourseDAO implements DAO<Course> {
                 SQL_SELECT_PROFESSOR_BY_COURSE, Integer.class, course.getId());
         List<Professor> professors = new ArrayList<>();
         for (Integer professorId : professorIds) {
-            if(0 == professorId) continue;
             professors.add(professordao.getById(professorId));
         }
         return professors;

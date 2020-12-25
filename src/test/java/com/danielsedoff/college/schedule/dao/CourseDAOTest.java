@@ -75,26 +75,24 @@ class CourseDAOTest extends DAOTest {
     void testSetProfessorList() {
         Course course = coursedao.getById(2);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new  Professor();
-        prof.setId(1);
+        Professor prof = new Professor();
+        prof.setName("Evangelista Torricelli");
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);
         List<Professor> requestedProfessors = coursedao.getProfessorByCourse(course);
-        int lastIndex = requestedProfessors.size() - 1;
-        assertEquals(1, requestedProfessors.get(lastIndex).getId());
+        assertEquals(professors, requestedProfessors);
     }
 
     @Test
     void testGetProfessorByCourse() {
-        Course course = coursedao.getById(2);
+        Course course = coursedao.getById(3);
         List<Professor> professors = new ArrayList<>();
-        Professor prof = new  Professor();
-        prof.setId(2);
+        Professor prof = new Professor();
+        prof.setName("Leonardo Da Vinci");
         professors.add(prof);
         coursedao.setCourseProfessor(course, professors);
         List<Professor> requestedProfessors = coursedao.getProfessorByCourse(course);
-        int lastIndex = requestedProfessors.size() - 1;
-        assertEquals(2, requestedProfessors.get(lastIndex).getId());
+        assertEquals(professors, requestedProfessors);
     }
 
 }
