@@ -87,23 +87,20 @@
 		</encoder>
 	</appender>
 
-	<root>
-		<appender-ref ref="serverLog" />
-	</root>
-
-	<logger name="com.danielsedoff.college.schedule.dao"
-		level="INFO" additivity="false">
+	<logger name="com.danielsedoff.college.schedule.dao">
 		<appender-ref ref="daoLog" />
 	</logger>
 
-	<logger name="com.danielsedoff.college.schedule.service"
-		level="INFO" additivity="false">
+	<logger name="com.danielsedoff.college.schedule.service">
 		<appender-ref ref="serviceLog" />
 	</logger>
 
-	<logger name="org.springframework" level="INFO"
-		additivity="false">
+	<logger name="org.springframework">
 		<appender-ref ref="springLog" />
+	</logger>
+
+	<logger name="org.apache.tomcat">
+		<appender-ref ref="serverLog" />
 	</logger>
 
 </configuration>

@@ -33,8 +33,6 @@ public class DayScheduleService {
     public List<Integer> getDayscheduleIdList() {
         List<Integer> result = null;
         try {
-            // DEBUG
-            logger.info("DS Service entered");
             result = dayscheduledao.getIdList();
         } catch (DAOException e) {
             logger.error("Could not get Day Schedule ID List", e);
