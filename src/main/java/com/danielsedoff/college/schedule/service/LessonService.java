@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +13,7 @@ import com.danielsedoff.college.schedule.model.Lesson;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class LessonCommandExecutor {
+public class LessonService {
 
     private LessonDAO lessondao;
     private ProfessorDAO professordao;
@@ -21,7 +21,7 @@ public class LessonCommandExecutor {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public LessonCommandExecutor(ProfessorDAO professordao, LessonDAO lessondao,
+    public LessonService(ProfessorDAO professordao, LessonDAO lessondao,
             GroupDAO groupdao) {
         this.lessondao = lessondao;
         this.professordao = professordao;

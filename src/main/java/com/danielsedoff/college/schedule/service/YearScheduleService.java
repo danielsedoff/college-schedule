@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class YearScheduleCommandExecutor {
+public class YearScheduleService {
     private YearScheduleDAO yearscheduledao;
     private DayScheduleDAO dayscheduledao;
 
     @Autowired
-    public YearScheduleCommandExecutor(YearScheduleDAO yearscheduledao,
+    public YearScheduleService(YearScheduleDAO yearscheduledao,
             DayScheduleDAO dayscheduledao) {
         this.yearscheduledao = yearscheduledao;
         this.dayscheduledao = dayscheduledao;

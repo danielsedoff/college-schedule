@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,12 @@ import com.danielsedoff.college.schedule.model.Professor;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class ProfessorCommandExecutor {
+public class ProfessorService {
     private static final String ARGUMENT_DELIMITER = "|";
     private ProfessorDAO professordao;
 
     @Autowired
-    public ProfessorCommandExecutor(ProfessorDAO professordao) {
+    public ProfessorService(ProfessorDAO professordao) {
         this.professordao = professordao;
     }
 

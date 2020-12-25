@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,14 @@ import com.danielsedoff.college.schedule.model.Student;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class GroupCommandExecutor {
+public class GroupService {
 
     private GroupDAO groupdao;
     private StudentDAO studentdao;
     private static final String ARGUMENT_DELIMITER = "|";
 
     @Autowired
-    public GroupCommandExecutor(GroupDAO groupdao, StudentDAO studentdao) {
+    public GroupService(GroupDAO groupdao, StudentDAO studentdao) {
         this.groupdao = groupdao;
         this.studentdao = studentdao;
     }

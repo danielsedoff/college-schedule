@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,14 +12,14 @@ import com.danielsedoff.college.schedule.model.DaySchedule;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class DayScheduleCommandExecutor {
+public class DayScheduleService {
 
     private DayScheduleDAO dayscheduledao;
     private LessonDAO lessondao;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public DayScheduleCommandExecutor(DayScheduleDAO dayscheduledao,
+    public DayScheduleService(DayScheduleDAO dayscheduledao,
             LessonDAO lessondao) {
         this.dayscheduledao = dayscheduledao;
         this.lessondao = lessondao;

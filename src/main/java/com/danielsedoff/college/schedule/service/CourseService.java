@@ -1,4 +1,4 @@
-package com.danielsedoff.college.schedule.controller;
+package com.danielsedoff.college.schedule.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,12 @@ import com.danielsedoff.college.schedule.model.Professor;
 import static com.danielsedoff.college.schedule.lang.UserMessages.*;
 
 @Service
-public class CourseCommandExecutor {
+public class CourseService {
     private CourseDAO coursedao;
     private ProfessorDAO professordao;
 
     @Autowired
-    public CourseCommandExecutor(CourseDAO coursedao, ProfessorDAO professordao) {
+    public CourseService(CourseDAO coursedao, ProfessorDAO professordao) {
         this.coursedao = coursedao;
         this.professordao = professordao;
     }

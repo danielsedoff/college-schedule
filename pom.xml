@@ -11,7 +11,8 @@
     <name>college-schedule</name>
 
     <properties>
-        <spring.framework>4.3.0.RELEASE</spring.framework>
+        <spring.test.version>5.2.8.RELEASE</spring.test.version>
+        <spring.framework>5.2.8.RELEASE</spring.framework>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -31,6 +32,13 @@
     </properties>
 
     <dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>${spring.test.version}</version>
+		    <scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
