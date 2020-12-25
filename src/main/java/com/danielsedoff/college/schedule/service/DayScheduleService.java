@@ -43,7 +43,7 @@ public class DayScheduleService {
         return dayscheduledao.update(dayschedId, daysched);
     }
 
-    public boolean deleteDayScheduleById(int dayschedId) {
+    public boolean deleteDaySchedule(int dayschedId) {
         return dayscheduledao.delete(dayscheduledao.getById(dayschedId));
     }
 
@@ -57,7 +57,7 @@ public class DayScheduleService {
         return dayscheduledao.insertLessonDayschedule(lesson, daysched);
     }
 
-    public List<Lesson> getLessonsByDayScheduleById(int dayschedId) {
+    public List<Lesson> getLessonsByDaySchedule(int dayschedId) {
         DaySchedule daysched = dayscheduledao.getById(dayschedId);
         return dayscheduledao.getLessonsByDayschedule(lessondao, daysched);
     }
