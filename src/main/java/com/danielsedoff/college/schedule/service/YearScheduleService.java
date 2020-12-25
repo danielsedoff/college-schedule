@@ -1,78 +1,66 @@
 package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAO;
-import com.danielsedoff.college.schedule.dao.DAOException;
+import com.danielsedoff.college.schedule.dao.YearScheduleRepository;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
 @Service
 public class YearScheduleService {
 
-    private DAO<YearSchedule> yearscheduledao;
-
-    public YearScheduleService(DAO<YearSchedule> yearscheduledao) {
-        super();
-        this.yearscheduledao = yearscheduledao;
-    }
+    @Autowired
+    private YearScheduleRepository yearscheduledao;
 
     private static Logger logger = LoggerFactory.getLogger(YearScheduleService.class);
 
-    public List<Integer> getYearScheduleIdList() {
-        List<Integer> result = null;
-        try {
-            result = yearscheduledao.getIdList();
-        } catch (DAOException e) {
-            logger.error("Could not get Year Schedule Id List", e);
-        }
-        return result;
+    public boolean createYearSchedule(YearSchedule yearschedule) {
+        return yearscheduledao.save(yearschedule) != null;
     }
 
-    public YearSchedule getYearScheduleById(int yearId) {
-        YearSchedule result = null;
-        try {
-            result = yearscheduledao.getById(yearId);
-        } catch (DAOException e) {
-            logger.error("Could not get a Year Schedule By id: {}", yearId);
+    public YearSchedule getYearScheduleById(int yearscheduleId) {
+        Optional<YearSchedule> result = yearscheduledao.findById(yearscheduleId);
+        if (null == result) {
+            return null;
         }
-        return result;
+        return result.get();
     }
 
-    public boolean createYearSchedule(int year) {
-        YearSchedule yearschedule = new YearSchedule();
-        yearschedule.setYear(year);
-        boolean result = false;
+    public boolean deleteYearScheduleById(int yearscheduleId) {
         try {
-            result = yearscheduledao.create(yearschedule);
-        } catch (DAOException e) {
-            logger.error("Could not create a Year Schedule for year: {}", year);
+            yearscheduledao.deleteById(yearscheduleId);
+        } catch (Exception e) {
+            logger.error("Could not delete YearSchedule by id: {}", yearscheduleId);
+            return false;
         }
-        return result;
+        return true;
     }
 
-    public boolean deleteYearSchedule(int yearId) {
-        boolean result = false;
+    public boolean updateYearSchedule(int yearscheduleId, YearSchedule yearschedule) {
         try {
-            result = yearscheduledao.delete(yearscheduledao.getById(yearId));
-        } catch (DAOException e) {
-            logger.error("Could not delete a Year Schedule, id: {}", yearId);
+            YearSchedule managedYearSchedule = yearscheduledao.findById(yearscheduleId).get();
+            managedYearSchedule.setDayschedules(yearschedule.getDayschedules());
+            managedYearSchedule.setYear(yearschedule.getYear());
+            yearscheduledao.save(managedYearSchedule);
+        } catch (Exception e) {
+            logger.error("Could not update YearSchedule, id: {}", yearscheduleId);
+            return false;
         }
-        return result;
+        return true;
     }
 
-    public boolean updateYearSchedule(int yearId, int year) {
-        boolean result = false;
+    public List<YearSchedule> getYearScheduleList() {
         try {
-            YearSchedule ys = yearscheduledao.getById(yearId);
-            ys.setYear(year);
-            result = yearscheduledao.update(year, ys);
-        } catch (DAOException e) {
-            logger.error("Could not update a Year Schedule, id: {}", yearId);
+            return (List<YearSchedule>) yearscheduledao.findAll();
+        } catch (Exception e) {
+            logger.error("Could not get a YearSchedule List", e);
         }
-        return result;
+        return null;
     }
+
 }

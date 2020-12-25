@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.dto.CourseDTO;
 import com.danielsedoff.college.schedule.model.Course;
 import com.danielsedoff.college.schedule.service.CourseService;
@@ -22,7 +21,7 @@ public class CourseWebController {
     private CourseService cs;
 
     @GetMapping("/courseList")
-    public String getCourses(Model model) throws DAOException {
+    public String getCourses(Model model) {
         List<Course> courses = cs.getCourseList();
         if (null == courses) {
             model.addAttribute("result", "ERROR: the expected LIST is NULL.");

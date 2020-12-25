@@ -1,84 +1,66 @@
 package com.danielsedoff.college.schedule.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.danielsedoff.college.schedule.dao.DAO;
-import com.danielsedoff.college.schedule.dao.DAOException;
+import com.danielsedoff.college.schedule.dao.GroupRepository;
 import com.danielsedoff.college.schedule.model.Group;
 
 @Service
 public class GroupService {
 
-    private DAO<Group> groupdao;
+    @Autowired
+    private GroupRepository groupdao;
 
-    public GroupService(DAO<Group> groupdao) {
-        this.groupdao = groupdao;
-    }
-    
     private static Logger logger = LoggerFactory.getLogger(GroupService.class);
 
-    public List<Group> getGroupList() {
-        List<Group> result = null;
-        try {
-            result = groupdao.getList();
-        } catch (DAOException e) {
-            logger.error("Could not get a Student Id List", e);
-        }
-        return result;
-    }
-
-    public List<Integer> getGroupIdList() {
-        List<Integer> result = null;
-        try {
-            result = groupdao.getIdList();
-        } catch (DAOException e) {
-            logger.error("Could not Get Group ID List", e);
-        }
-        return result;
-    }
-
     public boolean createGroup(Group group) {
-        boolean result = false;
-        try {
-            result = groupdao.create(group);
-        } catch (DAOException e) {
-            logger.error("Could not Create a Group", e);
-        }
-        return result;
-    }
-
-    public boolean updateGroup(int groupId, Group group) {
-        boolean result = false;
-        try {
-            result = groupdao.update(groupId, group);
-        } catch (DAOException e) {
-            logger.error("Could not Update a Group, groupId: {}", groupId);
-        }
-        return result;
-    }
-
-    public boolean deleteGroupById(int groupId) {
-        boolean result = false;
-        try {
-            result = groupdao.delete(groupdao.getById(groupId));
-        } catch (DAOException e) {
-            logger.error("Could not Delete a Group, groupId: {}", groupId);
-        }
-        return result;
+        return groupdao.save(group) != null;
     }
 
     public Group getGroupById(int groupId) {
-        Group result = null;
-        try {
-            result = groupdao.getById(groupId);
-        } catch (DAOException e) {
-            logger.error("Could not Get a Group, groupId: {}", groupId);
+        Optional<Group> result = groupdao.findById(groupId);
+        if (null == result) {
+            return null;
         }
-        return result;
+        return result.get();
+    }
+
+    public boolean deleteGroupById(int groupId) {
+        try {
+            groupdao.deleteById(groupId);
+        } catch (Exception e) {
+            logger.error("Could not delete Group by id: {}", groupId);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateGroup(int groupId, Group group) {
+        try {
+            Group managedGroup = groupdao.findById(groupId).get();
+            managedGroup.setStudents(group.getStudents());
+            managedGroup.setSpecialNotes(group.getSpecialNotes());
+            groupdao.save(managedGroup);
+        } catch (Exception e) {
+            logger.error("Could not update Group, id: {}", groupId);
+            return false;
+        }
+        return true;
+    }
+
+    public List<Group> getGroupList() {
+        try {
+            return (List<Group>) groupdao.findAll();
+        } catch (Exception e) {
+            logger.error("Could not get a Group List", e);
+        }
+        return null;
     }
 
 }

@@ -3,70 +3,61 @@ package com.danielsedoff.college.schedule.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
-import com.danielsedoff.college.schedule.dao.StudentDAO;
+import com.danielsedoff.college.schedule.dao.GroupRepository;
+import com.danielsedoff.college.schedule.dao.ProfessorRepository;
+import com.danielsedoff.college.schedule.dao.StudentRepository;
 import com.danielsedoff.college.schedule.model.Student;
 
-class StudentServiceTest {
+@SpringBootTest
+class StudentServiceTest extends AbstractServiceTest {
 
-    StudentDAO studentdao = Mockito.mock(StudentDAO.class);
-    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
-    GroupDAO groupdao = Mockito.mock(GroupDAO.class);
-    StudentService stservice = new StudentService( studentdao);
-
-    @Test
-    void testGetStudentIdList() throws DAOException {
-        List<Integer> mockList = new ArrayList<>();
-        mockList.add(123);
-        Mockito.when(studentdao.getIdList()).thenReturn(mockList);
-        List<Integer> idList = stservice.getStudentIdList();
-        assertNotNull(idList);
-    }
+    StudentRepository studentdao = Mockito.mock(StudentRepository.class);
+    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
+    GroupRepository groupdao = Mockito.mock(GroupRepository.class);
+    
+    @Autowired
+    StudentService stservice;
 
     @Test
-    void testCreateStudent() throws DAOException {
+    void testCreateStudent() throws Exception {
         Student student = new Student();
         student.setName("John");
-        student.setGroup(groupdao.getById(1));
+        student.setGroup(groupdao.findById(1).get());
         student.setSchoolYear(2);
-        Mockito.when(studentdao.create(student)).thenReturn(true);
+        Mockito.when(studentdao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = stservice.createStudent(student);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testUpdateStudent() throws DAOException {
-        int studId = 1;
+    void testGetStudentById() throws Exception {
         Student student = new Student();
         student.setName("John");
-        student.setGroup(groupdao.getById(1));
-        student.setSchoolYear(2);
-        Mockito.when(studentdao.update(studId, student)).thenReturn(true);
-        boolean successfulUpdate = stservice.updateStudent(studId, student);
-        assertTrue(successfulUpdate);
+        Mockito.when(studentdao.findById((Mockito.anyInt()))).thenReturn(Optional.of(student));
+        assertNotNull(stservice.getStudentById(1));
     }
-
+    
     @Test
-    void testDeleteStudent() throws DAOException {
-        Mockito.when(studentdao.delete(Mockito.any())).thenReturn(true);
-        boolean successfulDeletion = stservice.deleteStudent(1);
+    void testDeleteStudent() throws Exception {
+        boolean successfulDeletion = stservice.deleteStudentById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testGetStudentById() throws DAOException {
+    void testUpdateStudent() throws Exception {
+        int studId = 1;
         Student student = new Student();
         student.setName("John");
-        Mockito.when(studentdao.getById((Mockito.anyInt()))).thenReturn(student);
-        assertNotNull(stservice.getStudentById(1));
+        student.setSchoolYear(2);
+        boolean successfulUpdate = stservice.updateStudent(studId, student);
+        assertTrue(successfulUpdate);
     }
 
 }

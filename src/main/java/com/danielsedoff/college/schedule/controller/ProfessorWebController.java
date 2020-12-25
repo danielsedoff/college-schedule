@@ -53,7 +53,7 @@ public class ProfessorWebController {
 
     @PostMapping("/deleteProfessor")
     public String deleteProfessor(@ModelAttribute("professordto") ProfessorDTO professordto, Model model) {
-        ps.deleteProfessor(professordto.getId());
+        ps.deleteProfessorById(professordto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }

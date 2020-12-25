@@ -3,68 +3,60 @@ package com.danielsedoff.college.schedule.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.GroupDAO;
-import com.danielsedoff.college.schedule.dao.LessonDAO;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
+import com.danielsedoff.college.schedule.dao.GroupRepository;
+import com.danielsedoff.college.schedule.dao.LessonRepository;
+import com.danielsedoff.college.schedule.dao.ProfessorRepository;
 import com.danielsedoff.college.schedule.model.Lesson;
 import com.danielsedoff.college.schedule.model.Professor;
 
-class LessonServiceTest {
+@SpringBootTest
+class LessonServiceTest extends AbstractServiceTest {
 
-    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
-    LessonDAO lessondao = Mockito.mock(LessonDAO.class);
-    GroupDAO groupdao = Mockito.mock(GroupDAO.class);
+    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
+    LessonRepository lessondao = Mockito.mock(LessonRepository.class);
+    GroupRepository groupdao = Mockito.mock(GroupRepository.class);
 
-    LessonService lservice = new LessonService(lessondao);
+    @Autowired
+    LessonService lservice;
 
     @Test
-    void testGetLessonById() throws DAOException {
+    void testGetLessonById() throws Exception {
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lessondao.getById(Mockito.anyInt())).thenReturn(lesson);
+        Mockito.when(lessondao.findById(Mockito.anyInt())).thenReturn(Optional.of(lesson));
         assertNotNull(lservice.getLessonById(1));
     }
 
     @Test
-    void testCreateLesson() throws DAOException {
+    void testCreateLesson() throws Exception {
         Lesson lesson = new Lesson();
-        lesson.setProfessor(new Professor());
-        Mockito.when(lessondao.create(lesson)).thenReturn(true);
+        lesson.setStartTime("12-12-2012");
+        Mockito.when(lessondao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = lservice.createLesson(lesson);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testDeleteLessonById() throws DAOException {
-        Mockito.when(lessondao.delete(Mockito.any())).thenReturn(true);
+    void testDeleteLessonById() throws Exception {
+        lessondao.delete(Mockito.any());
         boolean successfulDeletion = lservice.deleteLessonById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testUpdateLesson() throws DAOException {
+    void testUpdateLesson() throws Exception {
         int lessonId = 1;
         Lesson lesson = new Lesson();
         lesson.setProfessor(new Professor());
-        Mockito.when(lessondao.update(Mockito.anyInt(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = lservice.updateLesson(lessonId, lesson);
         assertTrue(successfulUpdate);
-    }
-
-    @Test
-    void testGetLessonIdList() throws DAOException {
-        List<Integer> mockList = new ArrayList<>();
-        mockList.add(123);
-        Mockito.when(lessondao.getIdList()).thenReturn(mockList);
-        List<Integer> idList = lservice.getLessonIdList();
-        assertNotNull(idList);
     }
 
 }

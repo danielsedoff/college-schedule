@@ -3,59 +3,56 @@ package com.danielsedoff.college.schedule.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.DayScheduleDAO;
-import com.danielsedoff.college.schedule.dao.YearScheduleDAO;
+import com.danielsedoff.college.schedule.dao.DayScheduleRepository;
+import com.danielsedoff.college.schedule.dao.YearScheduleRepository;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-class YearScheduleServiceTest {
+@SpringBootTest
+class YearScheduleServiceTest extends AbstractServiceTest {
 
-    DayScheduleDAO dsdao = Mockito.mock(DayScheduleDAO.class);
-    YearScheduleDAO ysdao = Mockito.mock(YearScheduleDAO.class);
-    YearScheduleService yservice = new YearScheduleService(ysdao);
+    DayScheduleRepository dsdao = Mockito.mock(DayScheduleRepository.class);
+    YearScheduleRepository ysdao = Mockito.mock(YearScheduleRepository.class);
 
-    @Test
-    void testGetYearScheduleIdList() throws DAOException {
-        List<Integer> mockList = new ArrayList<>();
-        mockList.add(123);
-        Mockito.when(ysdao.getIdList()).thenReturn(mockList);
-        List<Integer> idList = yservice.getYearScheduleIdList();
-        assertNotNull(idList);
-    }
+    @Autowired
+    YearScheduleService yservice = new YearScheduleService();
 
     @Test
-    void testGetYearScheduleById() throws DAOException {
+    void testCreateYearSchedule() throws Exception {
+        Mockito.when(ysdao.save(Mockito.any())).thenReturn(true);
         YearSchedule ys = new YearSchedule();
         ys.setYear(1234);
-        Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(ys);
-        assertNotNull(yservice.getYearScheduleById(1));
-    }
-
-    @Test
-    void testCreateYearSchedule() throws DAOException {
-        Mockito.when(ysdao.create(Mockito.any())).thenReturn(true);
-        boolean successfulCreation = yservice.createYearSchedule(1861);
+        boolean successfulCreation = yservice.createYearSchedule(ys);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testDeleteYearSchedule() throws DAOException {
-        Mockito.when(ysdao.delete(Mockito.any())).thenReturn(true);
-        boolean successfulDeletion = yservice.deleteYearSchedule(1);
+    void testGetYearScheduleById() throws Exception {
+        YearSchedule ys = new YearSchedule();
+        ys.setYear(1234);
+        Mockito.when(ysdao.findById(Mockito.anyInt())).thenReturn(Optional.of(ys));
+        assertNotNull(yservice.getYearScheduleById(1));
+    }
+    
+    @Test
+    void testDeleteYearSchedule() throws Exception {
+        ysdao.delete(Mockito.any());
+        boolean successfulDeletion = yservice.deleteYearScheduleById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testUpdateYearSchedule() throws DAOException {
-        Mockito.when(ysdao.update(Mockito.any(), Mockito.any())).thenReturn(true);
-        Mockito.when(ysdao.getById(Mockito.anyInt())).thenReturn(new YearSchedule());
-        boolean successfulUpdate = yservice.updateYearSchedule(1, 1234);
+    void testUpdateYearSchedule() throws Exception {
+        int y = 1234;
+        YearSchedule ys = new YearSchedule();
+        ys.setYear(y);
+        boolean successfulUpdate = yservice.updateYearSchedule(1, ys);
         assertTrue(successfulUpdate);
     }
 

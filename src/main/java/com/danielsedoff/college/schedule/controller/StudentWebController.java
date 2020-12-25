@@ -57,7 +57,7 @@ public class StudentWebController {
 
     @PostMapping("/deleteStudent")
     public String deleteStudent(@ModelAttribute("studentdto") StudentDTO studentdto, Model model) {
-        ss.deleteStudent(studentdto.getId());
+        ss.deleteStudentById(studentdto.getId());
         model.addAttribute("result", "Your DELETE request has been accepted by the server.");
         return "resultPage";
     }

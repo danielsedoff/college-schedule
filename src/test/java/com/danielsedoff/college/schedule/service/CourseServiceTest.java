@@ -3,60 +3,53 @@ package com.danielsedoff.college.schedule.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.CourseDAO;
-import com.danielsedoff.college.schedule.dao.DAOException;
+import com.danielsedoff.college.schedule.dao.CourseRepository;
 import com.danielsedoff.college.schedule.model.Course;
 
-class CourseServiceTest {
+@SpringBootTest
+class CourseServiceTest extends AbstractServiceTest {
 
-    CourseDAO coursedao = Mockito.mock(CourseDAO.class);
-    CourseService cservice = new CourseService(coursedao);
+    CourseRepository coursedao = Mockito.mock(CourseRepository.class);
 
-    @Test
-    void testGetCourseIdList() throws DAOException {
-        List<Integer> mockList = new ArrayList<>();
-        mockList.add(123);
-        Mockito.when(coursedao.getIdList()).thenReturn(mockList);
-        List<Integer> idList = cservice.getCourseIdList();
-        assertNotNull(idList);
-    }
+    @Autowired
+    CourseService cservice = new CourseService();
 
     @Test
-    void testCreateCourse() throws DAOException {
+    void testCreateCourse() throws Exception {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(coursedao.create(Mockito.any())).thenReturn(true);
+        Mockito.when(coursedao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = cservice.createCourse(course);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testGetCourseById() throws DAOException {
+    void testGetCourseById() throws Exception {
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(coursedao.getById(Mockito.anyInt())).thenReturn(course);
+        Mockito.when(coursedao.findById(Mockito.anyInt())).thenReturn(Optional.of(course));
         assertNotNull(cservice.getCourseById(1));
     }
 
     @Test
-    void testDeleteCourseById() throws DAOException {
-        Mockito.when(coursedao.delete(Mockito.any())).thenReturn(true);
+    void testDeleteCourseById() throws Exception {
+        coursedao.delete(Mockito.any());
         boolean successfulDeletion = cservice.deleteCourseById(1);
         assertTrue(successfulDeletion);
     }
 
     @Test
-    void testUpdateCourse() throws DAOException {
+    void testUpdateCourse() throws Exception {
         int courseId = 1;
         Course course = new Course();
         course.setName("Wine Studies");
-        Mockito.when(coursedao.update(Mockito.anyInt(), Mockito.any())).thenReturn(true);
         boolean successfulUpdate = cservice.updateCourse(courseId, course);
         assertTrue(successfulUpdate);
     }

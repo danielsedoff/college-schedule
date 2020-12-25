@@ -3,62 +3,55 @@ package com.danielsedoff.college.schedule.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.danielsedoff.college.schedule.dao.DAOException;
-import com.danielsedoff.college.schedule.dao.ProfessorDAO;
+import com.danielsedoff.college.schedule.dao.ProfessorRepository;
 import com.danielsedoff.college.schedule.model.Professor;
 
-class ProfessorServiceTest {
+@SpringBootTest
+class ProfessorServiceTest extends AbstractServiceTest {
 
-    ProfessorDAO profdao = Mockito.mock(ProfessorDAO.class);
-    ProfessorService profservice = new ProfessorService(profdao);
+    ProfessorRepository profdao = Mockito.mock(ProfessorRepository.class);
 
-    @Test
-    void testUpdateProfessor() throws DAOException {
-        int profId = 1;
-        Professor prof = new Professor();
-        prof.setName("John");
-        Mockito.when(profdao.update(profId, prof)).thenReturn(true);
-        boolean successfulUpdate = profservice.updateProfessor(profId, prof);
-        assertTrue(successfulUpdate);
-    }
+    @Autowired
+    ProfessorService profservice = new ProfessorService();
 
     @Test
-    void testCreateProfessor() throws DAOException {
+    void testCreateProfessor() throws Exception {
         Professor professor = new Professor();
         professor.setName("Jack");
-        Mockito.when(profdao.create(professor)).thenReturn(true);
+        Mockito.when(profdao.save(Mockito.any())).thenReturn(true);
         boolean successfulCreation = profservice.createProfessor(professor);
         assertTrue(successfulCreation);
     }
 
     @Test
-    void testDeleteProfessor() throws DAOException {
-        Mockito.when(profdao.delete(Mockito.any())).thenReturn(true);
-        boolean successfulDeletion = profservice.deleteProfessor(1);
-        assertTrue(successfulDeletion);
-    }
-
-    @Test
-    void testGetProfessorById() throws DAOException {
+    void testGetProfessorById() throws Exception {
         Professor professor = new Professor();
         professor.setName("John");
-        Mockito.when(profdao.getById(Mockito.anyInt())).thenReturn(professor);
+        Mockito.when(profdao.findById(Mockito.anyInt())).thenReturn(Optional.of(professor));
         assertNotNull(profservice.getProfessorById(1));
     }
 
     @Test
-    void testGetProfessorIdList() throws DAOException {
-        List<Integer> mockList = new ArrayList<>();
-        mockList.add(123);
-        Mockito.when(profdao.getIdList()).thenReturn(mockList);
-        List<Integer> idList = profservice.getProfessorIdList();
-        assertNotNull(idList);
+    void testDeleteProfessor() throws Exception {
+        profdao.delete(Mockito.any());
+        boolean successfulDeletion = profservice.deleteProfessorById(1);
+        assertTrue(successfulDeletion);
+    }
+
+    @Test
+    void testUpdateProfessor() throws Exception {
+        int profId = 1;
+        Professor prof = new Professor();
+        prof.setName("John");
+        boolean successfulUpdate = profservice.updateProfessor(profId, prof);
+        assertTrue(successfulUpdate);
     }
 
 }
