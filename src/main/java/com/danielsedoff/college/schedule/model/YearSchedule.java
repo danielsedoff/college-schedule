@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class YearSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "year")
     private int year;

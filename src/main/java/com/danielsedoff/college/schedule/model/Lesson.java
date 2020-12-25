@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Lesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "start_time")
     private String startTime;

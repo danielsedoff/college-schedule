@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "professors")
 public class Professor extends Person{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "department_id")
     private int departmentId;

@@ -90,7 +90,6 @@ public class CourseDAO implements DAO<Course> {
             em.getTransaction().begin();
             em.persist(course);
             em.getTransaction().commit();
-            em.flush();
             em.close();
         } catch (Exception e) {
             logger.error(e.getStackTrace().toString());

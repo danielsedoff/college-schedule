@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "department_id")
     private int departmentId;

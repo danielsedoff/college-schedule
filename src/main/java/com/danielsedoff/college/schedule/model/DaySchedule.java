@@ -18,7 +18,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class DaySchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "date")
     private LocalDateTime day;
