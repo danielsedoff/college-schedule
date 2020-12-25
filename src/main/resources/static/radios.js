@@ -2,24 +2,20 @@ radioCreate = document.getElementById("radioCreate");
 radioDelete = document.getElementById("radioDelete");
 radioUpdate = document.getElementById("radioUpdate");
 
+radios = [radioCreate, radioDelete, radioUpdate];
+
 radioCreate.addEventListener('change', radioChanged);
 radioDelete.addEventListener('change', radioChanged);
 radioUpdate.addEventListener('change', radioChanged);
 
 function radioChanged() {
-    if (document.getElementById("radioCreate").checked) {
-        radioValue = "create";
-    } else if (document.getElementById("radioDelete").checked) {
-        radioValue = "delete";
-    } else if (document.getElementById("radioUpdate").checked) {
-        radioValue = "update";
-    }
+    var radioValue = getRadioVal(radios);
 
     var inputs = document.getElementsByTagName('input');
 
     for (var i = 0; i < inputs.length; i++) {
         input = inputs[i];
-        if (input.type != "text") continue;
+        if (input.type != "text" && input.type != "number") continue;
         if (input.id == "idinput") {
             if (radioValue != "create") {
                 input.disabled = false;
@@ -36,3 +32,13 @@ function radioChanged() {
         }
     }
 }
+
+function getRadioVal(radios) {
+    for (var i = 0, len = radios.length; i < len; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
+        }
+    }
+}
+
+radioChanged();

@@ -14,7 +14,7 @@ public class CourseDTO {
         return mode;
     }
 
-    public void setModeCreate(String mode) {
+    public void setMode(String mode) {
         this.mode = mode;
     }
 
