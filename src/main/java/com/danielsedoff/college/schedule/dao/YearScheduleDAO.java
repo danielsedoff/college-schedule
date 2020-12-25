@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.model.YearSchedule;
+import org.aspectj.lang.annotation.Aspect;
 
+@Aspect
 @Component
 public class YearScheduleDAO implements DAO<YearSchedule> {
     @PersistenceContext
@@ -33,7 +35,6 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public YearSchedule getById(Integer id) throws DAOException {
         YearSchedule result = null;
         try {
-
             result = em.find(YearSchedule.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get YearSchedule By Id", e);
@@ -43,17 +44,10 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
 
     @Transactional
     public boolean delete(YearSchedule yearSchedule) throws DAOException {
-
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
-            em.getTransaction().commit();
             YearSchedule targetYearSchedule = em.find(YearSchedule.class, yearSchedule.getId());
-            em.getTransaction().begin();
             em.remove(targetYearSchedule);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not delete YearSchedule", e);
         }
@@ -64,12 +58,8 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public boolean update(Integer id, YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             YearSchedule oldYearSchedule = (YearSchedule) em.find(YearSchedule.class, id);
             oldYearSchedule.setYear(yearSchedule.getYear());
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not update YearSchedule", e);
         }
@@ -80,11 +70,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public boolean create(YearSchedule yearSchedule) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             em.persist(yearSchedule);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not create YearSchedule", e);
         }
@@ -95,11 +81,7 @@ public class YearScheduleDAO implements DAO<YearSchedule> {
     public List<YearSchedule> getList() throws DAOException {
         List<YearSchedule> yearSchedules = null;
         try {
-
-            em.getTransaction().begin();
             yearSchedules = em.createQuery("from YearSchedule", YearSchedule.class).getResultList();
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not get YearSchedule List", e);
         }

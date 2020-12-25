@@ -1,5 +1,6 @@
 package com.danielsedoff.college.schedule.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,25 +21,25 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int lesson_id;
-    
+
     @Column(name = "start_time")
     private String startTime;
-    
+
     @Column(name = "end_time")
     private String endTime;
-    
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "professor_id")
     private Professor professor;
-    
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "group_id")
     private Group group;
-    
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "dayschedule_id")
     private DaySchedule dayschedule;
-    
+
     public Lesson() {
     }
 

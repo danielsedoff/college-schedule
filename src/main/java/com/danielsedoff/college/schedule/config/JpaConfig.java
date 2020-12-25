@@ -1,6 +1,5 @@
 package com.danielsedoff.college.schedule.config;
 
-import java.util.Objects;
 import java.util.Properties;
 
 import javax.naming.NamingException;
@@ -8,13 +7,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = "com.danielsedoff.college.schedule")
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
+@Import({ DataSourceConfig.class })
 public class JpaConfig {
 
     private final Environment environment;
@@ -35,25 +38,23 @@ public class JpaConfig {
         this.environment = environment;
     }
 
-    @Bean
-    public DataSource dataSource() throws NamingException {
-        return (DataSource) new JndiTemplate().lookup(Objects.requireNonNull(environment.getProperty("url")));
-    }
+    @Autowired
+    DataSource dataSource;
 
     @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws NamingException {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
+        em.setDataSource(dataSource);
         em.setPackagesToScan("com.danielsedoff.college.schedule");
-
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());
-
         return em;
     }
 
     @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
@@ -73,26 +74,3 @@ public class JpaConfig {
     }
 
 }
-
-//package com.danielsedoff.college.schedule.config;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityManagerFactory;
-//import javax.persistence.Persistence;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.web.context.annotation.RequestScope;
-//
-//@Configuration
-//public class JpaConfig {
-//    @Bean
-//    public EntityManagerFactory getFactory() {
-//        return Persistence.createEntityManagerFactory("PU");
-//    }
-//    @RequestScope
-//    @Bean
-//    public EntityManager em() {
-//        return getFactory().createEntityManager();
-//    }
-//}

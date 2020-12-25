@@ -5,17 +5,20 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.PersistenceContextType;
 
+import org.springframework.transaction.annotation.Transactional;
+import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.model.Lesson;
 
+@Aspect
 @Component
 public class LessonDAO implements DAO<Lesson> {
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     private static Logger logger = LoggerFactory.getLogger(LessonDAO.class);
@@ -29,6 +32,8 @@ public class LessonDAO implements DAO<Lesson> {
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
+
             throw new DAOException("Could not get Lesson Id List", e);
         }
         return result;
@@ -38,10 +43,11 @@ public class LessonDAO implements DAO<Lesson> {
     public Lesson getById(Integer id) throws DAOException {
         Lesson result = null;
         try {
-
             result = em.find(Lesson.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
+
             throw new DAOException("Could not get Lesson By Id", e);
         }
         return result;
@@ -49,19 +55,15 @@ public class LessonDAO implements DAO<Lesson> {
 
     @Transactional
     public boolean delete(Lesson lesson) throws DAOException {
-
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
-            em.getTransaction().commit();
             Lesson targetLesson = em.find(Lesson.class, lesson.getId());
             em.getTransaction().begin();
             em.remove(targetLesson);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
+
             throw new DAOException("Could not delete Lesson", e);
         }
         return result;
@@ -71,17 +73,14 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean update(Integer id, Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             Lesson oldLesson = (Lesson) em.find(Lesson.class, id);
             oldLesson.setEndTime(lesson.getEndTime());
             oldLesson.setStartTime(lesson.getStartTime());
             oldLesson.setProfessor(lesson.getProfessor());
             oldLesson.setGroup(lesson.getGroup());
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not update Lesson", e);
         }
         return result;
@@ -91,13 +90,11 @@ public class LessonDAO implements DAO<Lesson> {
     public boolean create(Lesson lesson) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             em.persist(lesson);
-            em.getTransaction().commit();
-            em.close();
+            em.flush();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            e.printStackTrace();
             throw new DAOException("Could not create Lesson", e);
         }
         return result;
@@ -108,11 +105,7 @@ public class LessonDAO implements DAO<Lesson> {
     public List<Lesson> getList() throws DAOException {
         List<Lesson> lessons = null;
         try {
-
-            em.getTransaction().begin();
             lessons = em.createQuery("from Lesson", Lesson.class).getResultList();
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             e.printStackTrace();
@@ -120,5 +113,4 @@ public class LessonDAO implements DAO<Lesson> {
         }
         return lessons;
     }
-
 }

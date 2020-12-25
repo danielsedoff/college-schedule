@@ -6,13 +6,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
+@Aspect
 @Component
 public class ProfessorDAO implements DAO<Professor> {
     @PersistenceContext
@@ -38,7 +39,6 @@ public class ProfessorDAO implements DAO<Professor> {
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
-
             result = em.find(Professor.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -52,14 +52,9 @@ public class ProfessorDAO implements DAO<Professor> {
 
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
-            em.getTransaction().commit();
             Professor targetProfessor = em.find(Professor.class, professor.getId());
             em.getTransaction().begin();
             em.remove(targetProfessor);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not delete Professor", e);
@@ -71,14 +66,10 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean update(Integer id, Professor professor) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             Professor oldProfessor = (Professor) em.find(Professor.class, id);
             oldProfessor.setName(professor.getName());
             oldProfessor.setRanksTitles(professor.getRanksTitles());
             oldProfessor.setSpecialNotes(professor.getSpecialNotes());
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not update Professor", e);
@@ -90,33 +81,23 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean create(Professor professor) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             em.persist(professor);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Professor", e);
         }
         return result;
-
     }
 
     @Transactional
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {
-
-            em.getTransaction().begin();
             professors = em.createQuery("from Professor", Professor.class).getResultList();
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Professor List", e);
         }
         return professors;
     }
-
 }

@@ -13,7 +13,6 @@ import com.danielsedoff.college.schedule.model.Group;
 
 @Service
 public class GroupService {
-    @Autowired
     private GroupDAO groupdao;
 
     @Autowired

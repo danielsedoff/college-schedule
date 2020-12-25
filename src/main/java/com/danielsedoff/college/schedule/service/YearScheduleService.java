@@ -15,7 +15,6 @@ import com.danielsedoff.college.schedule.model.YearSchedule;
 @Service
 public class YearScheduleService {
     
-    @Autowired
     private YearScheduleDAO yearscheduledao;
 
     @Autowired

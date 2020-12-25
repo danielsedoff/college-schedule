@@ -33,7 +33,7 @@ public class Professor extends Person {
         this.course = course;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "course_id")
     private Course course;
 

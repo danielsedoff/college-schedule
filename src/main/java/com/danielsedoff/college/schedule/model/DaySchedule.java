@@ -36,7 +36,7 @@ public class DaySchedule {
     @OneToMany(mappedBy = "dayschedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<Lesson>();
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "yearschedule_id")
     private YearSchedule yearschedule;
     

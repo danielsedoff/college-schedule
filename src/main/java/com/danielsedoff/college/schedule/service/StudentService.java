@@ -16,7 +16,6 @@ import com.danielsedoff.college.schedule.model.Student;
 @Service
 public class StudentService {
 
-    @Autowired
     private StudentDAO studentdao;
 
     @Autowired

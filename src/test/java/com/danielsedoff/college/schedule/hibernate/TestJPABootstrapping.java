@@ -22,7 +22,7 @@ public class TestJPABootstrapping {
         em.getTransaction().begin();
         
         em.find(Course.class, 1);
-        em.getTransaction().commit();
+        
         em.close();
         emf.close();
         

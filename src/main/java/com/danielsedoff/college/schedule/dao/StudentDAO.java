@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Transactional;
 
+import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielsedoff.college.schedule.model.Student;
 
+@Aspect
 @Component
 public class StudentDAO implements DAO<Student> {
     @PersistenceContext
@@ -39,7 +40,6 @@ public class StudentDAO implements DAO<Student> {
     public Student getById(Integer id) throws DAOException {
         Student result = null;
         try {
-
             result = em.find(Student.class, id);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -50,17 +50,10 @@ public class StudentDAO implements DAO<Student> {
 
     @Transactional
     public boolean delete(Student student) throws DAOException {
-
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
-            em.getTransaction().commit();
             Student targetStudent = em.find(Student.class, student.getId());
-            em.getTransaction().begin();
             em.remove(targetStudent);
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not delete Student", e);
@@ -72,14 +65,10 @@ public class StudentDAO implements DAO<Student> {
     public boolean update(Integer id, Student student) throws DAOException {
         boolean result = false;
         try {
-
-            em.getTransaction().begin();
             Student oldStudent = (Student) em.find(Student.class, id);
             oldStudent.setGroup(student.getGroup());
             oldStudent.setName(student.getName());
             oldStudent.setSchoolYear(student.getSchoolYear());
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not update Student", e);
@@ -90,18 +79,11 @@ public class StudentDAO implements DAO<Student> {
     @Transactional
     public boolean create(Student student) throws DAOException {
         boolean result = false;
-
-        EntityTransaction trn = em.getTransaction();
         try {
-            trn.begin();
-//          DEBUG
             System.out.println("StudentDAO RECEIVES: " + student.toString());
             em.persist(student);
             em.flush();
-            em.close();
-            trn.commit();
         } catch (Exception e) {
-            trn.rollback();
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not create Student", e);
         }
@@ -112,16 +94,11 @@ public class StudentDAO implements DAO<Student> {
     public List<Student> getList() throws DAOException {
         List<Student> students = null;
         try {
-
-            em.getTransaction().begin();
             students = em.createQuery("from Student", Student.class).getResultList();
-            em.getTransaction().commit();
-            em.close();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new DAOException("Could not get Student List", e);
         }
         return students;
     }
-
 }

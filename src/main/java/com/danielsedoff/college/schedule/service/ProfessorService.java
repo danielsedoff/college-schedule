@@ -13,7 +13,6 @@ import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class ProfessorService {
-    @Autowired
     private ProfessorDAO professordao;
 
     @Autowired
