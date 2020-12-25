@@ -5,7 +5,7 @@ import lombok.ToString;
 @ToString
 public class Student extends Person {
     private int schoolYear;
-
+    
     public int getSchoolYear() {
         return schoolYear;
     }

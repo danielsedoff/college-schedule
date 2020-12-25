@@ -1,25 +1,27 @@
 package com.danielsedoff.college.schedule.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@ResponseBody
 public class IndexController {
 
     @GetMapping("/index")
-    public String index() {
-        return "<!doctype html><html><head></head><body><h1>Index</h1>"
-                + "<DIV STYLE=\"font-size:24px;\">"
-                + "<ul>"
-                + "<li><a href=\"students.html\">Students</a></li>"
-                + "<li><a href=\"professors.html\">Professors</a></li>"
-                + "<li><a href=\"courses.html\">Courses</a></li>"
-                + "<li><a href=\"groups.html\">Groups</a></li>"
-                + "<li><a href=\"lessons.html\">Lessons</a></li>"
-                + ""
-                + "</ul>"
-                + "</body></html>";
+    public String main(Model model) {
+
+        List<PageLink> links = new ArrayList<>();
+        links.add(new PageLink("Student List", "students.html"));
+        links.add(new PageLink("Professor List", "professors.html"));
+        links.add(new PageLink("Course List", "courses.html"));
+        links.add(new PageLink("Group List", "groups.html"));
+        links.add(new PageLink("Lesson List", "lessons.html"));
+
+        model.addAttribute("links", links);
+        return "index.html";
+
     }
 }
