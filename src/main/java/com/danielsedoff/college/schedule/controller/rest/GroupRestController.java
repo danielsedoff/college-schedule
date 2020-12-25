@@ -24,7 +24,7 @@ import com.danielsedoff.college.schedule.service.GroupService;
 
 @RestController
 @RequestMapping("/groups")
-class GroupRestController {
+public class GroupRestController {
 
     @Autowired
     private GroupService service;
@@ -45,7 +45,8 @@ class GroupRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public GroupDTO findById(@PathVariable("id") int id) throws MyResourceNotFoundException {
+    public GroupDTO findById(@PathVariable("id") int id)
+            throws MyResourceNotFoundException {
         Group group = RestPreconditions.checkFound(service.getGroupById(id));
         GroupDTO dto = new GroupDTO();
         dto.setName(group.getSpecialNotes());
@@ -67,8 +68,8 @@ class GroupRestController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String update(@PathVariable("id") int id, @Valid @RequestBody GroupDTO resource)
-            throws MyResourceNotFoundException {
+    public String update(@PathVariable("id") int id,
+            @Valid @RequestBody GroupDTO resource) throws MyResourceNotFoundException {
         Group group = new Group();
         group.setId(resource.getId());
         group.setSpecialNotes(resource.getDescription());

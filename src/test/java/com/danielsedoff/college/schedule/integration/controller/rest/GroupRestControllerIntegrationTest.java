@@ -1,67 +1,66 @@
 package com.danielsedoff.college.schedule.integration.controller.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
-import com.danielsedoff.college.schedule.controller.ControllerTest;
+import com.danielsedoff.college.schedule.controller.rest.GroupRestController;
+import com.danielsedoff.college.schedule.model.Group;
+import com.danielsedoff.college.schedule.model.Student;
+import com.danielsedoff.college.schedule.service.StudentService;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class GroupRestControllerIntegrationTest extends ControllerTest {
+@SpringBootTest(classes = { GroupRestController.class }, 
+                webEnvironment = WebEnvironment.RANDOM_PORT)
+public class GroupRestControllerIntegrationTest {
+    @LocalServerPort
+    private int port;
 
     @Autowired
-    private WebApplicationContext wac;
+    StudentService ss;
+    
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-    private MockMvc mockMvc;
+    @Sql({ "create_tables.sql" })
+    @Test
+    public void testOneGroup() {
+        assertEquals(this.restTemplate
+                .getForObject("http://localhost:" + port + "/groups/2", Group.class)
+                .getId(), 2);
 
-    @BeforeEach
-    public void setup() throws Exception {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    void restGetGroupsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups")).andDo(print())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    public void testAddGroup() {
+        Group group = new Group();
+        group.setId(14);
+        group.setSpecialNotes("Fine Group");
+        List<Student> students = new ArrayList<>();
+        students.add(ss.getStudentById(2));
+        group.setStudents(students);
+        
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(
+                "http://localhost:" + port + "/groups", group, String.class);
+        assertEquals(201, responseEntity.getStatusCodeValue());
+    }
+    
+    @Test
+    public void testGetGroupListAvailability() {
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<String> response = testRestTemplate.
+          getForEntity("http://localhost:" + port + "/groups", String.class);
+        assertEquals(response.getStatusCode(), (HttpStatus.OK));
     }
 
-    @Test
-    void restGetGroupTwoShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/groups/2")).andDo(print()).andExpect(MockMvcResultMatchers.content()
-                .json("{'mode':'update','id':2,'name':'Worst Group','description':'Worst Group'}"));
-    }
-
-    @Test
-    void restDeleteGroupThreeShouldReturnThis() throws Exception {
-        mockMvc.perform(delete("/groups/3")).andDo(print()).andExpect(status().isOk());
-    }
-
-    @Test
-    void restPostGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/groups").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Big Group\",\"description\":\"Big Group\",\"mode\":\"create\",\"id\":1}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
-    }
-
-    @Test
-    void restPutGroupShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/groups/1").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Big Group\",\"description\":\"Big Group\",\"mode\":\"create\",\"id\":1}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-    }
 }

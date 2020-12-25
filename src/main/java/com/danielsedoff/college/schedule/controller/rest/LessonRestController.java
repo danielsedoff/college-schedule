@@ -28,7 +28,7 @@ import com.danielsedoff.college.schedule.service.ProfessorService;
 
 @RestController
 @RequestMapping("/lessons")
-class LessonRestController {
+public class LessonRestController {
 
     @Autowired
     private LessonService service;

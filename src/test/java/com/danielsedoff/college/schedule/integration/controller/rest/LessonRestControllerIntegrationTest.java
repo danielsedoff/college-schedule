@@ -1,65 +1,65 @@
 package com.danielsedoff.college.schedule.integration.controller.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class LessonRestControllerIntegrationTest { // extends ControllerTest {
+import com.danielsedoff.college.schedule.controller.rest.LessonRestController;
+import com.danielsedoff.college.schedule.model.DaySchedule;
+import com.danielsedoff.college.schedule.model.Lesson;
+import com.danielsedoff.college.schedule.service.GroupService;
+import com.danielsedoff.college.schedule.service.ProfessorService;
+
+@SpringBootTest(classes = { LessonRestController.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+public class LessonRestControllerIntegrationTest {
+    @LocalServerPort
+    private int port;
+    
+    @Autowired
+    private GroupService gservice;
 
     @Autowired
-    private WebApplicationContext wac;
+    private ProfessorService pservice;
+    
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-    private MockMvc mockMvc;
+    @Sql({ "create_tables.sql" })
+    @Test
+    public void testOneLesson() {
+        assertEquals(this.restTemplate
+                .getForObject("http://localhost:" + port + "/lessons/2", Lesson.class)
+                .getId(), 2);
 
-    @BeforeEach
-    public void setup() throws Exception {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    void restGetLessonsShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/lessons")).andDo(print())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    public void testAddLesson() {
+        Lesson lesson = new Lesson();
+        lesson.setDayschedule(new DaySchedule());
+        lesson.setEndTime("2011-01-01 00:01");
+        lesson.setStartTime("2011-01-01 02:01");
+        lesson.setGroup(gservice.getGroupById(2));
+        lesson.setProfessor(pservice.getProfessorById(2));
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(
+                "http://localhost:" + port + "/lessons", lesson, String.class);
+        assertEquals(201, responseEntity.getStatusCodeValue());
+    }
+    
+    @Test
+    public void testGetLessonListAvailability() {
+        TestRestTemplate testRestTemplate = new TestRestTemplate();
+        ResponseEntity<String> response = testRestTemplate.
+          getForEntity("http://localhost:" + port + "/lessons", String.class);
+        assertEquals(response.getStatusCode(), (HttpStatus.OK));
     }
 
-    @Test
-    void restGetLessonOneShouldReturnThis() throws Exception {
-        mockMvc.perform(get("/lessons/1")).andDo(print()).andExpect(MockMvcResultMatchers.content().json(
-                "{\"mode\":\"update\",\"id\":1,\"startTime\":\"2019-01-01 00:01\",\"endTime\":\"2019-01-01 01:01\",\"professorId\":1,\"groupId\":2}"));
-    }
-
-    @Test
-    void restDeleteLessonThreeShouldReturnThis() throws Exception {
-        mockMvc.perform(delete("/lessons/3")).andDo(print()).andExpect(status().isOk());
-    }
-
-    @Test
-    void restPostLessonShouldReturnThis() throws Exception {
-        mockMvc.perform(post("/lessons").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"startTime\":\"2011-01-01 00:01\",\"endTime\":\"2012-01-01 01:01\",\"professorId\":1,\"groupId\":2}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
-    }
-
-    @Test
-    void restPutLessonShouldReturnThis() throws Exception {
-        mockMvc.perform(put("/lessons/1").contentType(MediaType.APPLICATION_JSON).content(
-                "{\"mode\":\"update\",\"id\":1,\"startTime\":\"2011-01-01 00:01\",\"endTime\":\"2012-01-01 01:01\",\"professorId\":1,\"groupId\":2}")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-    }
 }
