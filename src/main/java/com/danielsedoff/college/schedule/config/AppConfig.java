@@ -10,6 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.danielsedoff.college.schedule.controller.StudentListingController;
+
 @Configuration
 @ComponentScan("com.danielsedoff.college.schedule")
 @PropertySource("classpath:database.properties")
@@ -18,17 +20,14 @@ public class AppConfig {
     @Autowired
     Environment environment;
 
-    @Autowired
-    DriverManagerDataSource driverManagerDataSource;
-
     private final String URL = "url";
     private final String USER = "dbuser";
     private final String DRIVER = "driver";
     private final String PASSWORD = "dbpassword";
 
-
     @Bean
     DataSource dataSource() {
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setUrl(environment.getProperty(URL));
         driverManagerDataSource.setUsername(environment.getProperty(USER));
         driverManagerDataSource.setPassword(environment.getProperty(PASSWORD));
@@ -36,5 +35,9 @@ public class AppConfig {
         return driverManagerDataSource;
     }
     
+    @Bean
+    StudentListingController studentListingController() {
+        return new StudentListingController();
+    }
     
 }

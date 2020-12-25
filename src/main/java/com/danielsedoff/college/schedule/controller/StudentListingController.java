@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.dao.GroupDAO;
@@ -16,6 +17,7 @@ import com.danielsedoff.college.schedule.service.StudentService;
 
 @Component
 public class StudentListingController {
+
     
     final String SQL_FILE_NAME = "create_tables.sql";
 
@@ -32,6 +34,7 @@ public class StudentListingController {
     @Autowired
     StudentService studentService;
 
+    @GetMapping(value = "/students")
     public String getStudentIds() throws IOException, SQLException {
         ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
         List<Integer> idList = studentService.getStudentIdList();
