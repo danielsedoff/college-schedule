@@ -11,12 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.Professor;
 
-@ContextConfiguration(classes = AppConfig.class)
 class ProfessorDAOTest extends DAOTest {
 
     @Autowired

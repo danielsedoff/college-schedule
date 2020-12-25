@@ -11,11 +11,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import com.danielsedoff.college.schedule.controller.StudentListingController;
-
 @Configuration
 @ComponentScan("com.danielsedoff.college.schedule")
-@PropertySource("classpath:database.properties")
+@PropertySource(value = "classpath:database.properties")
 public class AppConfig {
 
     private static final String URL = "url";
@@ -25,7 +23,7 @@ public class AppConfig {
 
     @Autowired
     private Environment env;
-    
+
     @Bean
     public DataSource dataSource() {
 
@@ -34,6 +32,7 @@ public class AppConfig {
         dataSource.setUrl(env.getProperty(URL));
         dataSource.setUsername(env.getProperty(USER));
         dataSource.setPassword(env.getProperty(PASSWORD));
+
         return dataSource;
     }
 
@@ -42,11 +41,7 @@ public class AppConfig {
 
         JdbcTemplate template = new JdbcTemplate();
         template.setDataSource(dataSource());
+
         return template;
-    }
-    
-    @Bean
-    public StudentListingController studentListingController() {
-        return new StudentListingController();
     }
 }

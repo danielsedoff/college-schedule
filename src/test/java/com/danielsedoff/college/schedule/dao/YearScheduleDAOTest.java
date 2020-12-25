@@ -10,13 +10,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
-import com.danielsedoff.college.schedule.config.AppConfig;
 import com.danielsedoff.college.schedule.model.DaySchedule;
 import com.danielsedoff.college.schedule.model.YearSchedule;
 
-@ContextConfiguration(classes = AppConfig.class)
 class YearScheduleDAOTest extends DAOTest {
 
     @Autowired
