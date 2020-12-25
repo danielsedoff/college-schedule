@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.danielsedoff.college.schedule.model.Professor;
 
-class ProfessorDAOTest extends AbstractDAOTest {
+class ProfessorDAOTest extends DAOTest {
 
     @Autowired
     private DAO<Professor> profdao;
@@ -28,17 +28,17 @@ class ProfessorDAOTest extends AbstractDAOTest {
 
     @Test
     void testGetIdList() throws DAOException {
-        final List<Integer> result = profdao.getIdList();
-        final Integer[] ints = { 1, 2, 3, 4 };
+        List<Integer> result = profdao.getIdList();
+        Integer[] ints = { 1, 2, 3, 4 };
         List<Integer> expectedResult = List.of(ints);
         assertEquals(expectedResult, result);
     }
 
     @Test
     void testUpdate() throws DAOException {
-        final int id = 1;
-        final Professor prof = profdao.getById(id);
-        final String newname = "Another Name";
+        int id = 1;
+        Professor prof = profdao.getById(id);
+        String newname = "Another Name";
         prof.setName(newname);
         profdao.update(id, prof);
         assertEquals(newname, profdao.getById(id).getName());
@@ -46,16 +46,16 @@ class ProfessorDAOTest extends AbstractDAOTest {
 
     @Test
     void testDelete() throws DAOException {
-        final int expectedResult = profdao.getIdList().size() - 1;
-        final Professor prof =  profdao.getById(2);
+        int expectedResult = profdao.getIdList().size() - 1;
+        Professor prof =  profdao.getById(2);
         profdao.delete(prof);
         assertEquals(expectedResult, profdao.getIdList().size());
     }
 
     @Test
     void testCreate() throws DAOException {
-        final int expectedSize = profdao.getIdList().size() + 1;
-        final Professor prof = new Professor();
+        int expectedSize = profdao.getIdList().size() + 1;
+        Professor prof = new Professor();
         prof.setName("Pit Bull");
         prof.setRanksTitles("The Most Aggressive One");
         prof.setSpecialNotes("Students Beware");
@@ -65,7 +65,7 @@ class ProfessorDAOTest extends AbstractDAOTest {
 
     @Test
     void testGetById() throws DAOException {
-        final Professor prof = profdao.getById(1);
+        Professor prof = profdao.getById(1);
         assertNotNull(prof);
     }
 

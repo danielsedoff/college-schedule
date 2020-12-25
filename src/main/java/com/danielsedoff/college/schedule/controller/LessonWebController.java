@@ -52,8 +52,8 @@ public class LessonWebController {
         Lesson lesson = ls.getLessonById(id);
         lessondto.setId(id);
         lessondto.setMode("update");
-        lessondto.setStartTime(lesson.getStartTime());
-        lessondto.setEndTime(lesson.getEndTime());
+        lessondto.setStartTime((lesson.getStartTime()));
+        lessondto.setEndTime((lesson.getEndTime()));
         lessondto.setGroupId(lesson.getGroup().getId());
         int professorId = lesson.getProfessor().getId();
         lessondto.setProfessorId(professorId);
@@ -70,8 +70,8 @@ public class LessonWebController {
     @PostMapping("/createLesson")
     public String createLesson(@ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         Lesson lesson = new Lesson();
-        lesson.setEndTime(lessondto.getEndTime());
-        lesson.setStartTime(lessondto.getStartTime());
+        lesson.setEndTime((lessondto.getEndTime()));
+        lesson.setStartTime((lessondto.getStartTime()));
         lesson.setGroup(gs.getGroupById(lessondto.getGroupId()));
         lesson.setProfessor(ps.getProfessorById(lessondto.getProfessorId()));
         ls.createLesson(lesson);
@@ -82,8 +82,8 @@ public class LessonWebController {
     @PostMapping("/updateLesson")
     public String updateLesson(@ModelAttribute("lessondto") LessonDTO lessondto, Model model) {
         Lesson lesson = new Lesson();
-        lesson.setEndTime(lessondto.getEndTime());
-        lesson.setStartTime(lessondto.getStartTime());
+        lesson.setEndTime((lessondto.getEndTime()));
+        lesson.setStartTime((lessondto.getStartTime()));
         lesson.setGroup(gs.getGroupById(lessondto.getGroupId()));
         if (ps.getProfessorById(lessondto.getProfessorId()) == null) {
             model.addAttribute("result", "Error: there is no professor with ID " + lessondto.getProfessorId());

@@ -19,8 +19,6 @@ import com.danielsedoff.college.schedule.model.PageLink;
 public class MainPageController {
     private static Logger logger = LoggerFactory.getLogger(MainPageController.class);
 
-    private static final String SQL_FILE_NAME = "create_tables.sql";
-    
     @Autowired
     private SqlScriptRunner ibatisRead;
 
@@ -37,6 +35,7 @@ public class MainPageController {
         model.addAttribute("links", links);
 
         try {
+            final String SQL_FILE_NAME = "create_tables.sql";
             ibatisRead.readSQLFileWithIbatis(SQL_FILE_NAME);
         } catch (IOException | SQLException e) {
             logger.error("ibatis error: " + e.getMessage());

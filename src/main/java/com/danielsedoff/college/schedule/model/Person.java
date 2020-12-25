@@ -11,10 +11,10 @@ public abstract class Person {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int personId;
+    protected int person_id;
     
     public int getId() {
-        return personId;
+        return person_id;
     }
 
 //    public void setId(int id) {

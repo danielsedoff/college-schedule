@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class DaySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int dayscheduleId;
+    private int dayschedule_id;
     
     @Column(name = "the_day")
     private String day;
@@ -39,7 +39,7 @@ public class DaySchedule {
     }
 
     public int getId() {
-        return dayscheduleId;
+        return dayschedule_id;
     }
 
 //    public void setId(int id) {
@@ -62,12 +62,12 @@ public class DaySchedule {
         this.hasOverlaps = hasOverlaps;
     }
 
-    public int getDayscheduleId() {
-        return dayscheduleId;
+    public int getDayschedule_id() {
+        return dayschedule_id;
     }
 
-    public void setDayscheduleId(int dayscheduleId) {
-        this.dayscheduleId = dayscheduleId;
+    public void setDayschedule_id(int dayschedule_id) {
+        this.dayschedule_id = dayschedule_id;
     }
 
     public List<Lesson> getLessons() {

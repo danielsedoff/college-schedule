@@ -10,10 +10,7 @@ import com.danielsedoff.college.schedule.config.TestWebConfig;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { TestWebConfig.class })
 @WebAppConfiguration
-public abstract class AbstractDAOTest {
-    public static final String SQL_FILE_NAME = "create_tables.sql";
+public abstract class DAOTest {
+    final String SQL_FILE_NAME = "create_tables.sql";
 
-    AbstractDAOTest() {
-
-    }
 }
