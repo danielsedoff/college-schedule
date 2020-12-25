@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.danielsedoff.college.schedule.dao.CourseDAO;
 import com.danielsedoff.college.schedule.dao.DAOException;
 import com.danielsedoff.college.schedule.model.Course;
-import com.danielsedoff.college.schedule.model.Professor;
 
 @Service
 public class CourseService {

@@ -3,23 +3,34 @@ package com.danielsedoff.college.schedule.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.danielsedoff.college.schedule.config.HibernateSessionFactoryUtil;
 import com.danielsedoff.college.schedule.model.Professor;
-import com.danielsedoff.college.schedule.model.Student;
 
 @Component
 public class ProfessorDAO implements DAO<Professor> {
+
+    @Autowired
+    public ProfessorDAO professordao;
+
     public List<Integer> getIdList() throws DAOException {
 
         List<Integer> result = new ArrayList<>();
         try {
-            List<Professor> professors = (List<Professor>) HibernateSessionFactoryUtil.getSessionFactory().openSession()
-                    .createQuery("From Professor").list();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            @SuppressWarnings("unchecked")
+            List<Professor> professors = em.createQuery("from Professor")
+                    .getResultList();
+            em.getTransaction().commit();
+
             for (Professor professor : professors) {
                 result.add(professor.getId());
             }
@@ -32,7 +43,10 @@ public class ProfessorDAO implements DAO<Professor> {
     public Professor getById(Integer id) throws DAOException {
         Professor result = null;
         try {
-            result = HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Professor.class, id);
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            EntityManager em = emf.createEntityManager();
+            result = em.find(Professor.class, id);
         } catch (Exception e) {
             throw new DAOException("Could not get Professor By Id", e);
         }
@@ -43,11 +57,17 @@ public class ProfessorDAO implements DAO<Professor> {
 
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.delete(professor);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.getTransaction().commit();
+            Professor targetProfessor = em.find(Professor.class, professor.getId());
+            em.getTransaction().begin();
+            em.remove(targetProfessor);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not delete Professor", e);
         }
@@ -57,12 +77,19 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean update(Integer id, Professor professor) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            professor.setId(id);
-            session.update(professor);
-            tx1.commit();
-            session.close();
+
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            Professor oldProfessor = (Professor) em.find(Professor.class, id);
+            oldProfessor.setDepartmentId(professor.getDepartmentId());
+            oldProfessor.setName(professor.getName());
+            oldProfessor.setRanksTitles(professor.getRanksTitles());
+            oldProfessor.setSpecialNotes(professor.getSpecialNotes());
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not update Professor", e);
         }
@@ -72,11 +99,14 @@ public class ProfessorDAO implements DAO<Professor> {
     public boolean create(Professor professor) throws DAOException {
         boolean result = false;
         try {
-            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.saveOrUpdate(professor);
-            tx1.commit();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(professor);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not create Professor", e);
         }
@@ -87,13 +117,19 @@ public class ProfessorDAO implements DAO<Professor> {
     public List<Professor> getList() throws DAOException {
         List<Professor> professors = null;
         try {
-            SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-            Session session = sessionFactory.openSession();
-            professors = session.createQuery("From Professor").list();
-            session.close();
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("PU");
+            // DEBUG System.out.println(emf.getProperties());
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            professors = em.createQuery("from Professor", Professor.class)
+                    .getResultList();
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             throw new DAOException("Could not get Professor List", e);
         }
         return professors;
     }
+
 }
