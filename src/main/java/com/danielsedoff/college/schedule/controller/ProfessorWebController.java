@@ -75,7 +75,7 @@ public class ProfessorWebController {
         professor.setName(professordto.getName());
         professor.setSpecialNotes(professordto.getNotes());
         professor.setRanksTitles(professordto.getRanks());
-        ps.updateProfessor(professor.getId(), professor);
+        ps.updateProfessor(professordto.getId(), professor);
         model.addAttribute("result", "Your UPDATE request has been accepted by the server.");
         return "resultPage";
     }
